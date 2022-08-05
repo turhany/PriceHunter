@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PriceHunter.Business\PriceHunter.Business.csproj" />
+    <ProjectReference Include="..\PriceHunter.Common\PriceHunter.Common.csproj" />
+    <ProjectReference Include="..\PriceHunter.Data.MongoDB\PriceHunter.Data.MongoDB.csproj" />
+    <ProjectReference Include="..\PriceHunter.Data\PriceHunter.Data.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PriceHunter.Api</name>
+    </assembly>
+    <members>
+        <member name="T:PriceHunter.Api.Configurations.Startup.ConfigureApiVersioning">
+            <summary>
+            Configure Api Versioning
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureApiVersioning.AddApiVersioningConfigurations(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add Api Versioning Configurations
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureApiVersioning.UseApiVersioningConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use Api Versioning Configuration
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PriceHunter.Api.Configurations.Startup.ConfigureCORS">
+            <summary>
+            Configure CORS
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureCORS.AddCorsConfigurations(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add CORS Configurations
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureCORS.UseCorsConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use CORS Configuration
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PriceHunter.Api.Configurations.Startup.ConfigureLocalization">
+            <summary>
+            Configure Localization
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureLocalization.AddLocalizationsConfigurations(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add Localizations Configurations
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureLocalization.UseLocalizationConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use Localization Configuration
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PriceHunter.Api.Configurations.Startup.ConfigureSwagger">
+            <summary>
+            Add Swagger configuration extension
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureSwagger.AddSwaggerConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add Swagger configuration extension
+            </summary>
+            <param name="services">ServiceCollection</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureSwagger.UseSwaggerConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use Swagger configuration
+            </summary>
+            <param name="app">Application builder</param>
+            <returns></returns>
+        </member>
+        <member name="T:PriceHunter.Api.Controllers.BaseController">
+            <summary>
+            Api base controller
+            </summary>
+        </member>
+        <member name="P:PriceHunter.Api.Controllers.BaseController.Mapper">
+            <summary>
+            Auto Mapper
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.BaseController.#ctor">
+            <summary>
+            Base Controller
+            </summary>
+        </member>
+        <member name="T:PriceHunter.Api.Controllers.HomeController">
+            <summary>
+            Api Home controller
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.HomeController.Home">
+            <summary>
+            Home Controller
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PriceHunter.Api.Controllers.V1.ProductsController">
+            <summary>
+            Products Controller
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.#ctor(PriceHunter.Business.Product.Abstract.IProductService)">
+            <summary>
+            Products Controller
+            </summary>
+            <param name="productService"></param>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.Get(System.Guid)">
+            <summary>
+            Get Product
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.CreateProduct(PriceHunter.Contract.App.Product.CreateProductRequest)">
+            <summary>
+            Create Product
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.UpdateProduct(PriceHunter.Contract.App.Product.UpdateProductRequest,System.Guid)">
+            <summary>
+            Update Product
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.DeleteProduct(System.Guid)">
+            <summary>
+            Delete Product
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PriceHunter.Api.Middlewares.ExceptionHandlerMiddleware">
+            <summary>
+            Global Exception handler middleware
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Middlewares.ExceptionHandlerMiddleware.#ctor(Microsoft.Extensions.Logging.ILogger{PriceHunter.Api.Middlewares.ExceptionHandlerMiddleware},Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Global Exception handler middleware constructor
+            </summary>
+            <param name="logger">Logger</param>
+            <param name="next">Next middleware</param>
+        </member>
+        <member name="M:PriceHunter.Api.Middlewares.ExceptionHandlerMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Middleware invoke method
+            </summary>
+            <param name="httpContext">Http Context</param>
+        </member>
+        <member name="T:PriceHunter.Api.Middlewares.RequestLogMiddleware">
+            <summary>
+            Global request - response log middleware
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Middlewares.RequestLogMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.DependencyInjection.IServiceScopeFactory)">
+            <summary>
+            Global request - response log middleware constructor
+            </summary>
+            <param name="next">Next middleware</param>
+            <param name="serviceScopeFactory">Service Scope Factory</param>
+        </member>
+        <member name="M:PriceHunter.Api.Middlewares.RequestLogMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Middleware invoke method
+            </summary>
+            <param name="httpContext">Http Context</param>
+        </member>
+    </members>
+</doc>
