@@ -68,5 +68,23 @@ namespace PriceHunter.Resources.Model {
                 return ResourceManager.GetString("Product", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UserProduct.
+        /// </summary>
+        public static string UserProduct {
+            get {
+                return ResourceManager.GetString("UserProduct", resourceCulture);
+            }
+        }
     }
 }

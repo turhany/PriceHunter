@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using PriceHunter.Common.Application;
 using PriceHunter.Common.Data;
 using PriceHunter.Common.Data.Abstract;
 using PriceHunter.Data.MongoDB.Options;
@@ -144,7 +145,7 @@ namespace PriceHunter.Data.MongoDB.Repositories
             Guid? currentUserId = null;
             try
             {
-                //Get logged user id
+                currentUserId = ApplicationContext.Instance.CurrentUser.Id;
             }
             catch
             {

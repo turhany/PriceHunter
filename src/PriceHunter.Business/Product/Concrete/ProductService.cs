@@ -93,6 +93,55 @@ namespace PriceHunter.Business.Product.Concrete
             };
         }
 
+        public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request)
+        {
+            var validationResponse = _validationService.Validate(typeof(UpdateProductRequestValidator), request);
+
+            if (!validationResponse.IsValid)
+            {
+                return new ServiceResult<ExpandoObject>
+                {
+                    Status = ResultStatus.InvalidInput,
+                    Message = ServiceResponseMessage.INVALID_INPUT_ERROR,
+                    ValidationMessages = validationResponse.ErrorMessages
+                };
+            }
+
+            var entity = await _productRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false);
+
+            if (entity == null)
+            {
+                return new ServiceResult<ExpandoObject>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.Product)
+                };
+            }
+
+            var lockKey = string.Format(LockKeyConstants.ProductLockKey, entity.Id);
+            var cacheKey = string.Format(CacheKeyConstants.ProductCacheKey, entity.Id);
+
+            using (await _lockService.CreateLockAsync(lockKey))
+            {
+                entity.Name = request.Name.Trim();
+
+                entity = await _productRepository.UpdateAsync(entity);
+
+                await _cacheService.RemoveAsync(cacheKey);
+            }
+
+
+            dynamic productWrapper = new ExpandoObject();
+            productWrapper.Id = entity.Id;
+
+            return new ServiceResult<ExpandoObject>
+            {
+                Status = ResultStatus.Successful,
+                Message = Resource.Updated(Entities.Product, entity.Name),
+                Data = productWrapper
+            };
+        }
+         
         public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id)
         {
             var entity = await _productRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false);
@@ -120,55 +169,6 @@ namespace PriceHunter.Business.Product.Concrete
             {
                 Status = ResultStatus.Successful,
                 Message = Resource.Deleted(Entities.Product, entity.Name)
-            };
-        }
-
-        public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request)
-        {
-            var validationResponse = _validationService.Validate(typeof(UpdateProductRequestValidator), request);
-
-            if (!validationResponse.IsValid)
-            {
-                return new ServiceResult<ExpandoObject>
-                {
-                    Status = ResultStatus.InvalidInput,
-                    Message = ServiceResponseMessage.INVALID_INPUT_ERROR,
-                    ValidationMessages = validationResponse.ErrorMessages
-                };
-            }
-
-            var entity = await _productRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false);
-
-            if (entity == null)
-            {
-                return new ServiceResult<ExpandoObject>
-                {
-                    Status = ResultStatus.ResourceNotFound,
-                    Message = Resource.NotFound(Entities.Product)
-                };
-            }
-             
-            var lockKey = string.Format(LockKeyConstants.ProductLockKey, entity.Id);
-            var cacheKey = string.Format(CacheKeyConstants.ProductCacheKey, entity.Id);
-
-            using (await _lockService.CreateLockAsync(lockKey))
-            {
-                entity.Name = request.Name.Trim();
-
-                entity = await _productRepository.UpdateAsync(entity);
-
-                await _cacheService.RemoveAsync(cacheKey);
-            }
-
-
-            dynamic productWrapper = new ExpandoObject();
-            productWrapper.Id = entity.Id;
-
-            return new ServiceResult<ExpandoObject>
-            {
-                Status = ResultStatus.Successful,
-                Message = Resource.Updated(Entities.Product, entity.Name),
-                Data = productWrapper
             };
         }
     }

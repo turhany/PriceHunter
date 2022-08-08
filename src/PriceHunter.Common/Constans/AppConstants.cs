@@ -16,5 +16,7 @@
         public const string RedLockSettingsOptionName = "RedLockSettings";
         public const string IPRateLimitingOptionName = "RateLimiting:IpRateLimiting";
         public const string RateLimitingModeOptionName = "RateLimiting:RateLimitingMode";
+
+        public const string ClaimTypesId = "Id";
     }
 }

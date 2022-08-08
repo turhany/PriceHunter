@@ -120,4 +120,10 @@
   <data name="Product" xml:space="preserve">
     <value>Product</value>
   </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="UserProduct" xml:space="preserve">
+    <value>UserProduct</value>
+  </data>
 </root>

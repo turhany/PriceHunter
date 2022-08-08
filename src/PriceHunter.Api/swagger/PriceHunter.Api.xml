@@ -140,6 +140,56 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:PriceHunter.Api.Controllers.V1.UserProductsController">
+            <summary>
+            User Products Controller
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.#ctor(PriceHunter.Business.UserProduct.Abstract.IUserProductService)">
+            <summary>
+            User Products Controller
+            </summary>
+            <param name="userProductService"></param>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.Get(System.Guid)">
+            <summary>
+            Get User Product
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.CreateProduct(PriceHunter.Contract.App.UserProduct.CreateUserProductRequest)">
+            <summary>
+            Create User Product
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.UpdateProduct(PriceHunter.Contract.App.UserProduct.UpdateUserProductRequest,System.Guid)">
+            <summary>
+            Update User Product
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.DeleteProduct(System.Guid)">
+            <summary>
+            Delete User Product
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PriceHunter.Api.Controllers.V1.UsersController">
+            <summary>
+            User Controller
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.#ctor(PriceHunter.Business.User.Abstract.IUserService)">
+            <summary>
+            User Controller
+            </summary>
+            <param name="userService"></param>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.Get(System.Guid)">
+            <summary>
+            Get User
+            </summary>
+        </member>
         <member name="T:PriceHunter.Api.Middlewares.ExceptionHandlerMiddleware">
             <summary>
             Global Exception handler middleware

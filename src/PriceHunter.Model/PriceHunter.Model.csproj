@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Product\" />
-    <Folder Include="User\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PriceHunter.Common\PriceHunter.Common.csproj" />
     <ProjectReference Include="..\PriceHunter.Data.MongoDB\PriceHunter.Data.MongoDB.csproj" />
   </ItemGroup>

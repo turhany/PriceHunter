@@ -158,5 +158,14 @@ namespace PriceHunter.Resources.Service {
                 return ResourceManager.GetString("RESOURCE_UPDATED_WITH_NAME", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; product url duplicated..
+        /// </summary>
+        public static string USERPRODUCT_URL_DUPLICATE_ERROR {
+            get {
+                return ResourceManager.GetString("USERPRODUCT_URL_DUPLICATE_ERROR", resourceCulture);
+            }
+        }
     }
 }

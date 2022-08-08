@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using PriceHunter.Common.Constans;
+using System.Security.Claims;
 
 namespace PriceHunter.Common.Application
 {
@@ -9,7 +11,10 @@ namespace PriceHunter.Common.Application
         public static ApplicationContext Instance => _instance ??= new ApplicationContext();
         
         public static IHttpContextAccessor Context { get; set; }
-          
+
+        private static CurrentUser WorkerServiceCurrentUser;
+        private static bool IsWorkerService;
+
         private ApplicationContext()
         {
             
@@ -34,6 +39,32 @@ namespace PriceHunter.Common.Application
             completionPortThreads = Math.Min(completionPortThreads, maxCompletionPortThreads);
 
             System.Threading.ThreadPool.SetMinThreads(workerThreads, completionPortThreads);
-        } 
+        }
+
+        public CurrentUser CurrentUser
+        {
+            get
+            {
+                if (IsWorkerService)
+                {
+                    return WorkerServiceCurrentUser;
+                }
+
+                if (Context?.HttpContext?.User == null)
+                {
+                    return null;
+                }
+
+                var user = Context.HttpContext.User;
+
+                return new CurrentUser
+                {
+                    Id = Guid.Parse(user.Claims.FirstOrDefault(claim => claim.Type == AppConstants.ClaimTypesId)?.Value),
+                    Email = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email)?.Value,
+                    Name = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name)?.Value,
+                    Role = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value
+                };
+            }
+        }
     }
 }
