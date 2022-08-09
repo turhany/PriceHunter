@@ -30,6 +30,11 @@ namespace PriceHunter.Resources.Extensions
             return GetString(ServiceResponseMessage.RESOURCE_DELETED_WITH_NAME, entity, $"\"{name}\"");
         }
 
+        public static string Duplicate(string entity)
+        {
+            return GetString(ServiceResponseMessage.DUPLICATE_DATA, entity);
+        }
+
         public static string Retrieved()
         {
             return GetString(ServiceResponseMessage.RESOURCE_RETRIEVED);

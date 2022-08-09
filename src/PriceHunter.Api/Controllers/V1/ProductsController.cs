@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PriceHunter.Business.Product.Abstract;
 using PriceHunter.Common.BaseModels.Api;
 using PriceHunter.Contract.App.Product;
@@ -26,7 +27,8 @@ namespace PriceHunter.Api.Controllers.V1
         /// <summary>
         /// Get Product
         /// </summary>
-        [HttpGet("{id:guid}")] 
+        [HttpGet("{id:guid}")]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductViewModel))]
         public async Task<ActionResult> Get(Guid id)
         {
@@ -38,7 +40,8 @@ namespace PriceHunter.Api.Controllers.V1
         /// Create Product
         /// </summary>
         /// <returns></returns>
-        [HttpPost] 
+        [HttpPost]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> CreateProduct([FromBody] CreateProductRequest request)
         {
@@ -52,7 +55,8 @@ namespace PriceHunter.Api.Controllers.V1
         /// Update Product
         /// </summary>
         /// <returns></returns>
-        [HttpPut("{id:guid}")] 
+        [HttpPut("{id:guid}")]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductRequest request, Guid id)
         {
@@ -68,7 +72,8 @@ namespace PriceHunter.Api.Controllers.V1
         /// Delete Product
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("{id:guid}")] 
+        [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> DeleteProduct(Guid id)
         {

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PriceHunter.Business.User.Abstract;
 using PriceHunter.Common.BaseModels.Api;
 using PriceHunter.Contract.App.User;
+using PriceHunter.Contract.Service.User;
 
 namespace PriceHunter.Api.Controllers.V1
 {
@@ -21,15 +23,64 @@ namespace PriceHunter.Api.Controllers.V1
         {
             _userService = userService;
         }
-         
+
         /// <summary>
         /// Get User
         /// </summary>
         [HttpGet("{id:guid}")]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel))]
         public async Task<ActionResult> Get(Guid id)
         {
             var result = await _userService.GetAsync(id);
+            return ApiResponse.CreateResult(result);
+        }
+
+        /// <summary>
+        /// Create User
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(Roles = "Root")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> CreateUser([FromBody] CreateUserRequest request)
+        {
+            if (request == null) return ApiResponse.InvalidInputResult;
+
+            var result = await _userService.CreateAsync(Mapper.Map<CreateUserRequestServiceRequest>(request));
+            return ApiResponse.CreateResult(result);
+        }
+
+        /// <summary>
+        /// Update User
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:guid}")]
+        [Authorize(Roles = "Root")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> UpdateUser([FromBody] UpdateUserRequest request, Guid id)
+        {
+            if (request == null) return ApiResponse.InvalidInputResult;
+            var model = Mapper.Map<UpdateUserRequestServiceRequest>(request);
+            model.Id = id;
+
+            var result = await _userService.UpdateAsync(model);
+            return ApiResponse.CreateResult(result);
+        }
+
+        /// <summary>
+        /// Delete User
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Root")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> DeleteUser(Guid id)
+        {
+            if (id == Guid.Empty)
+                return ApiResponse.InvalidInputResult;
+
+            var result = await _userService.DeleteAsync(id);
             return ApiResponse.CreateResult(result);
         }
     }

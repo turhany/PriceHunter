@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PriceHunter.Common\PriceHunter.Common.csproj" />
     <ProjectReference Include="..\PriceHunter.Data.MongoDB\PriceHunter.Data.MongoDB.csproj" />
+    <ProjectReference Include="..\PriceHunter.Resources\PriceHunter.Resources.csproj" />
   </ItemGroup>
 
 </Project>

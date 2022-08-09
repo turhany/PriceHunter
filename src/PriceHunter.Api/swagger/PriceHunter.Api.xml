@@ -106,6 +106,29 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:PriceHunter.Api.Controllers.V1.LoginController">
+            <summary>
+            Login Controller
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.LoginController.#ctor(PriceHunter.Business.User.Abstract.IUserService)">
+            <summary>
+            The constructor of <see cref="T:PriceHunter.Api.Controllers.V1.LoginController"/>.
+            </summary>
+            <param name="userService">The user service.</param>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.LoginController.Token(PriceHunter.Contract.App.User.GetTokenContract)">
+            <summary>
+            Get Token
+            </summary>
+            <returns>Returns user jwt token.</returns>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.LoginController.RefreshToken(PriceHunter.Contract.App.User.RefreshTokenContract)">
+            <summary>
+            Refresh Token
+            </summary>
+            <returns>Returns user jwt refresh token.</returns>
+        </member>
         <member name="T:PriceHunter.Api.Controllers.V1.ProductsController">
             <summary>
             Products Controller
@@ -189,6 +212,24 @@
             <summary>
             Get User
             </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.CreateUser(PriceHunter.Contract.App.User.CreateUserRequest)">
+            <summary>
+            Create User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.UpdateUser(PriceHunter.Contract.App.User.UpdateUserRequest,System.Guid)">
+            <summary>
+            Update User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.DeleteUser(System.Guid)">
+            <summary>
+            Delete User
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:PriceHunter.Api.Middlewares.ExceptionHandlerMiddleware">
             <summary>

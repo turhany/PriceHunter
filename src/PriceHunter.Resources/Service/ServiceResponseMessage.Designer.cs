@@ -61,6 +61,24 @@ namespace PriceHunter.Resources.Service {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can not delete request own user..
+        /// </summary>
+        public static string CANNOT_DELETE_ACTIVE_USER {
+            get {
+                return ResourceManager.GetString("CANNOT_DELETE_ACTIVE_USER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; data already exist.
+        /// </summary>
+        public static string DUPLICATE_DATA {
+            get {
+                return ResourceManager.GetString("DUPLICATE_DATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
         public static string FAILED {
@@ -84,6 +102,15 @@ namespace PriceHunter.Resources.Service {
         public static string INVALID_REQUEST {
             get {
                 return ResourceManager.GetString("INVALID_REQUEST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is invalid.
+        /// </summary>
+        public static string PROPERTY_INVALID {
+            get {
+                return ResourceManager.GetString("PROPERTY_INVALID", resourceCulture);
             }
         }
         
