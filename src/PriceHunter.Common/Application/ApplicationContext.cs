@@ -5,26 +5,37 @@ using System.Security.Claims;
 
 namespace PriceHunter.Common.Application
 {
-  public class ApplicationContext
+    public class ApplicationContext
     {
         private static ApplicationContext _instance;
         public static ApplicationContext Instance => _instance ??= new ApplicationContext();
-        
+
         public static IHttpContextAccessor Context { get; set; }
 
         private static CurrentUser WorkerServiceCurrentUser;
         private static bool IsWorkerService;
 
+
         private ApplicationContext()
         {
-            
+
         }
-        
+
         public static void Configure(IHttpContextAccessor httpContextAccessor)
         {
             Context = httpContextAccessor;
         }
-          
+
+        public static void ConfigureWorkerServiceUser(Guid userId)
+        {
+            IsWorkerService = true;
+
+            WorkerServiceCurrentUser = new CurrentUser
+            {
+                Id = userId
+            };
+        }
+
         public static void ConfigureThreadPool(IConfiguration configuration)
         {
             var workerThreads = Convert.ToInt32(configuration["ThreadPool:WorkerThreads"]);

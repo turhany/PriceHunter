@@ -79,7 +79,8 @@ namespace PriceHunter.Business.User.Concrete
                 };
             }
 
-            if (await _userRepository.AnyAsync(p => p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false))
+            request.Email = request.Email.Trim().ToLower();
+            if (await _userRepository.AnyAsync(p => p.Email.Equals(request.Email) && p.IsDeleted == false))
             {
                 return new ServiceResult<ExpandoObject>
                 {
@@ -134,7 +135,8 @@ namespace PriceHunter.Business.User.Concrete
                 };
             }
 
-            if (await _userRepository.AnyAsync(p => p.Id != request.Id && p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false))
+            request.Email = request.Email.Trim().ToLower();
+            if (await _userRepository.AnyAsync(p => p.Id != request.Id && p.Email.Equals(request.Email) && p.IsDeleted == false))
             {
                 return new ServiceResult<ExpandoObject>
                 {
@@ -150,7 +152,7 @@ namespace PriceHunter.Business.User.Concrete
             {
                 entity.FirstName = request.FirstName.Trim();
                 entity.LastName = request.LastName.Trim();
-                entity.Email = request.Email.Trim().ToLower();
+                entity.Email = request.Email;
                 entity.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
                 entity = await _userRepository.UpdateAsync(entity);
@@ -227,7 +229,8 @@ namespace PriceHunter.Business.User.Concrete
                 };
             }
 
-            var entity = await _userRepository.FindOneAsync(p => p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false);
+            request.Email = request.Email.Trim().ToLower();
+            var entity = await _userRepository.FindOneAsync(p => p.Email.Equals(request.Email) && p.IsDeleted == false);
 
             if (entity == null)
             {

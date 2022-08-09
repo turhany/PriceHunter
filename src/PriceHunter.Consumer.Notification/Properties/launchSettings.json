@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PriceHunter.Consumer.Notification": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

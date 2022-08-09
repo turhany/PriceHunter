@@ -21,6 +21,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
 {
     public class UserProductService : IUserProductService
     {
+        private readonly IGenericRepository<PriceHunter.Model.Product.Product> _productRepository;
         private readonly IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProduct> _userProductRepository;
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> _userProductSupplierMappingRepository;
@@ -30,6 +31,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
         private readonly IValidationService _validationService;
 
         public UserProductService(
+        IGenericRepository<PriceHunter.Model.Product.Product> productRepository,
         IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
         IGenericRepository<PriceHunter.Model.UserProduct.UserProduct> userProductRepository,
         IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> userProductSupplierMappingRepository,
@@ -38,6 +40,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
         IMapper mapper,
         IValidationService validationService)
         {
+            _productRepository = productRepository;
             _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
             _userProductRepository = userProductRepository;
             _userProductSupplierMappingRepository = userProductSupplierMappingRepository;
@@ -100,35 +103,23 @@ namespace PriceHunter.Business.UserProduct.Concrete
                 };
             }
 
+            var userId = ApplicationContext.Instance.CurrentUser.Id;
             var productSupplierMappings = new List<UserProductSupplierMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
-                var duplicateDataErrors = new List<string>();
-                productSupplierMappings.ForEach(p => p.Url = p.Url.Trim().ToLower());
+                var duplicateDataErrors = new List<string>(); 
+                request.UrlSupplierMapping.ForEach(p => p.Url = p.Url.Trim());
 
                 foreach (var mapping in request.UrlSupplierMapping)
                 {
-                    var userId = ApplicationContext.Instance.CurrentUser.Id;
                     if (await _userProductSupplierMappingRepository
                         .AnyAsync(p =>
-                        p.Url.Equals(mapping.Url, StringComparison.InvariantCultureIgnoreCase) &&
+                        p.Url.Equals(mapping.Url) &&
                         p.IsDeleted == false &&
                         p.UserId == userId))
                     {
                         duplicateDataErrors.Add(string.Format(ServiceResponseMessage.USERPRODUCT_URL_DUPLICATE_ERROR, mapping.Url));
                     }
-
-                    var product = await _productSupplierInfoMappingRepository.FindOneAsync(p =>
-                        p.Url.Equals(mapping.Url, StringComparison.InvariantCultureIgnoreCase) &&
-                        p.IsDeleted == false);
-
-                    productSupplierMappings.Add(new UserProductSupplierMapping
-                    {
-                        Url = mapping.Url,
-                        ProductId = product != null ? product.Id : null,
-                        SupplierId = mapping.SupplierType.GetDatabaseId(),
-                        UserId = userId
-                    });
                 }
 
                 if (duplicateDataErrors.Any())
@@ -140,12 +131,43 @@ namespace PriceHunter.Business.UserProduct.Concrete
                         ValidationMessages = duplicateDataErrors
                     };
                 }
+
+                foreach (var mapping in request.UrlSupplierMapping)
+                {
+                    var productSupplierInfoMapping = await _productSupplierInfoMappingRepository.FindOneAsync(p =>
+                        p.Url.Equals(mapping.Url) &&
+                        p.IsDeleted == false);
+
+                    Guid productId = Guid.Empty;
+                    if (productSupplierInfoMapping == null)
+                    {
+                        var product = await _productRepository.InsertAsync(new Model.Product.Product
+                        {
+                            Name = request.Name
+                        });
+                        productId = product.Id;
+
+                        await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
+                        {
+                            ProductId = productId,
+                            SupplierId = mapping.SupplierType.GetDatabaseId(),
+                            Url = mapping.Url
+                        });
+                    }
+
+                    productSupplierMappings.Add(new UserProductSupplierMapping
+                    {
+                        Url = mapping.Url,
+                        ProductId = productId,
+                        SupplierId = mapping.SupplierType.GetDatabaseId(),
+                        UserId = userId
+                    });
+                }
             }
 
             var entity = new PriceHunter.Model.UserProduct.UserProduct
             {
-                Name = request.Name.Trim(),
-                Image = string.Empty //TODO: Upload file and get url
+                Name = request.Name.Trim()
             };
 
             entity = await _userProductRepository.InsertAsync(entity);
@@ -181,36 +203,38 @@ namespace PriceHunter.Business.UserProduct.Concrete
                 };
             }
 
+            var entity = await _userProductRepository.FindOneAsync(p =>
+               p.Id == request.Id &&
+               p.UserId == userId &&
+               p.IsDeleted == false);
+
+            if (entity == null)
+            {
+                return new ServiceResult<ExpandoObject>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.UserProduct)
+                };
+            }
+
             var userId = ApplicationContext.Instance.CurrentUser.Id;
 
             var productSupplierMappings = new List<UserProductSupplierMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
-                var duplicateDataErrors = new List<string>();
-                productSupplierMappings.ForEach(p => p.Url = p.Url.Trim().ToLower());
+                var duplicateDataErrors = new List<string>(); 
+                request.UrlSupplierMapping.ForEach(p => p.Url = p.Url.Trim());
 
                 foreach (var mapping in request.UrlSupplierMapping)
                 {
                     if (await _userProductSupplierMappingRepository
                         .AnyAsync(p =>
-                        p.Url.Equals(mapping.Url, StringComparison.InvariantCultureIgnoreCase) &&
+                        p.Url.Equals(mapping.Url) &&
                         p.IsDeleted == false &&
                         p.UserId == userId))
                     {
                         duplicateDataErrors.Add(string.Format(ServiceResponseMessage.USERPRODUCT_URL_DUPLICATE_ERROR, mapping.Url));
-                    }
-
-                    var product = await _productSupplierInfoMappingRepository.FindOneAsync(p =>
-                        p.Url.Equals(mapping.Url, StringComparison.InvariantCultureIgnoreCase) &&
-                        p.IsDeleted == false);
-
-                    productSupplierMappings.Add(new UserProductSupplierMapping
-                    {
-                        Url = mapping.Url,
-                        ProductId = product != null ? product.Id : null,
-                        SupplierId = mapping.SupplierType.GetDatabaseId(),
-                        UserId = userId
-                    });
+                    } 
                 }
 
                 if (duplicateDataErrors.Any())
@@ -222,29 +246,46 @@ namespace PriceHunter.Business.UserProduct.Concrete
                         ValidationMessages = duplicateDataErrors
                     };
                 }
-            }
 
-            var entity = await _userProductRepository.FindOneAsync(p =>
-                p.Id == request.Id &&
-                p.UserId == userId &&
-                p.IsDeleted == false);
-
-            if (entity == null)
-            {
-                return new ServiceResult<ExpandoObject>
+                foreach (var mapping in request.UrlSupplierMapping)
                 {
-                    Status = ResultStatus.ResourceNotFound,
-                    Message = Resource.NotFound(Entities.UserProduct)
-                };
-            }
+                    var productSupplierInfoMapping = await _productSupplierInfoMappingRepository.FindOneAsync(p =>
+                       p.Url.Equals(mapping.Url) &&
+                       p.IsDeleted == false);
 
+                    Guid productId = Guid.Empty;
+                    if (productSupplierInfoMapping == null)
+                    {
+                        var product = await _productRepository.InsertAsync(new Model.Product.Product
+                        {
+                            Name = request.Name
+                        });
+                        productId = product.Id;
+
+                        await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
+                        {
+                            ProductId = productId,
+                            SupplierId = mapping.SupplierType.GetDatabaseId(),
+                            Url = mapping.Url
+                        });
+                    }
+
+                    productSupplierMappings.Add(new UserProductSupplierMapping
+                    {
+                        Url = mapping.Url,
+                        ProductId = productId,
+                        SupplierId = mapping.SupplierType.GetDatabaseId(),
+                        UserId = userId
+                    });
+                }
+            }
+             
             var lockKey = string.Format(LockKeyConstants.UserProductLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserProductCacheKey, entity.Id);
 
             using (await _lockService.CreateLockAsync(lockKey))
             {
                 entity.Name = request.Name.Trim();
-                entity.Image = string.Empty; //TODO: Upload file and get url
 
                 entity = await _userProductRepository.UpdateAsync(entity);
 

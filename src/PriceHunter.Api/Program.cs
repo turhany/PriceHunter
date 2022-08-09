@@ -26,6 +26,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
 builder.Configuration.AddEnvironmentVariables();
 
+builder.Services.AddIdentityConfigurations(builder.Configuration);
 builder.Services.AddLocalizationsConfigurations();
 builder.Services.AddDistributedCacheConfiguration(builder.Configuration);
 builder.Services.Configure<MongoDBOption>(builder.Configuration.GetSection("mongo")); 

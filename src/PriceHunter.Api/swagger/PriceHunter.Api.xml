@@ -42,6 +42,19 @@
             <param name="app"></param>
             <returns></returns>
         </member>
+        <member name="T:PriceHunter.Api.Configurations.Startup.ConfigureIdentityServer">
+            <summary>
+            Configure Identity Server
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureIdentityServer.AddIdentityConfigurations(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Add Identity Configurations
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
         <member name="T:PriceHunter.Api.Configurations.Startup.ConfigureLocalization">
             <summary>
             Configure Localization
