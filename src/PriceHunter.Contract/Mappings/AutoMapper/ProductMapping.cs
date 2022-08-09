@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PriceHunter.Contract.App.Product;
 using PriceHunter.Contract.Service.Product;
+using PriceHunter.Model.Product;
 
 namespace PriceHunter.Contract.Mappings.AutoMapper
 {
@@ -10,6 +11,10 @@ namespace PriceHunter.Contract.Mappings.AutoMapper
         {
             CreateMap<CreateProductRequest, CreateProductRequestServiceRequest>();
             CreateMap<UpdateProductRequest, UpdateProductRequestServiceRequest>();
+            CreateMap<Product, ProductViewModel>();
+            CreateMap<ProductSupplierInfoMappingViewModel, ProductSupplierInfoMapping>();
+
+            
         }
     }
 }

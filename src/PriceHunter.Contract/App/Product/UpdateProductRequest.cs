@@ -3,5 +3,6 @@
     public class UpdateProductRequest
     {
         public string Name { get; set; }
+        public List<ProductSupplierInfoMappingViewModel> UrlSupplierMapping { get; set; } 
     }
 }
