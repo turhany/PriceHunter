@@ -154,6 +154,10 @@ namespace PriceHunter.Business.UserProduct.Concrete
                             Url = mapping.Url
                         });
                     }
+                    else
+                    {
+                        productId = productSupplierInfoMapping.ProductId;
+                    }      
 
                     productSupplierMappings.Add(new UserProductSupplierMapping
                     {
@@ -167,7 +171,8 @@ namespace PriceHunter.Business.UserProduct.Concrete
 
             var entity = new PriceHunter.Model.UserProduct.UserProduct
             {
-                Name = request.Name.Trim()
+                Name = request.Name.Trim(),
+                UserId = userId
             };
 
             entity = await _userProductRepository.InsertAsync(entity);
@@ -202,6 +207,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     ValidationMessages = validationResponse.ErrorMessages
                 };
             }
+            var userId = ApplicationContext.Instance.CurrentUser.Id;
 
             var entity = await _userProductRepository.FindOneAsync(p =>
                p.Id == request.Id &&
@@ -216,9 +222,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     Message = Resource.NotFound(Entities.UserProduct)
                 };
             }
-
-            var userId = ApplicationContext.Instance.CurrentUser.Id;
-
+             
             var productSupplierMappings = new List<UserProductSupplierMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
@@ -268,6 +272,10 @@ namespace PriceHunter.Business.UserProduct.Concrete
                             SupplierId = mapping.SupplierType.GetDatabaseId(),
                             Url = mapping.Url
                         });
+                    }
+                    else
+                    {
+                        productId = productSupplierInfoMapping.ProductId;
                     }
 
                     productSupplierMappings.Add(new UserProductSupplierMapping

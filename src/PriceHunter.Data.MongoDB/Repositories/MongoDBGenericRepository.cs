@@ -185,7 +185,7 @@ namespace PriceHunter.Data.MongoDB.Repositories
         {
             entity.IsDeleted = true;
             entity.DeletedOn = DateTime.UtcNow;
-            //entity.DeletedBy = ApplicationContext.Instance.CurrentUser.Id;
+            entity.DeletedBy = ApplicationContext.Instance.CurrentUser.Id;
         }
 
         private enum OperationFlow
