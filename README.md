@@ -84,3 +84,9 @@ Infrastructure Infrastructure
 ###### Doc Version : PriceHunter-Requirements v 0.5
 
 ###### See Architecture Documentation [here](README_DESING.md)
+
+###### See Development Task Documentation [here](README_TASKS.md)
+
+###### See Local Development Docker Codes [here](README_LOCALDEVDOCKER.md)
+
+###### See URLS [here](README_URLS.md)
