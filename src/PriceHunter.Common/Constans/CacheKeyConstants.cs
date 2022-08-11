@@ -6,4 +6,5 @@ public static class CacheKeyConstants
     public const string ProductCacheKey = "ProductCache_{0}";
     public const string ProductSupplierInfoMappingCacheKey = "ProductSupplierInfoMappingCache_{0}";
     public const string UserProductCacheKey = "UserProductCache_{0}";
+    public const string SuppliersAllCacheKey = "SuppliersAllCacheKey";
 }

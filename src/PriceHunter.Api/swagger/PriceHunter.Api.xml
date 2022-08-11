@@ -176,6 +176,38 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:PriceHunter.Api.Controllers.V1.SuppliersController">
+            <summary>
+            Suppliers Controller
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.SuppliersController.#ctor(PriceHunter.Business.Supplier.Abstract.ISupplierService)">
+            <summary>
+            Suppliers Controller
+            </summary>
+            <param name="supplierService"></param>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.SuppliersController.All">
+            <summary>
+            Get Suppliers
+            </summary>
+        </member>
+        <member name="T:PriceHunter.Api.Controllers.V1.TestDataController">
+            <summary>
+            Test Data Controller
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.TestDataController.#ctor(PriceHunter.Business.TestData.Abstract.ITestDataService)">
+            <summary>
+            Test Data Controller
+            </summary>
+            <param name="testDataService"></param>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.TestDataController.InsertTestData">
+            <summary>
+            Insert Test Data
+            </summary>
+        </member>
         <member name="T:PriceHunter.Api.Controllers.V1.UserProductsController">
             <summary>
             User Products Controller

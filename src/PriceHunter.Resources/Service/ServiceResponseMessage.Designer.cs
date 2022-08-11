@@ -205,6 +205,15 @@ namespace PriceHunter.Resources.Service {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Supplier not found. (ID: {0}).
+        /// </summary>
+        public static string SUPPLIER_NOTFOUND {
+            get {
+                return ResourceManager.GetString("SUPPLIER_NOTFOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; product url duplicated..
         /// </summary>
         public static string USERPRODUCT_URL_DUPLICATE_ERROR {

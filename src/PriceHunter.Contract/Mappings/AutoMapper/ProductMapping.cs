@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using PriceHunter.Common.Extensions;
 using PriceHunter.Contract.App.Product;
 using PriceHunter.Contract.Service.Product;
 using PriceHunter.Model.Product;
-using PriceHunter.Model.Supplier;
 
 namespace PriceHunter.Contract.Mappings.AutoMapper
 {
@@ -15,13 +13,7 @@ namespace PriceHunter.Contract.Mappings.AutoMapper
             CreateMap<UpdateProductRequest, UpdateProductRequestServiceRequest>();
             CreateMap<ProductSupplierInfoMappingViewModel, ProductSupplierInfoMappingServiceModel>();
             CreateMap<Product, ProductViewModel>(); 
-            CreateMap<ProductSupplierInfoMapping, ProductSupplierInfoMappingViewModel>()
-                .ForMember(p => p.SupplierType, b => b.MapFrom(
-                    p =>
-                    Enum.Parse<SupplierType>(HelpersToolbox.Extensions.EnumExtensions.EnumToList<SupplierType>()
-                    .First(k => Enum.Parse<SupplierType>(k.Value).GetDatabaseId() == p.SupplierId).Value)
-                    ));
-
+            CreateMap<ProductSupplierInfoMapping, ProductSupplierInfoMappingViewModel>();
         }
     }
 }

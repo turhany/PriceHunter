@@ -165,6 +165,9 @@
   <data name="RESOURCE_UPDATED_WITH_NAME" xml:space="preserve">
     <value>{0} {1} has been updated</value>
   </data>
+  <data name="SUPPLIER_NOTFOUND" xml:space="preserve">
+    <value>Supplier not found. (ID: {0})</value>
+  </data>
   <data name="USERPRODUCT_URL_DUPLICATE_ERROR" xml:space="preserve">
     <value>'{0}' product url duplicated.</value>
   </data>

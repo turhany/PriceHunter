@@ -250,24 +250,65 @@ public class UrlSupplierMappingViewModel
 #### Delete User Product > {url}/userproducts/{id} - DELETE
 No need extra info. Return "<b>BaseResponse</b>" model.
 
-
-
-
-<!-- #### Create Product > {url}/products - POST
+#### Create Product > {url}/products - POST
 ```cs
 //Request
-public class CreateProductRequest{
-    public string Name {get; set;}
-    public IFormFile Image {get; set;} 
-    List<UrlSupplierMappingViewModel> UrlSupplierMapping {get; set;}
+ public class CreateProductRequest
+{
+    public string Name { get; set; }
+    public List<ProductSupplierInfoMappingViewModel> UrlSupplierMapping { get; set; }
 }
 
-public class UrlSupplierMappingViewModel{
-    public string Url {get; set;}
-    public SupplierType SupplierType {get; set;}
+public class ProductSupplierInfoMappingViewModel
+{
+    public string Url { get; set; }
+    public SupplierType SupplierType { get; set; }
+}
+``` 
+#### Read/Get Product > {url}/products/{id} - GET
+```cs
+//Response model in BaseResponse > Data
+public class ProductViewModel
+{
+    public string Name { get; set; }
+    public List<ProductSupplierInfoMappingViewModel> UrlSupplierMapping { get; set; } = new List<ProductSupplierInfoMappingViewModel>();
+}
+
+public class ProductSupplierInfoMappingViewModel
+{
+    public string Url { get; set; }
+    public SupplierType SupplierType { get; set; }
 }
 ``` 
 #### Update Product > {url}/products/{id} - PUT
+```cs
+//Request
+ public class UpdateProductRequest
+{
+    public string Name { get; set; }
+    public List<ProductSupplierInfoMappingViewModel> UrlSupplierMapping { get; set; } 
+}
+
+public class ProductSupplierInfoMappingViewModel
+{
+    public string Url { get; set; }
+    public SupplierType SupplierType { get; set; }
+}
+```
+#### Delete Product > {url}/products/{id} - DELETE
+No need extra info. Return "<b>BaseResponse</b>" model.
+
+#### Read/Get Product > {url}/suppliers/all - GET
+```cs
+//Response model in BaseResponse > Data
+public class SupplierViewModel
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+}
+``` 
+
+<!-- #### Update Product > {url}/products/{id} - PUT
 ```cs
 //Request
 public class UpdateProductRequest{

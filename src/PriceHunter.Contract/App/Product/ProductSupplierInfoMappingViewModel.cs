@@ -1,10 +1,8 @@
-﻿using PriceHunter.Model.Supplier;
-
-namespace PriceHunter.Contract.App.Product
+﻿namespace PriceHunter.Contract.App.Product
 {
     public class ProductSupplierInfoMappingViewModel
     {
         public string Url { get; set; }
-        public SupplierType SupplierType { get; set; }
+        public Guid SupplierId { get; set; }
     }
 }

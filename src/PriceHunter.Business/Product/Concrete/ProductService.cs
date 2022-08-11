@@ -20,6 +20,7 @@ namespace PriceHunter.Business.Product.Concrete
 {
     public class ProductService : IProductService
     {
+        private readonly IGenericRepository<PriceHunter.Model.Supplier.Supplier> _supplierRepository;
         private readonly IGenericRepository<PriceHunter.Model.Product.Product> _productRepository;
         private readonly IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> _userProductSupplierMappingRepository;
@@ -29,6 +30,7 @@ namespace PriceHunter.Business.Product.Concrete
         private readonly IValidationService _validationService;
 
         public ProductService(
+        IGenericRepository<PriceHunter.Model.Supplier.Supplier> supplierRepository,
         IGenericRepository<PriceHunter.Model.Product.Product> productRepository,
         IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
         IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> userProductSupplierMappingRepository,
@@ -37,6 +39,7 @@ namespace PriceHunter.Business.Product.Concrete
         IMapper mapper,
         IValidationService validationService)
         {
+            _supplierRepository = supplierRepository;
             _productRepository = productRepository;
             _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
             _userProductSupplierMappingRepository = userProductSupplierMappingRepository;
@@ -104,7 +107,7 @@ namespace PriceHunter.Business.Product.Concrete
             var productSupplierMappings = new List<ProductSupplierInfoMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
-                var duplicateDataErrors = new List<string>();
+                var errors = new List<string>(); 
                 request.UrlSupplierMapping.ForEach(p => p.Url = p.Url.Trim());
 
                 foreach (var mapping in request.UrlSupplierMapping)
@@ -114,17 +117,22 @@ namespace PriceHunter.Business.Product.Concrete
                         p.Url.Equals(mapping.Url) &&
                         p.IsDeleted == false))
                     {
-                        duplicateDataErrors.Add(string.Format(ServiceResponseMessage.PRODUCT_URL_DUPLICATE_ERROR, mapping.Url));
+                        errors.Add(string.Format(ServiceResponseMessage.PRODUCT_URL_DUPLICATE_ERROR, mapping.Url));
+                    }
+
+                    if (!await _supplierRepository.AnyAsync(p => p.Id == mapping.SupplierId && p.IsDeleted == false))
+                    {
+                        errors.Add(String.Format(ServiceResponseMessage.SUPPLIER_NOTFOUND, mapping.SupplierId));
                     }
                 }
 
-                if (duplicateDataErrors.Any())
+                if (errors.Any())
                 {
                     return new ServiceResult<ExpandoObject>
                     {
                         Status = ResultStatus.InvalidInput,
                         Message = ServiceResponseMessage.INVALID_INPUT_ERROR,
-                        ValidationMessages = duplicateDataErrors
+                        ValidationMessages = errors
                     };
                 }
 
@@ -133,11 +141,10 @@ namespace PriceHunter.Business.Product.Concrete
                     productSupplierMappings.Add(new ProductSupplierInfoMapping
                     {
                         Url = mapping.Url,
-                        SupplierId = mapping.SupplierType.GetDatabaseId()
+                        SupplierId = mapping.SupplierId
                     });
                 }
             }
-
 
             var entity = new PriceHunter.Model.Product.Product
             {
@@ -189,7 +196,7 @@ namespace PriceHunter.Business.Product.Concrete
             var productSupplierMappings = new List<ProductSupplierInfoMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
-                var duplicateDataErrors = new List<string>();
+                var errors = new List<string>(); 
                 request.UrlSupplierMapping.ForEach(p => p.Url = p.Url.Trim());
 
                 foreach (var mapping in request.UrlSupplierMapping)
@@ -199,17 +206,22 @@ namespace PriceHunter.Business.Product.Concrete
                         p.Url.Equals(mapping.Url) &&
                         p.IsDeleted == false))
                     {
-                        duplicateDataErrors.Add(string.Format(ServiceResponseMessage.PRODUCT_URL_DUPLICATE_ERROR, mapping.Url));
+                        errors.Add(string.Format(ServiceResponseMessage.PRODUCT_URL_DUPLICATE_ERROR, mapping.Url));
+                    }
+
+                    if (!await _supplierRepository.AnyAsync(p => p.Id == mapping.SupplierId && p.IsDeleted == false))
+                    {
+                        errors.Add(String.Format(ServiceResponseMessage.SUPPLIER_NOTFOUND, mapping.SupplierId));
                     }
                 }
 
-                if (duplicateDataErrors.Any())
+                if (errors.Any())
                 {
                     return new ServiceResult<ExpandoObject>
                     {
                         Status = ResultStatus.InvalidInput,
                         Message = ServiceResponseMessage.INVALID_INPUT_ERROR,
-                        ValidationMessages = duplicateDataErrors
+                        ValidationMessages = errors
                     };
                 }
 
@@ -218,7 +230,7 @@ namespace PriceHunter.Business.Product.Concrete
                     productSupplierMappings.Add(new ProductSupplierInfoMapping
                     {
                         Url = mapping.Url,
-                        SupplierId = mapping.SupplierType.GetDatabaseId()
+                        SupplierId = mapping.SupplierId
                     });
                 }
             }
