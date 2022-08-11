@@ -1,10 +1,13 @@
 {
-  "profiles": {
-    "PriceHunter.Consumer.Parser": {
-      "commandName": "Project"
-    },
-    "Docker": {
-      "commandName": "Docker"
+    "profiles": {
+        "PriceHunter.Consumer.Parser": {
+            "commandName": "Project",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        "Docker": {
+            "commandName": "Docker"
+        }
     }
-  }
 }
