@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using HelpersToolbox.Extensions;
+﻿using AutoMapper; 
 using PriceHunter.Common.Extensions;
 using PriceHunter.Contract.App.UserProduct;
 using PriceHunter.Contract.Service.UserProduct;

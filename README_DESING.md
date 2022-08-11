@@ -127,7 +127,133 @@ public enum SupplierType{
 }
 ```
  
-#### Create Product > {url}/products - POST
+#### GetToken > {url}/login/token - POST
+```cs
+//Request
+public class GetTokenContract
+{
+    public string Email { get; set; }
+    public string Password { get; set; }
+}
+
+//Response
+public class AccessTokenContract
+{
+    public string AccessToken { get; set; }
+    public string RefreshToken { get; set; }
+    public int? ExpiresIn { get; set; }
+    public DateTime RefreshTokenExpireDate { get; set; }
+}
+``` 
+#### GetToken > {url}/login/refresh-token - POST
+```cs
+//Request
+public class RefreshTokenContract
+{
+    public string Token { get; set; }
+}
+
+//Response
+public class AccessTokenContract
+{
+    public string AccessToken { get; set; }
+    public string RefreshToken { get; set; }
+    public int? ExpiresIn { get; set; }
+    public DateTime RefreshTokenExpireDate { get; set; }
+}
+``` 
+
+#### Create Product > {url}/users - POST
+```cs
+//Request
+public class CreateUserRequest
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; } 
+    public string Email { get; set; }
+    public string Password { get; set; }
+}
+``` 
+#### Read/Get User > {url}/users/{id} - GET
+```cs
+//Response model in BaseResponse > Data
+public class UserViewModel
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Image { get; set; }
+    public string Email { get; set; }
+    public string Type { get; set; }
+}
+``` 
+#### Update User > {url}/users/{id} - PUT
+```cs
+//Request
+public class UpdateUserRequest
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public UserType Type { get; set; }
+    public bool IsActive { get; set; }
+}
+```
+#### Delete User > {url}/users/{id} - DELETE
+No need extra info. Return "<b>BaseResponse</b>" model.
+
+#### Create User Product > {url}/userproducts - POST
+```cs
+//Request
+public class CreateUserProductRequest
+{
+    public string Name { get; set; }
+    public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; }
+}
+
+public class UrlSupplierMappingViewModel
+{
+    public string Url { get; set; }
+    public SupplierType SupplierType { get; set; }
+}
+``` 
+#### Read/Get User Product> {url}/userproducts/{id} - GET
+```cs
+//Response model in BaseResponse > Data
+public class UserProductViewModel
+{
+    public string Name { get; set; }
+    public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; } = new List<UrlSupplierMappingViewModel>();
+}
+
+public class UrlSupplierMappingViewModel
+{
+    public string Url { get; set; }
+    public SupplierType SupplierType { get; set; }
+}
+``` 
+#### Update User Product > {url}/userproducts/{id} - PUT
+```cs
+//Request
+public class UpdateUserProductRequest
+{
+    public string Name { get; set; } 
+    public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; }
+}
+
+public class UrlSupplierMappingViewModel
+{
+    public string Url { get; set; }
+    public SupplierType SupplierType { get; set; }
+}
+``` 
+#### Delete User Product > {url}/userproducts/{id} - DELETE
+No need extra info. Return "<b>BaseResponse</b>" model.
+
+
+
+
+<!-- #### Create Product > {url}/products - POST
 ```cs
 //Request
 public class CreateProductRequest{
@@ -212,7 +338,7 @@ public class UserViewModel{
     public string FirstName {get; set;}  
     public string LastName {get; set;} 
 }
-``` 
+```  -->
 
 ## Define all consumers and their interfaces
 Consumers will consume all producer events.

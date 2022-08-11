@@ -106,6 +106,24 @@ namespace PriceHunter.Resources.Service {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product has user mapping, cannnot delete it..
+        /// </summary>
+        public static string PRODUCT_HAS_USER_MAPPING_CANNOT_DELETE {
+            get {
+                return ResourceManager.GetString("PRODUCT_HAS_USER_MAPPING_CANNOT_DELETE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; product url duplicated..
+        /// </summary>
+        public static string PRODUCT_URL_DUPLICATE_ERROR {
+            get {
+                return ResourceManager.GetString("PRODUCT_URL_DUPLICATE_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} is invalid.
         /// </summary>
         public static string PROPERTY_INVALID {

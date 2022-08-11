@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace PriceHunter.Contract.App.UserProduct
+﻿namespace PriceHunter.Contract.App.UserProduct
 {
     public class CreateUserProductRequest
     {

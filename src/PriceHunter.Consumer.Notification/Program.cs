@@ -42,8 +42,8 @@ var hostBuilder = Host.CreateDefaultBuilder()
         config.AddEnvironmentVariables();
     });
 
-hostBuilder.Configuration.AddJsonFile($"appsettings.{hostBuilder.Environment.EnvironmentName}.json", true, true);
-hostBuilder.Configuration.AddEnvironmentVariables();
+//hostBuilder.Configuration.AddJsonFile($"appsettings.{hostBuilder.Environment.EnvironmentName}.json", true, true);
+//hostBuilder.Configuration.AddEnvironmentVariables();
 
 hostBuilder.UseConsoleLifetime();
 

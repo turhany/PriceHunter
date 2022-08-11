@@ -12,6 +12,8 @@ namespace PriceHunter.Business.Product.Validator
                 .NotEmpty().WithMessage(string.Format(ServiceResponseMessage.PROPERTY_REQUIRED, nameof(CreateProductRequestServiceRequest.Name)))
                 .MaximumLength(200)
                 .WithMessage(string.Format(ServiceResponseMessage.PROPERTY_MAX_LENGTH_ERROR, nameof(CreateProductRequestServiceRequest.Name), 200));
+
+            RuleForEach(x => x.UrlSupplierMapping).SetValidator(new ProductSupplierInfoMappingServiceModelValidator());
         }
     }
 }

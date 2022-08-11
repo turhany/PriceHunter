@@ -132,6 +132,12 @@
   <data name="INVALID_REQUEST" xml:space="preserve">
     <value>Invalid request</value>
   </data>
+  <data name="PRODUCT_HAS_USER_MAPPING_CANNOT_DELETE" xml:space="preserve">
+    <value>Product has user mapping, cannnot delete it.</value>
+  </data>
+  <data name="PRODUCT_URL_DUPLICATE_ERROR" xml:space="preserve">
+    <value>'{0}' product url duplicated.</value>
+  </data>
   <data name="PROPERTY_INVALID" xml:space="preserve">
     <value>{0} is invalid</value>
   </data>
