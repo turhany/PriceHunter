@@ -132,24 +132,29 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     };
                 }
 
+                
+                Guid createdProductId = Guid.Empty;
                 foreach (var mapping in request.UrlSupplierMapping)
                 {
+                    Guid productId = Guid.Empty;
                     var productSupplierInfoMapping = await _productSupplierInfoMappingRepository.FindOneAsync(p =>
                         p.Url.Equals(mapping.Url) &&
                         p.IsDeleted == false);
 
-                    Guid productId = Guid.Empty;
                     if (productSupplierInfoMapping == null)
                     {
-                        var product = await _productRepository.InsertAsync(new Model.Product.Product
+                        if (createdProductId == Guid.Empty)
                         {
-                            Name = request.Name
-                        });
-                        productId = product.Id;
-
+                            var product = await _productRepository.InsertAsync(new Model.Product.Product
+                            {
+                                Name = request.Name
+                            });
+                            createdProductId = product.Id;
+                        }
+                         
                         await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
                         {
-                            ProductId = productId,
+                            ProductId = createdProductId,
                             SupplierId = mapping.SupplierType.GetDatabaseId(),
                             Url = mapping.Url
                         });
@@ -157,12 +162,13 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     else
                     {
                         productId = productSupplierInfoMapping.ProductId;
-                    }      
+                    }
 
+                    var productIdForMap = productId == Guid.Empty ? createdProductId : productId;
                     productSupplierMappings.Add(new UserProductSupplierMapping
                     {
                         Url = mapping.Url,
-                        ProductId = productId,
+                        ProductId = productIdForMap,
                         SupplierId = mapping.SupplierType.GetDatabaseId(),
                         UserId = userId
                     });
@@ -251,24 +257,28 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     };
                 }
 
+                Guid createdProductId = Guid.Empty;
                 foreach (var mapping in request.UrlSupplierMapping)
                 {
+                    Guid productId = Guid.Empty;
                     var productSupplierInfoMapping = await _productSupplierInfoMappingRepository.FindOneAsync(p =>
                        p.Url.Equals(mapping.Url) &&
                        p.IsDeleted == false);
 
-                    Guid productId = Guid.Empty;
                     if (productSupplierInfoMapping == null)
                     {
-                        var product = await _productRepository.InsertAsync(new Model.Product.Product
+                        if (createdProductId == Guid.Empty)
                         {
-                            Name = request.Name
-                        });
-                        productId = product.Id;
+                            var product = await _productRepository.InsertAsync(new Model.Product.Product
+                            {
+                                Name = request.Name
+                            });
+                            createdProductId = product.Id;
+                        } 
 
                         await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
                         {
-                            ProductId = productId,
+                            ProductId = createdProductId,
                             SupplierId = mapping.SupplierType.GetDatabaseId(),
                             Url = mapping.Url
                         });
@@ -278,10 +288,11 @@ namespace PriceHunter.Business.UserProduct.Concrete
                         productId = productSupplierInfoMapping.ProductId;
                     }
 
+                    var productIdForMap = productId == Guid.Empty ? createdProductId : productId;
                     productSupplierMappings.Add(new UserProductSupplierMapping
                     {
                         Url = mapping.Url,
-                        ProductId = productId,
+                        ProductId = productIdForMap,
                         SupplierId = mapping.SupplierType.GetDatabaseId(),
                         UserId = userId
                     });
