@@ -1,0 +1,54 @@
+version: '3.4'
+
+networks:
+  bridge-network:
+    driver: bridge
+
+services:
+  PriceHunter.api:
+    image: ${DOCKER_REGISTRY-}pricehunter
+    restart : always
+    depends_on:
+      - "database_mongo"
+      - "database_redis"
+      - "message_rabbitmq"
+    build:
+      context: .
+      dockerfile: PriceHunter.Api/Dockerfile
+    ports:
+      - "5010:5010"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "DockerCompose"
+    networks:
+      - bridge-network
+  
+  database_mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    restart: always
+    networks:
+      - bridge-network
+
+  database_redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass 123456789.tY
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - bridge-network
+
+  message_rabbitmq:
+    image: "rabbitmq:3.8.3-management"
+    #    container_name: rabbitmq_docker
+    #    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "turhany"
+      RABBITMQ_DEFAULT_PASS: "turhany"
+      RABBITMQ_DEFAULT_VHOST: "pricehunter"
+    networks:
+      - bridge-network

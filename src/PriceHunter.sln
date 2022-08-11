@@ -43,9 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Parser.Alibaba"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Parser.AliExpress", "PriceHunter.Parser.AliExpress\PriceHunter.Parser.AliExpress.csproj", "{8E798549-22D1-400D-A514-502576A82918}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Consumer.Parser", "PriceHunter.Consumer.Parser\PriceHunter.Consumer.Parser.csproj", "{9531C8D4-1AA0-40FE-82C7-F382402B0EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Consumer.Parser", "PriceHunter.Consumer.Parser\PriceHunter.Consumer.Parser.csproj", "{9531C8D4-1AA0-40FE-82C7-F382402B0EB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Consumer.Notification", "PriceHunter.Consumer.Notification\PriceHunter.Consumer.Notification.csproj", "{5DEC482A-DC66-4B2A-9B55-955513F52BB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Consumer.Notification", "PriceHunter.Consumer.Notification\PriceHunter.Consumer.Notification.csproj", "{5DEC482A-DC66-4B2A-9B55-955513F52BB9}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{AA998C7A-2879-45BB-A4A5-C4A79E31DC45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +115,10 @@ Global
 		{5DEC482A-DC66-4B2A-9B55-955513F52BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DEC482A-DC66-4B2A-9B55-955513F52BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DEC482A-DC66-4B2A-9B55-955513F52BB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA998C7A-2879-45BB-A4A5-C4A79E31DC45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA998C7A-2879-45BB-A4A5-C4A79E31DC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA998C7A-2879-45BB-A4A5-C4A79E31DC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA998C7A-2879-45BB-A4A5-C4A79E31DC45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
