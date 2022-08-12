@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.UI", "1.UI", "{1CFF9733-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Business", "2.Business", "{617ED39E-BDEE-47D7-A5AC-371E6A328F63}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.MessageConsumers", "5.MessageConsumers", "{DD540301-AFAE-4010-8C58-4FB87968A853}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.MessageConsumers", "6.MessageConsumers", "{DD540301-AFAE-4010-8C58-4FB87968A853}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.ScheduleServices", "6.ScheduleServices", "{8A328098-4EF9-4C2F-96CA-4B8479D59F4A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.ScheduleServices", "7.ScheduleServices", "{8A328098-4EF9-4C2F-96CA-4B8479D59F4A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.Tests", "7.Tests", "{DD3B41EF-9B25-415E-A9DE-507BB1E7F241}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.Tests", "8.Tests", "{DD3B41EF-9B25-415E-A9DE-507BB1E7F241}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Api", "PriceHunter.Api\PriceHunter.Api.csproj", "{43AA1F5A-3A53-4039-8CEC-A08C22C961C7}"
 EndProject
@@ -31,9 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Resources", "Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Data.MongoDB", "PriceHunter.Data.MongoDB\PriceHunter.Data.MongoDB.csproj", "{E7635E1C-D9F1-415E-A9AD-8D21B11F5298}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Shared", "4.Shared", "{8C28BA02-84A0-460A-A707-702CBBD45945}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Shared", "3.Shared", "{8C28BA02-84A0-460A-A707-702CBBD45945}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Parsers", "3.Parsers", "{DF4EA16E-E408-4D49-BA1F-524CD0AC8E5F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Parsers", "4.Parsers", "{DF4EA16E-E408-4D49-BA1F-524CD0AC8E5F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Parser", "PriceHunter.Parser\PriceHunter.Parser.csproj", "{C754549C-5145-40C7-8BCD-8F8235BB3DA7}"
 EndProject
@@ -52,6 +52,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.ScheduleService", "PriceHunter.ScheduleService\PriceHunter.ScheduleService.csproj", "{E21BBBBE-93A8-4752-B73B-0FEE348E8638}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Web", "..\PriceHunter.Web\PriceHunter.Web.csproj", "{8842D451-2A89-4E01-8812-27232515DA7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Notification", "5.Notification", "{DA93EFDB-6C6A-40D8-815E-94F2CB7C2518}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Notification", "..\PriceHunter.Notification\PriceHunter.Notification.csproj", "{5D2C2899-E912-432C-96CA-0A471CAB92C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Notification.Email", "..\PriceHunter.Notification.Email\PriceHunter.Notification.Email.csproj", "{348BAB59-2B27-40CE-ABEB-48D1DBCF42F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Notification.Sms", "..\PriceHunter.Notification.Sms\PriceHunter.Notification.Sms.csproj", "{00A75B94-9044-467C-9050-0523D1600AAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Notification.MobilePush", "..\PriceHunter.Notification.MobilePush\PriceHunter.Notification.MobilePush.csproj", "{5BFDAE86-3641-4065-BEE1-044FF7E57DFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +141,22 @@ Global
 		{8842D451-2A89-4E01-8812-27232515DA7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8842D451-2A89-4E01-8812-27232515DA7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8842D451-2A89-4E01-8812-27232515DA7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2C2899-E912-432C-96CA-0A471CAB92C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D2C2899-E912-432C-96CA-0A471CAB92C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D2C2899-E912-432C-96CA-0A471CAB92C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D2C2899-E912-432C-96CA-0A471CAB92C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348BAB59-2B27-40CE-ABEB-48D1DBCF42F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348BAB59-2B27-40CE-ABEB-48D1DBCF42F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348BAB59-2B27-40CE-ABEB-48D1DBCF42F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348BAB59-2B27-40CE-ABEB-48D1DBCF42F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00A75B94-9044-467C-9050-0523D1600AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00A75B94-9044-467C-9050-0523D1600AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00A75B94-9044-467C-9050-0523D1600AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00A75B94-9044-467C-9050-0523D1600AAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BFDAE86-3641-4065-BEE1-044FF7E57DFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BFDAE86-3641-4065-BEE1-044FF7E57DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BFDAE86-3641-4065-BEE1-044FF7E57DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BFDAE86-3641-4065-BEE1-044FF7E57DFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +179,10 @@ Global
 		{5DEC482A-DC66-4B2A-9B55-955513F52BB9} = {DD540301-AFAE-4010-8C58-4FB87968A853}
 		{E21BBBBE-93A8-4752-B73B-0FEE348E8638} = {8A328098-4EF9-4C2F-96CA-4B8479D59F4A}
 		{8842D451-2A89-4E01-8812-27232515DA7D} = {1CFF9733-DFCE-46CC-BF6E-93D381778ADA}
+		{5D2C2899-E912-432C-96CA-0A471CAB92C7} = {DA93EFDB-6C6A-40D8-815E-94F2CB7C2518}
+		{348BAB59-2B27-40CE-ABEB-48D1DBCF42F5} = {DA93EFDB-6C6A-40D8-815E-94F2CB7C2518}
+		{00A75B94-9044-467C-9050-0523D1600AAE} = {DA93EFDB-6C6A-40D8-815E-94F2CB7C2518}
+		{5BFDAE86-3641-4065-BEE1-044FF7E57DFE} = {DA93EFDB-6C6A-40D8-815E-94F2CB7C2518}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E19CE82-A48A-4C99-BA41-43EC8DBE7E36}
