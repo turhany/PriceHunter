@@ -51,6 +51,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.ScheduleService", "PriceHunter.ScheduleService\PriceHunter.ScheduleService.csproj", "{E21BBBBE-93A8-4752-B73B-0FEE348E8638}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Web", "..\PriceHunter.Web\PriceHunter.Web.csproj", "{8842D451-2A89-4E01-8812-27232515DA7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,10 @@ Global
 		{E21BBBBE-93A8-4752-B73B-0FEE348E8638}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E21BBBBE-93A8-4752-B73B-0FEE348E8638}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E21BBBBE-93A8-4752-B73B-0FEE348E8638}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8842D451-2A89-4E01-8812-27232515DA7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8842D451-2A89-4E01-8812-27232515DA7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8842D451-2A89-4E01-8812-27232515DA7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8842D451-2A89-4E01-8812-27232515DA7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,6 +152,7 @@ Global
 		{9531C8D4-1AA0-40FE-82C7-F382402B0EB4} = {DD540301-AFAE-4010-8C58-4FB87968A853}
 		{5DEC482A-DC66-4B2A-9B55-955513F52BB9} = {DD540301-AFAE-4010-8C58-4FB87968A853}
 		{E21BBBBE-93A8-4752-B73B-0FEE348E8638} = {8A328098-4EF9-4C2F-96CA-4B8479D59F4A}
+		{8842D451-2A89-4E01-8812-27232515DA7D} = {1CFF9733-DFCE-46CC-BF6E-93D381778ADA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E19CE82-A48A-4C99-BA41-43EC8DBE7E36}
