@@ -16,7 +16,7 @@
             "launchBrowser": true,
             "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api",
             "publishAllPorts": true,
-            "useSSL": true
+            "useSSL": false
         }
     }
 }
