@@ -15,6 +15,10 @@
     <ProjectReference Include="..\PriceHunter.Common\PriceHunter.Common.csproj" />
     <ProjectReference Include="..\PriceHunter.Data.MongoDB\PriceHunter.Data.MongoDB.csproj" />
     <ProjectReference Include="..\PriceHunter.Data\PriceHunter.Data.csproj" />
+    <ProjectReference Include="..\PriceHunter.Parser.Alibaba\PriceHunter.Parser.Alibaba.csproj" />
+    <ProjectReference Include="..\PriceHunter.Parser.AliExpress\PriceHunter.Parser.AliExpress.csproj" />
+    <ProjectReference Include="..\PriceHunter.Parser.Amazon\PriceHunter.Parser.Amazon.csproj" />
+    <ProjectReference Include="..\PriceHunter.Parser\PriceHunter.Parser.csproj" />
   </ItemGroup>
 
 </Project>

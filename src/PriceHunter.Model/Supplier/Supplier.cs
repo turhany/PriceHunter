@@ -6,5 +6,7 @@ namespace PriceHunter.Model.Supplier
     {
         public string Name { get; set; }
         public int Order { get; set; }
+        public int PriceControlPeriodAsMinute { get; set; }
+        public int EnumMapping { get; set; }
     }
 }

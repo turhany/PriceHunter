@@ -3,7 +3,7 @@ using PriceHunter.Contract.Consumer.Notification;
 
 namespace PriceHunter.Consumer.Notification.Consumers
 {
-    internal class NotificationConsumer : IConsumer<SendNotificationCommand>
+    public class NotificationConsumer : IConsumer<SendNotificationCommand>
     {
         public Task Consume(ConsumeContext<SendNotificationCommand> context)
         {

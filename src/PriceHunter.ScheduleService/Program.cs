@@ -27,13 +27,13 @@ builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMassTransitConfiguration(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(ProductMapping));
-
+ 
 var app = builder.Build();
 app.UseRouting();
 app.UseHangfireConfiguration();
 app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-RecurringJobs.SampleJob();
+await RecurringJobs.CheckProductPricesAsync(app.Services.GetRequiredService<IServiceScopeFactory>());
 
 ApplicationContext.ConfigureWorkerServiceUser(Guid.Parse(builder.Configuration["Application:ServiceUserId"]));
 ApplicationContext.ConfigureThreadPool(builder.Configuration);

@@ -46,7 +46,7 @@ namespace PriceHunter.Consumer.Parser.Configurations
                         cb.ActiveThreshold = 10;
                         cb.ResetInterval = TimeSpan.FromMinutes(5);
                     });
-                }).Endpoint(endpoint => { endpoint.Name = rabbitMqConfig.NotificationQueue; });
+                }).Endpoint(endpoint => { endpoint.Name = rabbitMqConfig.ParserQueue; });
             });
 
             return services;

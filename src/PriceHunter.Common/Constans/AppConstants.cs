@@ -21,5 +21,7 @@
         public const string SymmetricKey = "!#_PriceHunter_Symmetric_Key_2022_!#";
         public const double AccessTokenExpireMinute = 6 * 60;//6 hour
         public const double RefreshTokenExpireMinute = 7 * 60; //7 hour
+
+        public const string SupplierPriceControlCronJobTemplate = "*/{0} * * * *";
     }
 }

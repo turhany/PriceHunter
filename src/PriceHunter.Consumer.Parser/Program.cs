@@ -10,7 +10,6 @@ using PriceHunter.Container.Modules;
 using PriceHunter.Contract.Mappings.AutoMapper;
 using Serilog;
 using PriceHunter.Consumer.Parser.Configurations;
-using PriceHunter.Consumer;
 using PriceHunter.Data.MongoDB.Options;
 using PriceHunter.Consumer.Parser;
 
@@ -22,6 +21,7 @@ var hostBuilder = Host.CreateDefaultBuilder()
         builder.RegisterModule(new ApplicationModule());
         builder.RegisterModule(new RepositoryModule());
         builder.RegisterModule(new ServiceModule());
+        builder.RegisterModule(new ParserModule());
     })
     .UseSerilog((context, conf) => conf.ReadFrom.Configuration(context.Configuration))
     .ConfigureServices((hostingContext, services) =>

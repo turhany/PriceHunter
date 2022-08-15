@@ -4,6 +4,7 @@ namespace PriceHunter.Model.Product
 {
     public class ProductPriceHistory : SoftDeleteEntity
     {
-        public Guid ProductSupplierInfoMapping { get; set; }
+        public double Price { get; set; }
+        public Guid ProductSupplierInfoMappingId { get; set; }
     }
 }

@@ -1,14 +1,19 @@
 ﻿using AutoMapper;
+using MassTransit;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PriceHunter.Business.Product.Abstract;
 using PriceHunter.Business.Product.Validator;
 using PriceHunter.Common.BaseModels.Service;
 using PriceHunter.Common.Cache.Abstract;
 using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract;
-using PriceHunter.Common.Extensions;
 using PriceHunter.Common.Lock.Abstract;
+using PriceHunter.Common.Options;
 using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Contract.App.Product;
+using PriceHunter.Contract.Consumer.Parser;
 using PriceHunter.Contract.Service.Product;
 using PriceHunter.Model.Product;
 using PriceHunter.Resources.Extensions;
@@ -28,6 +33,9 @@ namespace PriceHunter.Business.Product.Concrete
         private readonly ILockService _lockService;
         private readonly IMapper _mapper;
         private readonly IValidationService _validationService;
+        private readonly ISendEndpointProvider _sendEndpointProvider;
+        private readonly RabbitMqOption _rabbitMqOptions;
+        private readonly ILogger<ProductService> _logger;
 
         public ProductService(
         IGenericRepository<PriceHunter.Model.Supplier.Supplier> supplierRepository,
@@ -37,7 +45,10 @@ namespace PriceHunter.Business.Product.Concrete
         ICacheService cacheService,
         ILockService lockService,
         IMapper mapper,
-        IValidationService validationService)
+        IValidationService validationService,
+        ISendEndpointProvider sendEndpointProvider,
+        IOptions<RabbitMqOption> rabbitMqOptions,
+        ILogger<ProductService> logger)
         {
             _supplierRepository = supplierRepository;
             _productRepository = productRepository;
@@ -47,6 +58,9 @@ namespace PriceHunter.Business.Product.Concrete
             _lockService = lockService;
             _mapper = mapper;
             _validationService = validationService;
+            _rabbitMqOptions = rabbitMqOptions.Value;
+            _sendEndpointProvider = sendEndpointProvider;
+            _logger = logger;
         }
 
         public async Task<ServiceResult<ProductViewModel>> GetAsync(Guid id)
@@ -107,7 +121,7 @@ namespace PriceHunter.Business.Product.Concrete
             var productSupplierMappings = new List<ProductSupplierInfoMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
-                var errors = new List<string>(); 
+                var errors = new List<string>();
                 request.UrlSupplierMapping.ForEach(p => p.Url = p.Url.Trim());
 
                 foreach (var mapping in request.UrlSupplierMapping)
@@ -196,7 +210,7 @@ namespace PriceHunter.Business.Product.Concrete
             var productSupplierMappings = new List<ProductSupplierInfoMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
-                var errors = new List<string>(); 
+                var errors = new List<string>();
                 request.UrlSupplierMapping.ForEach(p => p.Url = p.Url.Trim());
 
                 foreach (var mapping in request.UrlSupplierMapping)
@@ -318,6 +332,36 @@ namespace PriceHunter.Business.Product.Concrete
                 Status = ResultStatus.Successful,
                 Message = Resource.Deleted(Entities.Product, entity.Name)
             };
+        }
+
+        public async Task CheckProductPricesAsync(Guid supplierId)
+        {
+            try
+            {
+                var products = _productSupplierInfoMappingRepository.Find(p => p.SupplierId == supplierId && p.IsDeleted == false).ToList();
+                var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri($"{_rabbitMqOptions.RabbitMqUri}/{_rabbitMqOptions.ParserQueue}"));
+
+                if (products != null && products.Any())
+                {
+                    var supplier = await _supplierRepository.FindOneAsync(p => p.Id == supplierId && p.IsDeleted == false);
+
+                    foreach (var product in products)
+                    {
+                        await endpoint.Send(new SendParserCommand
+                        {
+                            ProductId = product.ProductId,
+                            SupplierId = supplierId,
+                            EnumMapping = supplier.EnumMapping,
+                            Url = product.Url,
+                            RequestTime = DateTime.UtcNow
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
         }
     }
 }
