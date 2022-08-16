@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using PriceHunter.Business.RequestLog.Abstract;
+using PriceHunter.Model.RequestLog;
+using System.Text;
 
 namespace PriceHunter.Api.Middlewares
 {
@@ -56,16 +58,15 @@ namespace PriceHunter.Api.Middlewares
             
             var response = await ReadResponseBodyAsync(httpContext.Response);
 
-            //TOOD: request log
-            //var requestLog = new RequestLog
-            //{
-            //    Request = request,
-            //    Response = response,
-            //    StatusCode = httpContext.Response.StatusCode.ToString(),
-            //    RequestPath = httpContext.Request.Path.Value
-            //};
- 
-            //_ = Task.Run(async () => await SaveRequestLogAsync(requestLog, _serviceScopeFactory));
+            var requestLog = new RequestLog
+            {
+                Request = request,
+                Response = response,
+                StatusCode = httpContext.Response.StatusCode.ToString(),
+                RequestPath = httpContext.Request.Path.Value
+            };
+
+            _ = Task.Run(async () => await SaveRequestLogAsync(requestLog, _serviceScopeFactory));
 
             await responseBody.CopyToAsync(originalBodyStream);
         }
@@ -93,18 +94,18 @@ namespace PriceHunter.Api.Middlewares
             return $"{response.StatusCode}: {text}";
         }
 
-        //private async Task SaveRequestLogAsync(RequestLog requestLog, IServiceScopeFactory serviceScopeFactory)
-        //{
-        //    if ( !string.IsNullOrWhiteSpace(requestLog.RequestPath) && _ignoreFileForLog.Any(p => requestLog.RequestPath.Contains(p, StringComparison.InvariantCultureIgnoreCase)))
-        //    {
-        //        return;
-        //    }
-            
-        //    using (var scope = serviceScopeFactory.CreateScope())
-        //    {
-        //        var requestLogService = (IRequestLogService) scope.ServiceProvider.GetRequiredService(typeof(IRequestLogService));
-        //        await requestLogService.SaveAsync(requestLog);
-        //    }
-        //}
+        private async Task SaveRequestLogAsync(RequestLog requestLog, IServiceScopeFactory serviceScopeFactory)
+        {
+            if (!string.IsNullOrWhiteSpace(requestLog.RequestPath) && _ignoreFileForLog.Any(p => requestLog.RequestPath.Contains(p, StringComparison.InvariantCultureIgnoreCase)))
+            {
+                return;
+            }
+
+            using (var scope = serviceScopeFactory.CreateScope())
+            {
+                var requestLogService = (IRequestLogService)scope.ServiceProvider.GetRequiredService(typeof(IRequestLogService));
+                await requestLogService.SaveAsync(requestLog);
+            }
+        }
     }
 }
