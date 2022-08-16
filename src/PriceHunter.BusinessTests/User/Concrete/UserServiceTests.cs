@@ -7,6 +7,9 @@ using PriceHunter.Common.Data.Abstract;
 using PriceHunter.Contract.Service.User; 
 using PriceHunter.Model.User;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Filtery.Exceptions;
+using Filtery.Models.Order;
+using Filtery.Models;
 
 namespace PriceHunter.BusinessTests.Services.Concrete;
 
@@ -170,6 +173,52 @@ public class UserServiceTests : TestBase
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
+    }
+
+    [TestMethod]
+    public async Task SearchAsync_OK()
+    {
+        //arrange
+        var user = new Model.User.User { Id = Guid.NewGuid(), Email = "test@test.com", Password = "Password", Type = UserType.Root };
+        await _userRepository.InsertAsync(user);
+
+        //act
+        var response = await _userService.SearchAsync(new FilteryRequest
+        {
+            PageNumber = 1,
+            PageSize = 10
+        });
+
+        //assert 
+        Assert.AreEqual(ResultStatus.Successful, response.Status);
+    }
+
+    [TestMethod]
+    public async Task SearchAsync_NOK()
+    {
+        //INFO: I can not use "Assert.ThrowsExceptionAsync" because it's not catch base exception type
+
+        //arrange - act - assert 
+        try
+        {
+            await _userService.SearchAsync(new FilteryRequest
+            {
+                OrderOperations = new Dictionary<string, OrderOperation>()
+                {
+                    {"errorkey", OrderOperation.Ascending}
+                },
+                PageNumber = 1,
+                PageSize = 10
+            });
+        }
+        catch (FilteryBaseException)
+        {
+            Assert.IsTrue(true);
+        }
+        catch (Exception)
+        {
+            Assert.IsTrue(false);
+        }
     }
 
     [TestMethod]

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Filtery.Extensions;
+using Filtery.Models; 
 using PriceHunter.Business.User.Abstract;
 using PriceHunter.Business.User.Validator;
 using PriceHunter.Common.Application;
@@ -9,13 +11,16 @@ using PriceHunter.Common.Cache.Abstract;
 using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract;
 using PriceHunter.Common.Lock.Abstract;
+using PriceHunter.Common.Pager;
 using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Contract.App.User;
+using PriceHunter.Contract.Mappings.Filtery;
 using PriceHunter.Contract.Service.User;
 using PriceHunter.Resources.Extensions;
 using PriceHunter.Resources.Model;
 using PriceHunter.Resources.Service;
 using System.Dynamic;
+using Page = PriceHunter.Common.Pager.Page;
 
 namespace PriceHunter.Business.User.Concrete
 {
@@ -209,10 +214,31 @@ namespace PriceHunter.Business.User.Concrete
                 Message = Resource.Deleted(Entities.User, entity.Email)
             };
         }
+        public async Task<ServiceResult<PagedList<UserViewModel>>> SearchAsync(FilteryRequest request)
+        {
+            var filteryResponse = await _userRepository.Find(p => true).BuildFilteryAsync(new UserFilteryMapping(), request);
+
+            var response = new PagedList<UserViewModel>
+            {
+                Data = _mapper.Map<List<UserViewModel>>(filteryResponse.Data),
+                PageInfo = new Page
+                {
+                    PageNumber = filteryResponse.PageNumber,
+                    PageSize = filteryResponse.PageSize,
+                    TotalItemCount = filteryResponse.TotalItemCount
+                }
+            };
+
+            return new ServiceResult<PagedList<UserViewModel>>
+            {
+                Data = response,
+                Status = ResultStatus.Successful
+            };
+        }
 
         #endregion
 
-          
+
         #region Login Operations
 
         public async Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request)

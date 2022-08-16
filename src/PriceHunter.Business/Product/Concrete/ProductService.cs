@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Filtery.Extensions;
+using Filtery.Models;
 using MassTransit; 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -10,9 +12,11 @@ using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract;
 using PriceHunter.Common.Lock.Abstract;
 using PriceHunter.Common.Options;
+using PriceHunter.Common.Pager;
 using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Contract.App.Product;
 using PriceHunter.Contract.Consumer.Parser;
+using PriceHunter.Contract.Mappings.Filtery;
 using PriceHunter.Contract.Service.Product;
 using PriceHunter.Model.Product;
 using PriceHunter.Resources.Extensions;
@@ -330,6 +334,30 @@ namespace PriceHunter.Business.Product.Concrete
             {
                 Status = ResultStatus.Successful,
                 Message = Resource.Deleted(Entities.Product, entity.Name)
+            };
+        }
+
+        public async Task<ServiceResult<PagedList<ProductSearchViewModel>>> SearchAsync(FilteryRequest request)
+        {
+            var filteryResponse = await _productRepository
+                .Find(p => p.IsDeleted == false)
+                .BuildFilteryAsync(new ProductFilteryMapping(), request);
+
+            var response = new PagedList<ProductSearchViewModel>
+            {
+                Data = _mapper.Map<List<ProductSearchViewModel>>(filteryResponse.Data),
+                PageInfo = new Page
+                {
+                    PageNumber = filteryResponse.PageNumber,
+                    PageSize = filteryResponse.PageSize,
+                    TotalItemCount = filteryResponse.TotalItemCount
+                }
+            };
+
+            return new ServiceResult<PagedList<ProductSearchViewModel>>
+            {
+                Data = response,
+                Status = ResultStatus.Successful
             };
         }
 

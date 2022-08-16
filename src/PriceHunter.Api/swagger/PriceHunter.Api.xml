@@ -276,6 +276,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.Search(Filtery.Models.FilteryRequest)">
+            <summary>
+            User Search
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:PriceHunter.Api.Middlewares.ExceptionHandlerMiddleware">
             <summary>
             Global Exception handler middleware

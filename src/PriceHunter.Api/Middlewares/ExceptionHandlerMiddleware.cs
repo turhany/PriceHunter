@@ -1,4 +1,5 @@
-﻿using System.Net; 
+﻿using System.Net;
+using Filtery.Exceptions;
 using Newtonsoft.Json;
 using PriceHunter.Common.BaseModels.Api;
 using PriceHunter.Common.Constans;
@@ -7,7 +8,7 @@ using PriceHunter.Resources.Service;
 
 namespace PriceHunter.Api.Middlewares
 {
-  /// <summary>
+    /// <summary>
     /// Global Exception handler middleware
     /// </summary>
     public class ExceptionHandlerMiddleware
@@ -36,7 +37,16 @@ namespace PriceHunter.Api.Middlewares
             try
             {
                 await _next(httpContext);
-            } 
+            }
+            catch (FilteryBaseException ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                response.Status = ServiceResponseStatus.FAILED;
+                response.Message = ex.Message;
+
+                httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                httpContext.Response.ContentType = AppConstants.JsonContentType;
+            }
             catch (AcquireLockException ex)
             {
                 _logger.LogError(ex, ex.Message);
