@@ -319,6 +319,17 @@ public class ProductSearchViewModel
     public string Name { get; set; }        
 }
 ``` 
+#### Search Product Price History> {url}/products/pricehistory/search - POST
+Use generic filter request - response data type
+```cs
+//Response model in generic filter response
+public class ProductPriceHistorySearchViewModel
+{
+    public Guid ProductId { get; set; }
+    public Guid SupplierId { get; set; }
+    public double Price { get; set; }
+}
+``` 
 #### Delete Product > {url}/products/{id} - DELETE
 No need extra info. Return "<b>BaseResponse</b>" model.
 

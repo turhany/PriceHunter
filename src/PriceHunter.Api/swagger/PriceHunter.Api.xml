@@ -176,6 +176,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.Search(Filtery.Models.FilteryRequest)">
+            <summary>
+            Product Search
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.SearchPriceHistory(Filtery.Models.FilteryRequest)">
+            <summary>
+            Product Search
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:PriceHunter.Api.Controllers.V1.SuppliersController">
             <summary>
             Suppliers Controller
