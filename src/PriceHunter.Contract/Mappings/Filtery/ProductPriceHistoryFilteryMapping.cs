@@ -26,7 +26,7 @@ public class ProductPriceHistoryFilteryMapping : AbstractFilteryMapping<ProductP
             .Filter(p => p.SupplierId != FilteryQueryValueMarker.FilterGuidValue, FilterOperation.NotEqual);
 
         mapper
-            .Name("supplierid")
+            .Name("productid")
             .OrderProperty(p => p.ProductId)
             .Filter(p => p.ProductId == FilteryQueryValueMarker.FilterGuidValue, FilterOperation.Equal)
             .Filter(p => p.ProductId != FilteryQueryValueMarker.FilterGuidValue, FilterOperation.NotEqual);
