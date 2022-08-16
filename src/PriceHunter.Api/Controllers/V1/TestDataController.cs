@@ -29,6 +29,5 @@ namespace PriceHunter.Api.Controllers.V1
             await _testDataService.InsertDataAsync();
             return Ok();
         }
-
     }
 }

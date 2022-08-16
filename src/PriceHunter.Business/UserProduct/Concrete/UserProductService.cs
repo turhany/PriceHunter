@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using OneOf.Types;
 using PriceHunter.Business.UserProduct.Abstract;
 using PriceHunter.Business.UserProduct.Validator;
 using PriceHunter.Common.Application;
@@ -7,7 +6,6 @@ using PriceHunter.Common.BaseModels.Service;
 using PriceHunter.Common.Cache.Abstract;
 using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract;
-using PriceHunter.Common.Extensions;
 using PriceHunter.Common.Lock.Abstract;
 using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Contract.App.UserProduct;
@@ -57,10 +55,13 @@ namespace PriceHunter.Business.UserProduct.Concrete
         public async Task<ServiceResult<UserProductViewModel>> GetAsync(Guid id)
         {
             var cacheKey = string.Format(CacheKeyConstants.UserProductCacheKey, id);
+            var userId = ApplicationContext.Instance.CurrentUser.Id;
 
-            var product = await _cacheService.GetOrSetObjectAsync(cacheKey, async () => await _userProductRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
+            var product = await _cacheService.GetOrSetObjectAsync(
+                cacheKey,
+                async () => await _userProductRepository.FindOneAsync(p => p.Id == id && p.UserId == userId && p.IsDeleted == false));
 
-            if (product == null)
+            if (product == null || product.UserId != userId)
             {
                 return new ServiceResult<UserProductViewModel>
                 {
@@ -70,7 +71,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             }
 
             var productViewModel = _mapper.Map<UserProductViewModel>(product);
-            var userId = ApplicationContext.Instance.CurrentUser.Id;
+
 
             var userProductMappings = _userProductSupplierMappingRepository.Find(p =>
             p.UserProductId == product.Id &&
@@ -111,7 +112,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             var productSupplierMappings = new List<UserProductSupplierMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
-                var errors = new List<string>(); 
+                var errors = new List<string>();
                 request.UrlSupplierMapping.ForEach(p => p.Url = p.Url.Trim());
 
                 foreach (var mapping in request.UrlSupplierMapping)
@@ -141,7 +142,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     };
                 }
 
-                
+
                 Guid createdProductId = Guid.Empty;
                 foreach (var mapping in request.UrlSupplierMapping)
                 {
@@ -160,7 +161,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                             });
                             createdProductId = product.Id;
                         }
-                         
+
                         await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
                         {
                             ProductId = createdProductId,
@@ -237,11 +238,11 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     Message = Resource.NotFound(Entities.UserProduct)
                 };
             }
-             
+
             var productSupplierMappings = new List<UserProductSupplierMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
-                var errors = new List<string>(); 
+                var errors = new List<string>();
                 request.UrlSupplierMapping.ForEach(p => p.Url = p.Url.Trim());
 
                 foreach (var mapping in request.UrlSupplierMapping)
@@ -288,7 +289,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                                 Name = request.Name
                             });
                             createdProductId = product.Id;
-                        } 
+                        }
 
                         await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
                         {
@@ -312,7 +313,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     });
                 }
             }
-             
+
             var lockKey = string.Format(LockKeyConstants.UserProductLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserProductCacheKey, entity.Id);
 
@@ -356,8 +357,8 @@ namespace PriceHunter.Business.UserProduct.Concrete
         {
             var userId = ApplicationContext.Instance.CurrentUser.Id;
 
-            var entity = await _userProductRepository.FindOneAsync(p => 
-                p.Id == id && 
+            var entity = await _userProductRepository.FindOneAsync(p =>
+                p.Id == id &&
                 p.UserId == userId &&
                 p.IsDeleted == false);
 
@@ -378,6 +379,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                 await _userProductRepository.DeleteAsync(entity);
 
                 var dbProductSupplierMappings = _userProductSupplierMappingRepository.Find(p =>
+                    p.UserProductId == entity.Id &&
                     p.IsDeleted == false &&
                     p.UserId == userId).ToList();
 
