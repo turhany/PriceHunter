@@ -31,6 +31,7 @@ namespace PriceHunter.Business.Product.Concrete
         private readonly IGenericRepository<PriceHunter.Model.Supplier.Supplier> _supplierRepository;
         private readonly IGenericRepository<PriceHunter.Model.Product.Product> _productRepository;
         private readonly IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
+        private readonly IGenericRepository<PriceHunter.Model.Product.ProductPriceHistory> _productPriceHistoryRepository;
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> _userProductSupplierMappingRepository;
         private readonly ICacheService _cacheService;
         private readonly ILockService _lockService;
@@ -44,6 +45,7 @@ namespace PriceHunter.Business.Product.Concrete
         IGenericRepository<PriceHunter.Model.Supplier.Supplier> supplierRepository,
         IGenericRepository<PriceHunter.Model.Product.Product> productRepository,
         IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
+        IGenericRepository<PriceHunter.Model.Product.ProductPriceHistory> productPriceHistoryRepository,
         IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> userProductSupplierMappingRepository,
         ICacheService cacheService,
         ILockService lockService,
@@ -56,6 +58,7 @@ namespace PriceHunter.Business.Product.Concrete
             _supplierRepository = supplierRepository;
             _productRepository = productRepository;
             _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
+            _productPriceHistoryRepository = productPriceHistoryRepository;
             _userProductSupplierMappingRepository = userProductSupplierMappingRepository;
             _cacheService = cacheService;
             _lockService = lockService;
@@ -355,6 +358,28 @@ namespace PriceHunter.Business.Product.Concrete
             };
 
             return new ServiceResult<PagedList<ProductSearchViewModel>>
+            {
+                Data = response,
+                Status = ResultStatus.Successful
+            };
+        }
+
+        public async Task<ServiceResult<PagedList<ProductPriceHistorySearchViewModel>>> SearchPriceHistoryAsync(FilteryRequest request)
+        {
+            var filteryResponse = await _productPriceHistoryRepository.Find(p => p.IsDeleted == false).BuildFilteryAsync(new ProductPriceHistoryFilteryMapping(), request);
+
+            var response = new PagedList<ProductPriceHistorySearchViewModel>
+            {
+                Data = _mapper.Map<List<ProductPriceHistorySearchViewModel>>(filteryResponse.Data),
+                PageInfo = new Page
+                {
+                    PageNumber = filteryResponse.PageNumber,
+                    PageSize = filteryResponse.PageSize,
+                    TotalItemCount = filteryResponse.TotalItemCount
+                }
+            };
+
+            return new ServiceResult<PagedList<ProductPriceHistorySearchViewModel>>
             {
                 Data = response,
                 Status = ResultStatus.Successful

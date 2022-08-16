@@ -53,7 +53,12 @@ namespace PriceHunter.Consumer.Parser.Consumers
                     return;
                 }
 
-                var lastPriceHistoryItem = _productPriceHistoryRepository.Find(p => p.ProductSupplierInfoMappingId == mapping.Id && p.IsDeleted == false).OrderByDescending(p => p.CreatedBy).FirstOrDefault();
+                var lastPriceHistoryItem = _productPriceHistoryRepository.Find(p =>
+                p.ProductId == context.Message.ProductId &&
+                p.SupplierId == context.Message.SupplierId &&
+                p.IsDeleted == false)
+                    .OrderByDescending(p => p.CreatedBy)
+                    .FirstOrDefault();
 
                 if (lastPriceHistoryItem != null && lastPriceHistoryItem.CreatedOn >= context.Message.RequestTime)
                 {
@@ -75,7 +80,8 @@ namespace PriceHunter.Consumer.Parser.Consumers
 
                 await _productPriceHistoryRepository.InsertAsync(new ProductPriceHistory
                 {
-                    ProductSupplierInfoMappingId = mapping.Id,
+                    ProductId = context.Message.ProductId,
+                    SupplierId = context.Message.SupplierId,
                     Price = parsedPrice
                 });
 

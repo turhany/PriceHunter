@@ -98,5 +98,18 @@ namespace PriceHunter.Api.Controllers.V1
             return ApiResponse.CreateResult(result);
         }
 
+        /// <summary>
+        /// Product Search
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("pricehistory/search")]
+        [Authorize(Roles = "Root")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductPriceHistorySearchViewModel))]
+        public async Task<ActionResult> SearchPriceHistory([FromBody] FilteryRequest request)
+        {
+            var result = await _productService.SearchPriceHistoryAsync(request);
+            return ApiResponse.CreateResult(result);
+        }
+
     }
 }

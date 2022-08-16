@@ -12,6 +12,7 @@ namespace PriceHunter.Business.Product.Abstract
     {
         Task<ServiceResult<ProductViewModel>> GetAsync(Guid id);
         Task<ServiceResult<PagedList<ProductSearchViewModel>>> SearchAsync(FilteryRequest request);
+        Task<ServiceResult<PagedList<ProductPriceHistorySearchViewModel>>> SearchPriceHistoryAsync(FilteryRequest request);        
         Task<ServiceResult<ExpandoObject>> CreateAsync(CreateProductRequestServiceRequest request);
         Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request);
         Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id);

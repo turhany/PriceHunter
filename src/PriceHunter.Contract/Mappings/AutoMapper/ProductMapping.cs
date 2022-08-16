@@ -15,6 +15,7 @@ namespace PriceHunter.Contract.Mappings.AutoMapper
             CreateMap<Product, ProductViewModel>();
             CreateMap<Product, ProductSearchViewModel>();
             CreateMap<ProductSupplierInfoMapping, ProductSupplierInfoMappingViewModel>();
+            CreateMap<ProductPriceHistory, ProductPriceHistorySearchViewModel>();
         }
     }
 }
