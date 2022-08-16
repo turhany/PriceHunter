@@ -199,6 +199,19 @@ public class UpdateUserRequest
     public bool IsActive { get; set; }
 }
 ```
+#### Search User > {url}/users/search - POST
+Use generic filter request - response data type
+```cs
+//Response model in generic filter response
+public class UserViewModel
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Image { get; set; }
+    public string Email { get; set; }
+    public string Type { get; set; }
+}
+``` 
 #### Delete User > {url}/users/{id} - DELETE
 No need extra info. Return "<b>BaseResponse</b>" model.
 
@@ -247,6 +260,7 @@ public class UrlSupplierMappingViewModel
     public SupplierType SupplierType { get; set; }
 }
 ``` 
+
 #### Delete User Product > {url}/userproducts/{id} - DELETE
 No need extra info. Return "<b>BaseResponse</b>" model.
 
@@ -295,6 +309,16 @@ public class ProductSupplierInfoMappingViewModel
     public SupplierType SupplierType { get; set; }
 }
 ```
+#### Search Product > {url}/products/search - POST
+Use generic filter request - response data type
+```cs
+//Response model in generic filter response
+public class ProductSearchViewModel
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }        
+}
+``` 
 #### Delete Product > {url}/products/{id} - DELETE
 No need extra info. Return "<b>BaseResponse</b>" model.
 
