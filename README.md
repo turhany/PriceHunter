@@ -89,4 +89,8 @@ Infrastructure Infrastructure
 
 ###### See Local Development Docker Codes [here](README_LOCALDEVDOCKER.md)
 
+###### DB, Distributed Cache - Lock, Message Queue Settings  [here](README_CONFIG.md)
+
+###### Sample Data Flow (Usage)  [here](README_USAGE.md)
+
 ###### See URLS [here](README_URLS.md)

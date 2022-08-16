@@ -308,98 +308,44 @@ public class SupplierViewModel
 }
 ``` 
 
-<!-- #### Update Product > {url}/products/{id} - PUT
-```cs
-//Request
-public class UpdateProductRequest{
-    public string Name {get; set;}
-    public IFormFile Image {get; set;} 
-    List<UrlSupplierMappingViewModel> UrlSupplierMapping {get; set;}
-}
-
-public class UrlSupplierMappingViewModel{
-    public string Url {get; set;}
-    public SupplierType SupplierType {get; set;}
-}
-``` 
-
-#### Read/Get Product > {url}/products/{id} - GET
-```cs
-//Response model in BaseResponse > Data
-public class ProductViewModel{
-    public Guid Id {get; set;}
-    public string Name {get; set;} 
-    public string Image {get; set}
-    public double CurrentPrice {get; set;}
-    public string CurrentMinMarket {get; set;} 
-}
-``` 
-
-#### Delete Product > {url}/products/{id} - DELETE
-No need extra info. Return "<b>BaseResponse</b>" model.
-
-#### Search Product > {url}/products/search - POST
-This end point get "<b>FilterRequest</b>" for search flow and return <b>PagedList</b>" base response.
-```cs
-//Response model in PagedList > Data list
-public class ProductListViewModel{
-    public Guid Id {get; set;}
-    public string Name {get; set;}
-    public string Image {get; set}
-    public double CurrentPrice {get; set;}
-    public string CurrentMinMarket {get; set;} 
-}
-``` 
-
-#### Search Product Params > {url}/products/search/params - GET
-This end point will give the options which will be use for search request.
-```cs
-//Response model in PagedList > Data list
-public class ProductSearchParamsViewModel{
-    public List<int, String> SupplierTypes {get; set;} 
-}
-``` 
-
-#### Get Product Trend> {url}/products/trend/last6month/{id} - GET
-```cs
-//Response model in BaseResponse > Data = List of ProductTrendModel
-public class ProductTrendViewModel{
-    public int Order {get; set;} 
-    public string Month {get; set;}  
-    public double Price {get; set;} 
-}
-``` 
-
-#### Get User Profile> {url}/users/profile/{id} - GET
-```cs
-//Response model in BaseResponse > Data
-public class UserViewModel{
-    public int Id {get; set;} 
-    public string Image {get; set;}
-    public string FirstName {get; set;}  
-    public string LastName {get; set;} 
-}
-```  -->
-
 ## Define all consumers and their interfaces
-Consumers will consume all producer events.
+#### Price parser consumer event model
+```cs
+public class SendParserCommand
+{
+    public Guid ProductId { get; set; }
+    public Guid SupplierId { get; set; }
+    public string Url { get; set; }
+    public int EnumMapping { get; set; }
+    public DateTime RequestTime { get; set; }
+}
+``` 
+#### Notification consumer event model
+```cs
+public class SendNotificationCommand
+{
+    public Guid ProductId { get; set; }
+}
+``` 
+
 
 ## Define all producers and their interfaces
+#### Price parser consumer event model
 ```cs
-public class ProductPriceChangedEvent{
-    public int Id {get; set;} 
-    public int Name {get; set;} 
-    public string NewPrice {get; set;}
-    public string Url {get; set;}
-    public SupplierType SupplierType {get; set;}
+public class SendParserCommand
+{
+    public Guid ProductId { get; set; }
+    public Guid SupplierId { get; set; }
+    public string Url { get; set; }
+    public int EnumMapping { get; set; }
+    public DateTime RequestTime { get; set; }
 }
 ``` 
+#### Notification consumer event model
 ```cs
-public class CheckProductPriceEvent{
-    public int Id {get; set;} 
-    public int Name {get; set;} 
-    public string Url {get; set;}
-    public SupplierType SupplierType {get; set;}
+public class SendNotificationCommand
+{
+    public Guid ProductId { get; set; }
 }
 ``` 
 

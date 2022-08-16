@@ -34,9 +34,9 @@ namespace PriceHunter.Business.TestData.Concrete
         {
             var user = new Model.User.User
             {
-                FirstName = "Türhan",
-                LastName = "Yıldırım",
-                Email = "yildirimturhan@gmail.com",
+                FirstName = "User",
+                LastName = "PriceHunter",
+                Email = "user@pricehunter.com",
                 Password = BCrypt.Net.BCrypt.HashPassword("123456789.tY"),
                 Type = Model.User.UserType.Root
             };
