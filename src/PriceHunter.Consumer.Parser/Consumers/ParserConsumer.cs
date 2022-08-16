@@ -25,12 +25,12 @@ namespace PriceHunter.Consumer.Parser.Consumers
         private readonly ILifetimeScope _lifetimeScope;
 
         public ParserConsumer(
-        IGenericRepository<ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
-        IGenericRepository<ProductPriceHistory> productPriceHistoryRepository,
-        ISendEndpointProvider sendEndpointProvider,
-        IOptions<RabbitMqOption> rabbitMqOptions,
+            IGenericRepository<ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
+            IGenericRepository<ProductPriceHistory> productPriceHistoryRepository,
+            ISendEndpointProvider sendEndpointProvider,
+            IOptions<RabbitMqOption> rabbitMqOptions,
             ILogger<ProductService> logger,
-        ILifetimeScope lifetimeScope
+            ILifetimeScope lifetimeScope
         )
         {
             _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
@@ -79,9 +79,9 @@ namespace PriceHunter.Consumer.Parser.Consumers
                     Price = parsedPrice
                 });
 
-                if (parsedPrice != null && lastPriceHistoryItem.Price > parsedPrice)
+                if (lastPriceHistoryItem != null && parsedPrice != null && lastPriceHistoryItem.Price > parsedPrice)
                 {
-                    var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri($"{_rabbitMqOptions.RabbitMqUri}/{_rabbitMqOptions.ParserQueue}"));
+                    var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri($"{_rabbitMqOptions.RabbitMqUri}/{_rabbitMqOptions.NotificationQueue}"));
                     await endpoint.Send(new SendNotificationCommand
                     {
                         ProductId = context.Message.ProductId

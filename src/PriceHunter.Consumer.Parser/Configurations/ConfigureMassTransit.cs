@@ -20,6 +20,8 @@ namespace PriceHunter.Consumer.Parser.Configurations
         /// <returns></returns>
         public static IServiceCollection AddMassTransitConfigurationForConsumer(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<RabbitMqOption>(configuration.GetSection(AppConstants.RabbitMqSettingsOptionName));
+
             var rabbitMqConfig = new RabbitMqOption();
             configuration.GetSection(AppConstants.RabbitMqSettingsOptionName).Bind(rabbitMqConfig);
 

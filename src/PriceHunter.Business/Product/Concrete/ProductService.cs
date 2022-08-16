@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using MassTransit;
-using Microsoft.AspNetCore.Diagnostics;
+using MassTransit; 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PriceHunter.Business.Product.Abstract;

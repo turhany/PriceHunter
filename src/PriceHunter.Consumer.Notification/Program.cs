@@ -21,6 +21,7 @@ var hostBuilder = Host.CreateDefaultBuilder()
         builder.RegisterModule(new ApplicationModule());
         builder.RegisterModule(new RepositoryModule());
         builder.RegisterModule(new ServiceModule());
+        builder.RegisterModule(new NotificationModule());
     })
     .UseSerilog((context, conf) => conf.ReadFrom.Configuration(context.Configuration))
     .ConfigureServices((hostingContext, services) =>
@@ -30,20 +31,7 @@ var hostBuilder = Host.CreateDefaultBuilder()
         services.AddMassTransitConfigurationForConsumer(hostingContext.Configuration);
         services.AddAutoMapper(typeof(ProductMapping));
         services.AddHostedService<QueueWorker>();
-    })
-    .ConfigureAppConfiguration((hostingContext, config) =>
-    {
-        if (string.IsNullOrWhiteSpace(env))
-        {
-            env = hostingContext.HostingEnvironment.EnvironmentName;
-        }
-
-        config.AddJsonFile($"appsettings.{env}.json", true, true);
-        config.AddEnvironmentVariables();
     });
-
-//hostBuilder.Configuration.AddJsonFile($"appsettings.{hostBuilder.Environment.EnvironmentName}.json", true, true);
-//hostBuilder.Configuration.AddEnvironmentVariables();
 
 hostBuilder.UseConsoleLifetime();
 
