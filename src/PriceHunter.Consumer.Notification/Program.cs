@@ -15,6 +15,7 @@ using PriceHunter.Consumer.Notification;
 
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 var hostBuilder = Host.CreateDefaultBuilder()
+    .ConfigureAppConfiguration(x => x.AddJsonFile($"appsettings.{env}.json", true, true))
     .UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .ConfigureContainer<ContainerBuilder>(builder =>
     {
