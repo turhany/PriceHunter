@@ -91,7 +91,7 @@ namespace PriceHunter.Api.Controllers.V1
         /// <returns></returns>
         [HttpPost("search")]
         [Authorize(Roles = "Root")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel))]
         public async Task<ActionResult> Search([FromBody] FilteryRequest request)
         {
             var result = await _userService.SearchAsync(request);
