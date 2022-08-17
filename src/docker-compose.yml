@@ -6,7 +6,7 @@ networks:
 
 services:
   PriceHunter.api:
-    image: ${DOCKER_REGISTRY-}pricehunter
+    image: ${DOCKER_REGISTRY-}pricehunterapi
     restart : always
     depends_on:
       - "database_mongo"
@@ -22,22 +22,22 @@ services:
     networks:
       - bridge-network
 
-  PriceHunter.scheduleService:
-    image: ${DOCKER_REGISTRY-}pricehunterscheduleservice
-    restart: always
-    depends_on:
-      - "database_mongo"
-      - "database_redis"
-      - "message_rabbitmq"
-    build:
-      context: .
-      dockerfile: PriceHunter.ScheduleService/Dockerfile
-    ports:
-      - "5001:80"
-    environment:
-      ASPNETCORE_ENVIRONMENT: "DockerCompose"
-    networks:
-      - bridge-network
+   PriceHunter.scheduleService:
+     image: ${DOCKER_REGISTRY-}pricehunterscheduleservice
+     restart: always
+     depends_on:
+       - "database_mongo"
+       - "database_redis"
+       - "message_rabbitmq"
+     build:
+       context: .
+       dockerfile: PriceHunter.ScheduleService/Dockerfile
+     ports:
+       - "5001:80"
+     environment:
+       ASPNETCORE_ENVIRONMENT: "DockerCompose"
+     networks:
+       - bridge-network
 
   PriceHunter.consumer.notification:
     image: ${DOCKER_REGISTRY-}pricehunterconsumernotification

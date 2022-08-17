@@ -15,6 +15,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
         builder.RegisterModule(new ApplicationModule());
         builder.RegisterModule(new RepositoryModule());
         builder.RegisterModule(new ServiceModule());
+        builder.RegisterModule(new ParserModule());
+        builder.RegisterModule(new NotificationModule());
     });
 
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);

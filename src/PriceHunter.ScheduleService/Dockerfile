@@ -15,6 +15,14 @@ COPY ["PriceHunter.Contract/PriceHunter.Contract.csproj", "PriceHunter.Contract/
 COPY ["PriceHunter.Model/PriceHunter.Model.csproj", "PriceHunter.Model/"]
 COPY ["PriceHunter.Data.MongoDB/PriceHunter.Data.MongoDB.csproj", "PriceHunter.Data.MongoDB/"]
 COPY ["PriceHunter.Data/PriceHunter.Data.csproj", "PriceHunter.Data/"]
+COPY ["PriceHunter.Notification.Email/PriceHunter.Notification.Email.csproj", "PriceHunter.Notification.Email/"]
+COPY ["PriceHunter.Notification/PriceHunter.Notification.csproj", "PriceHunter.Notification/"]
+COPY ["PriceHunter.Notification.MobilePush/PriceHunter.Notification.MobilePush.csproj", "PriceHunter.Notification.MobilePush/"]
+COPY ["PriceHunter.Notification.Sms/PriceHunter.Notification.Sms.csproj", "PriceHunter.Notification.Sms/"]
+COPY ["PriceHunter.Parser.Alibaba/PriceHunter.Parser.Alibaba.csproj", "PriceHunter.Parser.Alibaba/"]
+COPY ["PriceHunter.Parser/PriceHunter.Parser.csproj", "PriceHunter.Parser/"]
+COPY ["PriceHunter.Parser.AliExpress/PriceHunter.Parser.AliExpress.csproj", "PriceHunter.Parser.AliExpress/"]
+COPY ["PriceHunter.Parser.Amazon/PriceHunter.Parser.Amazon.csproj", "PriceHunter.Parser.Amazon/"]
 RUN dotnet restore "PriceHunter.ScheduleService/PriceHunter.ScheduleService.csproj"
 COPY . .
 WORKDIR "/src/PriceHunter.ScheduleService"
