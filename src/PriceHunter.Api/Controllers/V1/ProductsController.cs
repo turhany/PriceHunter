@@ -111,5 +111,16 @@ namespace PriceHunter.Api.Controllers.V1
             return ApiResponse.CreateResult(result);
         }
 
+        /// <summary>
+        /// Get Product
+        /// </summary>
+        [HttpGet("last6monthchanges/{id:guid}")]
+        [Authorize(Roles = "Root")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductPriceChangesViewModel))]
+        public async Task<ActionResult> Last6MonthChanges(Guid id)
+        {
+            var result = await _productService.GetLastNMonthChangesAsync(id, 6);
+            return ApiResponse.CreateResult(result);
+        }
     }
 }

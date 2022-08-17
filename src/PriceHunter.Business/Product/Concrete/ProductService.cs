@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Filtery.Extensions;
 using Filtery.Models;
-using MassTransit; 
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PriceHunter.Business.Product.Abstract;
@@ -414,6 +414,45 @@ namespace PriceHunter.Business.Product.Concrete
             {
                 _logger.LogError(ex, ex.Message);
             }
+        }
+
+        public async Task<ServiceResult<List<ProductPriceChangesViewModel>>> GetLastNMonthChangesAsync(Guid id, int monthCount)
+        {
+            if (!await _productRepository.AnyAsync(p => p.Id == id && p.IsDeleted == false))
+            {
+                return new ServiceResult<List<ProductPriceChangesViewModel>>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.Product)
+                };
+            }
+
+            var groupedPriceHistory = _productPriceHistoryRepository
+                                    .Find(P => P.ProductId == id && P.IsDeleted == false)
+                                    .OrderByDescending(p => p.CreatedBy)
+                                    .GroupBy(p => new { p.Year, p.Month })
+                                    .Select(p => new { Year = p.Key.Year, Month = p.Key.Month, Price = p.Average(x => x.Price) })
+                                    .Take(monthCount)
+                                    .ToList();
+
+            var response = new List<ProductPriceChangesViewModel>();
+
+            if (groupedPriceHistory != null && groupedPriceHistory.Any())
+            {
+                response = groupedPriceHistory.Select(p => new ProductPriceChangesViewModel
+                {
+                    Year = p.Year,
+                    Month = p.Month,
+                    Price = p.Price
+                }).ToList();
+            }
+
+            return new ServiceResult<List<ProductPriceChangesViewModel>>
+            {
+                Status = ResultStatus.Successful,
+                Message = Resource.Retrieved(),
+                Data = response
+            };
         }
     }
 }

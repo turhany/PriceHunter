@@ -163,7 +163,7 @@ public class AccessTokenContract
 }
 ``` 
 
-#### Create Product > {url}/users - POST
+#### Create User > {url}/users - POST
 ```cs
 //Request
 public class CreateUserRequest
@@ -260,7 +260,17 @@ public class UrlSupplierMappingViewModel
     public SupplierType SupplierType { get; set; }
 }
 ``` 
-
+#### Get User Product Last 6 Month changes> {url}/userproducts/last6monthchanges/{id} - GET
+Use generic filter request - response data type
+```cs
+//Response model in BaseResponse > Data
+public class ProductPriceChangesViewModel
+{
+    public double Price { get; set; }
+    public int Year { get; set; }
+    public int Month { get; set; }
+}
+``` 
 #### Delete User Product > {url}/userproducts/{id} - DELETE
 No need extra info. Return "<b>BaseResponse</b>" model.
 
@@ -332,6 +342,17 @@ public class ProductPriceHistorySearchViewModel
 ``` 
 #### Delete Product > {url}/products/{id} - DELETE
 No need extra info. Return "<b>BaseResponse</b>" model.
+#### Get Product Last 6 Month changes> {url}/products/last6monthchanges/{id} - GET
+Use generic filter request - response data type
+```cs
+//Response model in BaseResponse > Data
+public class ProductPriceChangesViewModel
+{
+    public double Price { get; set; }
+    public int Year { get; set; }
+    public int Month { get; set; }
+}
+``` 
 
 #### Read/Get Product > {url}/suppliers/all - GET
 ```cs

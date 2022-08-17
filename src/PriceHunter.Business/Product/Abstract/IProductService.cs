@@ -16,5 +16,6 @@ namespace PriceHunter.Business.Product.Abstract
         Task<ServiceResult<ExpandoObject>> CreateAsync(CreateProductRequestServiceRequest request);
         Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request);
         Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id);
+        Task<ServiceResult<List<ProductPriceChangesViewModel>>> GetLastNMonthChangesAsync(Guid id, int monthCount);        
     }
 }

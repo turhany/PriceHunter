@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc; 
 using PriceHunter.Business.UserProduct.Abstract;
 using PriceHunter.Common.BaseModels.Api;
+using PriceHunter.Contract.App.Product;
 using PriceHunter.Contract.App.UserProduct;
 using PriceHunter.Contract.Service.UserProduct;
 
@@ -13,7 +14,7 @@ namespace PriceHunter.Api.Controllers.V1
     [ApiVersion("1.0")]
     public class UserProductsController : BaseController
     {
-        private readonly IUserProductService _userProductService;
+        private readonly IUserProductService _userProductService; 
 
         /// <summary>
         /// User Products Controller
@@ -81,6 +82,18 @@ namespace PriceHunter.Api.Controllers.V1
                 return ApiResponse.InvalidInputResult;
 
             var result = await _userProductService.DeleteAsync(id);
+            return ApiResponse.CreateResult(result);
+        }
+
+        /// <summary>
+        /// Get Product
+        /// </summary>
+        [HttpGet("last6monthchanges/{id:guid}")]
+        [Authorize(Roles = "Root")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductPriceChangesViewModel))]
+        public async Task<ActionResult> Last6MonthChanges(Guid id)
+        {
+            var result = await _userProductService.GetLastNMonthChangesAsync(id, 6);
             return ApiResponse.CreateResult(result);
         }
     }

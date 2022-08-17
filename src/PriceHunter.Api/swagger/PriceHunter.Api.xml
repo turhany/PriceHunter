@@ -188,6 +188,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.Last6MonthChanges(System.Guid)">
+            <summary>
+            Get Product
+            </summary>
+        </member>
         <member name="T:PriceHunter.Api.Controllers.V1.SuppliersController">
             <summary>
             Suppliers Controller
@@ -253,6 +258,11 @@
             Delete User Product
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.Last6MonthChanges(System.Guid)">
+            <summary>
+            Get Product
+            </summary>
         </member>
         <member name="T:PriceHunter.Api.Controllers.V1.UsersController">
             <summary>

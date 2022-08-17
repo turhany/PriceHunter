@@ -8,6 +8,7 @@ using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract;
 using PriceHunter.Common.Lock.Abstract;
 using PriceHunter.Common.Validation.Abstract;
+using PriceHunter.Contract.App.Product;
 using PriceHunter.Contract.App.UserProduct;
 using PriceHunter.Contract.Service.UserProduct;
 using PriceHunter.Model.UserProduct;
@@ -25,6 +26,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
         private readonly IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProduct> _userProductRepository;
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> _userProductSupplierMappingRepository;
+        private readonly IGenericRepository<PriceHunter.Model.Product.ProductPriceHistory> _productPriceHistoryRepository;
         private readonly ICacheService _cacheService;
         private readonly ILockService _lockService;
         private readonly IMapper _mapper;
@@ -36,6 +38,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
         IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
         IGenericRepository<PriceHunter.Model.UserProduct.UserProduct> userProductRepository,
         IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> userProductSupplierMappingRepository,
+        IGenericRepository<PriceHunter.Model.Product.ProductPriceHistory> productPriceHistoryRepository,
         ICacheService cacheService,
         ILockService lockService,
         IMapper mapper,
@@ -46,6 +49,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
             _userProductRepository = userProductRepository;
             _userProductSupplierMappingRepository = userProductSupplierMappingRepository;
+            _productPriceHistoryRepository = productPriceHistoryRepository;
             _cacheService = cacheService;
             _lockService = lockService;
             _mapper = mapper;
@@ -395,6 +399,72 @@ namespace PriceHunter.Business.UserProduct.Concrete
             {
                 Status = ResultStatus.Successful,
                 Message = Resource.Deleted(Entities.UserProduct, entity.Name)
+            };
+        }
+
+        public async Task<ServiceResult<List<ProductPriceChangesViewModel>>> GetLastNMonthChangesAsync(Guid id, int monthCount)
+        {
+            var userId = ApplicationContext.Instance.CurrentUser.Id;
+            var userProduct = await _userProductRepository.FindOneAsync(p => p.Id == id && p.UserId == userId && p.IsDeleted == false);
+
+            if (userProduct == null)
+            {
+                return new ServiceResult<List<ProductPriceChangesViewModel>>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.UserProduct)
+                };
+            }
+
+            var userProductMappings = _userProductSupplierMappingRepository.Find(p =>
+               p.UserProductId == userProduct.Id &&
+               p.UserId == userId &&
+               p.IsDeleted == false).ToList();
+
+            if (userProductMappings == null)
+            {
+                return new ServiceResult<List<ProductPriceChangesViewModel>>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.UserProduct)
+                };
+            }
+
+            List<Guid> productIds = userProductMappings.Select(p => p.ProductId.Value).ToList();
+            if (!await _productRepository.AnyAsync(p => productIds.Contains(p.Id) && p.IsDeleted == false))
+            {
+                return new ServiceResult<List<ProductPriceChangesViewModel>>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.Product)
+                };
+            }
+
+            var groupedPriceHistory = _productPriceHistoryRepository
+                                    .Find(p => productIds.Contains(p.ProductId) && p.IsDeleted == false)
+                                    .OrderByDescending(p => p.CreatedBy)
+                                    .GroupBy(p => new { p.Year, p.Month })
+                                    .Select(p => new { Year = p.Key.Year, Month = p.Key.Month, Price = p.Average(x => x.Price) })
+                                    .Take(monthCount)
+                                    .ToList();
+
+            var response = new List<ProductPriceChangesViewModel>();
+
+            if (groupedPriceHistory != null && groupedPriceHistory.Any())
+            {
+                response = groupedPriceHistory.Select(p => new ProductPriceChangesViewModel
+                {
+                    Year = p.Year,
+                    Month = p.Month,
+                    Price = p.Price
+                }).ToList();
+            }
+
+            return new ServiceResult<List<ProductPriceChangesViewModel>>
+            {
+                Status = ResultStatus.Successful,
+                Message = Resource.Retrieved(),
+                Data = response
             };
         }
     }
