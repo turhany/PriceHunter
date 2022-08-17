@@ -78,11 +78,16 @@ namespace PriceHunter.Consumer.Parser.Consumers
                     parsedPrice = parser.Parse(context.Message.Url);
                 }
 
+                var operationTime = DateTime.UtcNow;
                 await _productPriceHistoryRepository.InsertAsync(new ProductPriceHistory
                 {
                     ProductId = context.Message.ProductId,
                     SupplierId = context.Message.SupplierId,
-                    Price = parsedPrice
+                    Price = parsedPrice,
+                    Year = operationTime.Year,
+                    Month = operationTime.Month,
+                    Day = operationTime.Day,
+                    Time = operationTime.TimeOfDay
                 });
 
                 if (lastPriceHistoryItem != null && parsedPrice != null && lastPriceHistoryItem.Price > parsedPrice)
