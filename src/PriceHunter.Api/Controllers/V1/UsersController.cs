@@ -42,9 +42,9 @@ namespace PriceHunter.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Root")]
+        //[Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> CreateUser([FromBody] CreateUserRequest request)
+        public async Task<ActionResult> CreateUser(CreateUserRequest request)
         {
             if (request == null) return ApiResponse.InvalidInputResult;
 

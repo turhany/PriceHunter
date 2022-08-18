@@ -24,8 +24,6 @@
 
         public const string SupplierPriceControlCronJobTemplate = "*/{0} * * * *";
 
-        public const string Json = "json";
-
         public const string UserImageDirectory = "UserImages";
     }
 }

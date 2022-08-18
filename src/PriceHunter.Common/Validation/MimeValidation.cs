@@ -1,16 +1,28 @@
-﻿namespace ImMicro.Common.Validation
+﻿namespace PriceHunter.Common.Validation
 {
     public static class MimeValidation
     {
+        public static class MimeTypes
+        {
+            public readonly static string Jpeg = "jpeg";
+            public readonly static string Jpg = "jpg";
+            public readonly static string Png = "png";
+        }
         /// <summary>
-        /// Json
+        /// jpg | jpeg
         /// </summary>
-        private static readonly byte[] Json = {91, 13, 10, 32};
+        private static readonly byte[] Jpg = { 255, 216, 255 };
 
+        /// <summary>
+        /// png
+        /// </summary>
+        private static readonly byte[] Png = { 137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82 };
 
         private static readonly Dictionary<string, string> MimeTypesDictionary = new()
         {
-            {"json", "application/json"}
+            {"jpeg", "image/jpeg"},
+            {"jpg", "image/jpeg"},
+            {"png", "image/png"}
         };
 
         private static string GetMimeType(byte[] file, string fileName)
@@ -22,9 +34,13 @@
                 return mime;
             }
 
-            if (file.Take(4).SequenceEqual(Json))
+            if (file.Take(3).SequenceEqual(Jpg))
             {
-                mime = "application/json";
+                mime = "image/jpeg";
+            }
+            else if (file.Take(16).SequenceEqual(Png))
+            {
+                mime = "image/png";
             }
 
             return mime;

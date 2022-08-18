@@ -110,7 +110,7 @@ namespace PriceHunter.Business.User.Concrete
 
             entity = await _userRepository.InsertAsync(entity);
 
-            UploadImage(request.Image, entity.Id.ToString() + request.Image.);
+            UploadImage(request.Image, entity.Id.ToString());
 
             dynamic userWrapper = new ExpandoObject();
             userWrapper.Id = entity.Id;
@@ -365,8 +365,10 @@ namespace PriceHunter.Business.User.Concrete
                 {
                     Directory.CreateDirectory(imageFolderPath);
                 }
-                
-                var fileFullPath = Path.Combine(imageFolderPath, fileName);
+
+                FileInfo imageFileInfo = new FileInfo(image.FileName);
+
+                var fileFullPath = Path.Combine(imageFolderPath, $"{fileName}{imageFileInfo.Extension}");
 
                 using (var stream = new FileStream(fileFullPath, FileMode.Create))
                 {

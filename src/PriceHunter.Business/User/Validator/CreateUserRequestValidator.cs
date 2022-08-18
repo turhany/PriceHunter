@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
-using ImMicro.Common.Validation;
+using PriceHunter.Common.Validation;
 using Microsoft.AspNetCore.Http;
 using PriceHunter.Common.Constans;
 using PriceHunter.Contract.Service.User;
@@ -36,7 +36,7 @@ namespace PriceHunter.Business.User.Validator
 
             RuleFor(x => x.Image)                    
                 .Must(IsHaveExtension).WithMessage("Extension can't be null.")
-                .Must(file => IsValidMime(file, new[] { AppConstants.Json })).WithMessage("Wrong file type!")
+                .Must(file => IsValidMime(file, new[] { MimeValidation.MimeTypes.Jpeg, MimeValidation.MimeTypes.Jpg, MimeValidation.MimeTypes.Png })).WithMessage("Wrong file type!")
                 .When(p => p.Image != null);
         }
 
