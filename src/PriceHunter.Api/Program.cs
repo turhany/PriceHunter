@@ -1,5 +1,5 @@
 using Autofac;
-using Autofac.Extensions.DependencyInjection; 
+using Autofac.Extensions.DependencyInjection;
 using PriceHunter.Api.Configurations.Startup;
 using PriceHunter.Api.Middlewares;
 using PriceHunter.Common.Application;
@@ -30,6 +30,7 @@ builder.Services.AddIdentityConfigurations(builder.Configuration);
 builder.Services.AddLocalizationsConfigurations();
 builder.Services.AddDistributedCacheConfiguration(builder.Configuration);
 builder.Services.Configure<MongoDBOption>(builder.Configuration.GetSection("mongo")); 
+builder.Services.AddStaticFileConfiguration(builder.Configuration);
 builder.Services.AddCorsConfigurations();
 builder.Services.AddCompressionConfiguration();
 builder.Services.AddControllers().AddNewtonsoftJson();
@@ -50,13 +51,14 @@ app.UseHealthCheckConfiguration();
 app.UseSecuritySettings();
 app.UseRouting();
 app.UseCompressionConfiguration();
-app.UseStaticFiles();
+app.UseStaticFileConfiguration(builder.Configuration);
 app.UseCorsConfiguration();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseRateLimitingConfiguration(builder.Configuration);
 app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
 
 ApplicationContext.Configure(app.Services.GetRequiredService<IHttpContextAccessor>());
 ApplicationContext.ConfigureThreadPool(builder.Configuration);

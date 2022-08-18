@@ -2,7 +2,6 @@
 using FluentValidation.Validators;
 using PriceHunter.Common.Validation;
 using Microsoft.AspNetCore.Http;
-using PriceHunter.Common.Constans;
 using PriceHunter.Contract.Service.User;
 using PriceHunter.Resources.Service;
   

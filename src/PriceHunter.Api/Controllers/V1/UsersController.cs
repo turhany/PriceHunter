@@ -29,7 +29,7 @@ namespace PriceHunter.Api.Controllers.V1
         /// Get User
         /// </summary>
         [HttpGet("{id:guid}")]
-        [Authorize(Roles = "Root")]
+        //[Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel))]
         public async Task<ActionResult> Get(Guid id)
         {
@@ -44,7 +44,7 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpPost]
         //[Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> CreateUser(CreateUserRequest request)
+        public async Task<ActionResult> CreateUser([FromForm]CreateUserRequest request)
         {
             if (request == null) return ApiResponse.InvalidInputResult;
 
@@ -59,7 +59,7 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpPut("{id:guid}")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> UpdateUser([FromBody] UpdateUserRequest request, Guid id)
+        public async Task<ActionResult> UpdateUser([FromForm] UpdateUserRequest request, Guid id)
         {
             if (request == null) return ApiResponse.InvalidInputResult;
             var model = Mapper.Map<UpdateUserRequestServiceRequest>(request);

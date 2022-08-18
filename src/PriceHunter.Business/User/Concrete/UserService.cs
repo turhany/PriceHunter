@@ -3,6 +3,8 @@ using Filtery.Extensions;
 using Filtery.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PriceHunter.Business.User.Abstract;
 using PriceHunter.Business.User.Validator;
 using PriceHunter.Common.Application;
@@ -13,6 +15,7 @@ using PriceHunter.Common.Cache.Abstract;
 using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract;
 using PriceHunter.Common.Lock.Abstract;
+using PriceHunter.Common.Options;
 using PriceHunter.Common.Pager;
 using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Contract.App.User;
@@ -34,14 +37,18 @@ namespace PriceHunter.Business.User.Concrete
         private readonly IMapper _mapper;
         private readonly IValidationService _validationService;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<UserService> _logger;
+        FileConfigurationOptions _fileConfigurationOptions;
 
         public UserService(
-            IGenericRepository<Model.User.User> userRepository, 
+            IGenericRepository<Model.User.User> userRepository,
             ICacheService cacheService,
             ILockService lockService,
             IMapper mapper,
             IValidationService validationService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ILogger<UserService> logger,
+            IOptions<FileConfigurationOptions> fileConfigurationOptions)
         {
             _userRepository = userRepository;
             _cacheService = cacheService;
@@ -49,6 +56,8 @@ namespace PriceHunter.Business.User.Concrete
             _mapper = mapper;
             _validationService = validationService;
             _configuration = configuration;
+            _logger = logger;
+            _fileConfigurationOptions = fileConfigurationOptions.Value;
         }
 
         #region CRUD Operations
@@ -68,11 +77,14 @@ namespace PriceHunter.Business.User.Concrete
                 };
             }
 
+            var response = _mapper.Map<UserViewModel>(user);
+            response.Image = string.IsNullOrWhiteSpace(user.Image) ? user.Image : Path.Combine(_fileConfigurationOptions.UserProfileVirtualPath, user.Image);
+
             return new ServiceResult<UserViewModel>
             {
                 Status = ResultStatus.Successful,
                 Message = Resource.Retrieved(),
-                Data = _mapper.Map<UserViewModel>(user)
+                Data = response
             };
         }
         public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request)
@@ -99,18 +111,18 @@ namespace PriceHunter.Business.User.Concrete
                 };
             }
 
+            var imageName = UploadImage(request.Image);
             var entity = new Model.User.User
             {
                 FirstName = request.FirstName.Trim(),
                 LastName = request.LastName.Trim(),
                 Email = request.Email.Trim().ToLowerInvariant(),
                 Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                Type = Model.User.UserType.Root //TODO: this need to be change as your logic
+                Type = Model.User.UserType.Root, //TODO: this need to be change as your logic                
+                Image = imageName
             };
 
             entity = await _userRepository.InsertAsync(entity);
-
-            UploadImage(request.Image, entity.Id.ToString());
 
             dynamic userWrapper = new ExpandoObject();
             userWrapper.Id = entity.Id;
@@ -122,7 +134,6 @@ namespace PriceHunter.Business.User.Concrete
                 Data = userWrapper
             };
         }
-         
         public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request)
         {
             var validationResponse = _validationService.Validate(typeof(UpdateUserRequestValidator), request);
@@ -167,6 +178,11 @@ namespace PriceHunter.Business.User.Concrete
                 entity.LastName = request.LastName.Trim();
                 entity.Email = request.Email;
                 entity.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+                if (request.Image != null)
+                {
+                    entity.Image = UploadImage(request.Image);
+                }
 
                 entity = await _userRepository.UpdateAsync(entity);
 
@@ -236,6 +252,8 @@ namespace PriceHunter.Business.User.Concrete
                     TotalItemCount = filteryResponse.TotalItemCount
                 }
             };
+
+            response.Data.ForEach(p => p.Image = string.IsNullOrWhiteSpace(p.Image) ? p.Image : Path.Combine(_fileConfigurationOptions.UserProfileVirtualPath, p.Image));
 
             return new ServiceResult<PagedList<UserViewModel>>
             {
@@ -355,26 +373,36 @@ namespace PriceHunter.Business.User.Concrete
 
         #endregion
 
-        private void UploadImage(IFormFile image, string fileName)
+        private string UploadImage(IFormFile image)
         {
+            string fileName = null;
             if (image != null)
             {
-                var imageFolderPath = $"{Directory.GetCurrentDirectory()}\\{_configuration[AppConstants.UserImageDirectory]}";
-
-                if (!Directory.Exists(imageFolderPath))
+                try
                 {
-                    Directory.CreateDirectory(imageFolderPath);
+                    var imageFolderPath = $"{Directory.GetCurrentDirectory()}\\{_fileConfigurationOptions.UserProfilePhysicalPath}";
+
+                    if (!Directory.Exists(imageFolderPath))
+                    {
+                        Directory.CreateDirectory(imageFolderPath);
+                    }
+
+                    FileInfo imageFileInfo = new FileInfo(image.FileName);
+
+                    fileName = $"{Guid.NewGuid().ToString()}{imageFileInfo.Extension}";
+                    var fileFullPath = Path.Combine(imageFolderPath, fileName);
+
+                    using (var stream = new FileStream(fileFullPath, FileMode.Create))
+                    {
+                        image.CopyTo(stream);
+                    }
                 }
-
-                FileInfo imageFileInfo = new FileInfo(image.FileName);
-
-                var fileFullPath = Path.Combine(imageFolderPath, $"{fileName}{imageFileInfo.Extension}");
-
-                using (var stream = new FileStream(fileFullPath, FileMode.Create))
+                catch (Exception ex)
                 {
-                    image.CopyTo(stream);
+                    _logger.LogError(ex.Message, ex);
                 }
             }
+            return fileName;
         }
     }
 }

@@ -16,6 +16,8 @@
         public const string RedLockSettingsOptionName = "RedLockSettings";
         public const string IPRateLimitingOptionName = "RateLimiting:IpRateLimiting";
         public const string RateLimitingModeOptionName = "RateLimiting:RateLimitingMode";
+        public const string FileConfigurationsOptionName = "FileConfigurations";
+        
 
         public const string ClaimTypesId = "Id";
         public const string SymmetricKey = "!#_PriceHunter_Symmetric_Key_2022_!#";
