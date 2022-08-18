@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Filtery.Extensions;
-using Filtery.Models; 
+using Filtery.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using PriceHunter.Business.User.Abstract;
 using PriceHunter.Business.User.Validator;
 using PriceHunter.Common.Application;
@@ -31,19 +33,22 @@ namespace PriceHunter.Business.User.Concrete
         private readonly ILockService _lockService;
         private readonly IMapper _mapper;
         private readonly IValidationService _validationService;
+        private readonly IConfiguration _configuration;
 
         public UserService(
             IGenericRepository<Model.User.User> userRepository, 
             ICacheService cacheService,
             ILockService lockService,
             IMapper mapper,
-            IValidationService validationService)
+            IValidationService validationService,
+            IConfiguration configuration)
         {
             _userRepository = userRepository;
             _cacheService = cacheService;
             _lockService = lockService;
             _mapper = mapper;
             _validationService = validationService;
+            _configuration = configuration;
         }
 
         #region CRUD Operations
@@ -105,6 +110,8 @@ namespace PriceHunter.Business.User.Concrete
 
             entity = await _userRepository.InsertAsync(entity);
 
+            UploadImage(request.Image, entity.Id.ToString() + request.Image.);
+
             dynamic userWrapper = new ExpandoObject();
             userWrapper.Id = entity.Id;
 
@@ -115,6 +122,7 @@ namespace PriceHunter.Business.User.Concrete
                 Data = userWrapper
             };
         }
+         
         public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request)
         {
             var validationResponse = _validationService.Validate(typeof(UpdateUserRequestValidator), request);
@@ -346,5 +354,25 @@ namespace PriceHunter.Business.User.Concrete
         }
 
         #endregion
+
+        private void UploadImage(IFormFile image, string fileName)
+        {
+            if (image != null)
+            {
+                var imageFolderPath = $"{Directory.GetCurrentDirectory()}\\{_configuration[AppConstants.UserImageDirectory]}";
+
+                if (!Directory.Exists(imageFolderPath))
+                {
+                    Directory.CreateDirectory(imageFolderPath);
+                }
+                
+                var fileFullPath = Path.Combine(imageFolderPath, fileName);
+
+                using (var stream = new FileStream(fileFullPath, FileMode.Create))
+                {
+                    image.CopyTo(stream);
+                }
+            }
+        }
     }
 }
