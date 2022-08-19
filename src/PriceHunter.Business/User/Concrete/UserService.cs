@@ -181,6 +181,7 @@ namespace PriceHunter.Business.User.Concrete
 
                 if (request.Image != null)
                 {
+                    DeleteImage(entity.Image);
                     entity.Image = UploadImage(request.Image);
                 }
 
@@ -228,6 +229,7 @@ namespace PriceHunter.Business.User.Concrete
             using (await _lockService.CreateLockAsync(lockKey))
             {
                 await _userRepository.DeleteAsync(entity);
+                DeleteImage(entity.Image);
 
                 await _cacheService.RemoveAsync(cacheKey);
             }
@@ -395,7 +397,7 @@ namespace PriceHunter.Business.User.Concrete
                     using (var stream = new FileStream(fileFullPath, FileMode.Create))
                     {
                         image.CopyTo(stream);
-                    }
+                    }          
                 }
                 catch (Exception ex)
                 {
@@ -403,6 +405,18 @@ namespace PriceHunter.Business.User.Concrete
                 }
             }
             return fileName;
+        }
+        private void DeleteImage(string imageName)
+        {
+            if (!string.IsNullOrWhiteSpace(imageName))
+            {
+                var imageFolderPath = $"{Directory.GetCurrentDirectory()}\\{_fileConfigurationOptions.UserProfilePhysicalPath}";
+                var oldImageFileFullPath = Path.Combine(imageFolderPath, imageName);
+                if (File.Exists(oldImageFileFullPath))
+                {
+                    File.Delete(oldImageFileFullPath);
+                }
+            }
         }
     }
 }
