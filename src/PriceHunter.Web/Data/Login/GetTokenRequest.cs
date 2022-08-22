@@ -2,6 +2,7 @@
 
 namespace PriceHunter.Web.Data.Login
 {
+    [Serializable]
     public class GetTokenRequest
     {
         [Required]

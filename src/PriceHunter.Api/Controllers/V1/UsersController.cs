@@ -57,9 +57,9 @@ namespace PriceHunter.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPut("{id:guid}")]
-        [Authorize(Roles = "Root")]
+        //[Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> UpdateUser([FromForm] UpdateUserRequest request, Guid id)
+        public async Task<ActionResult> UpdateUser([FromBody]UpdateUserRequest request, Guid id)
         {
             if (request == null) return ApiResponse.InvalidInputResult;
             var model = Mapper.Map<UpdateUserRequestServiceRequest>(request);

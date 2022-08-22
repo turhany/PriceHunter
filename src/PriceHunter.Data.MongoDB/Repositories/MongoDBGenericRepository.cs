@@ -145,7 +145,7 @@ namespace PriceHunter.Data.MongoDB.Repositories
             Guid? currentUserId = null;
             try
             {
-                currentUserId = ApplicationContext.Instance.CurrentUser.Id;
+                //currentUserId = ApplicationContext.Instance.CurrentUser.Id; //TODO: open it later
             }
             catch
             {

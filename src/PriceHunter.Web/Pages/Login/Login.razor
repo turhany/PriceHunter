@@ -1,11 +1,12 @@
 ﻿@page "/Login"
 
 @using PriceHunter.Web.Data.Login
-@inject ILocalStorageService LocalStorage
-@inject NavigationManager NavigationManager
-@inject AuthenticationStateProvider AuthStateProvider
-@inject IToastService ToastService
-@inject HttpClient Http
+@using static PriceHunter.Web.Helpers.HttpRequester
+@inject ILocalStorageService _localStorage
+@inject NavigationManager _navigationManager
+@inject AuthenticationStateProvider _authStateProvider
+@inject IToastService _toastService
+@inject HttpClient _http
 
 <h3>Login</h3>
 
@@ -21,7 +22,7 @@
         <InputText id="password" @bind-Value="model.Password" type="password" class="form-control" style="width:50%;"></InputText>
     </div>
     <br />
-    <button type="submit" class="btn btn-primary" @on>Login</button>
+    <button type="submit" class="btn btn-primary">Login</button>
 </EditForm>
 
 @code {
@@ -31,39 +32,46 @@
     {
         try
         {
-            var result = await Http.PostAsJsonAsync(AppConstants.V1ApiTokenUrl, model);
-            var response = await result.Content.ReadFromJsonAsync<DataResponse<GetTokenResponse>>();
+            var httpRequester = new HttpRequester(_http, _toastService);
 
-            Console.WriteLine(model.Email);
-            Console.WriteLine(model.Password);
+            var result = await httpRequester.PostAsync<GetTokenRequest, GetTokenResponse>(AppConstants.V1ApiTokenUrl, model);
+            if (result.IsSuccess)
+            {
+                await _localStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, result.Response.Data);
+                await _authStateProvider.GetAuthenticationStateAsync();
+                _navigationManager.NavigateTo(NavigationConstants.UserProfile);
+            }
 
-            if (response.Status == ServiceStatusMessages.Success)
-            {
-                await LocalStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, response.Data);
-                await AuthStateProvider.GetAuthenticationStateAsync();
-                NavigationManager.NavigateTo(NavigationConstants.UserProfile);
-            }
-            else
-            {
-                var errorMessageBuilder = new StringBuilder();
-                if (!string.IsNullOrEmpty(response.Message))
-                {
-                    errorMessageBuilder.AppendLine(response.Message);
-                }
-                if (response.ValidationMessages != null && response.ValidationMessages.Any())
-                {
-                    foreach (var error in response.ValidationMessages)
-                    {
-                        errorMessageBuilder.AppendLine(error);
-                    }
-                }
-                
-                ToastService.ShowError(errorMessageBuilder.ToString()); 
-            }
+            //var result = await _http.PostAsJsonAsync(AppConstants.V1ApiTokenUrl, model);
+            //var response = await result.Content.ReadFromJsonAsync<DataResponse<GetTokenResponse>>();
+
+            //if (response.Status == ServiceStatusMessages.Success)
+            //{
+            //    await _localStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, response.Data);
+            //    await _authStateProvider.GetAuthenticationStateAsync();
+            //    _navigationManager.NavigateTo(NavigationConstants.UserProfile);
+            //}
+            //else
+            //{
+            //    var errorMessageBuilder = new StringBuilder();
+            //    if (!string.IsNullOrEmpty(response.Message))
+            //    {
+            //        errorMessageBuilder.AppendLine(response.Message);
+            //    }
+            //    if (response.ValidationMessages != null && response.ValidationMessages.Any())
+            //    {
+            //        foreach (var error in response.ValidationMessages)
+            //        {
+            //            errorMessageBuilder.AppendLine(error);
+            //        }
+            //    }
+
+            //    _toastService.ShowError(errorMessageBuilder.ToString());
+            //}
         }
         catch (Exception ex)
         {
-            ToastService.ShowError(ex.Message); 
+            _toastService.ShowError(ex.Message);
         }
     }
 }

@@ -34,7 +34,8 @@ namespace PriceHunter.ScheduleService.Configurations
                         BackupStrategy = new CollectionMongoBackupStrategy()
                     },
                     Prefix = "Hangfire",
-                    CheckConnection = true
+                    CheckConnection = true,
+                    CheckQueuedJobsStrategy = CheckQueuedJobsStrategy.TailNotificationsCollection
                 })
             );
 

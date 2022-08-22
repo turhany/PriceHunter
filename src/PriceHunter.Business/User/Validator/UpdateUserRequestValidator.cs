@@ -22,14 +22,13 @@ namespace PriceHunter.Business.User.Validator
                 .MaximumLength(320).WithMessage(string.Format(ServiceResponseMessage.PROPERTY_MAX_LENGTH_ERROR, "Email", 320))
                 .EmailAddress(EmailValidationMode.Net4xRegex).WithMessage(string.Format(ServiceResponseMessage.PROPERTY_INVALID, "Email"));
 
-            RuleFor(request => request.Password)
-                .NotEmpty()
-                .WithMessage(string.Format(ServiceResponseMessage.PROPERTY_REQUIRED, "Password"))
+            RuleFor(request => request.Password)                
                 .MinimumLength(8)
                 .Matches("[A-Z]").WithMessage("'Password' must contain one or more capital letters.")
                 .Matches("[a-z]").WithMessage("'Password' must contain one or more lowercase letters.")
                 .Matches(@"\d").WithMessage("'Password' must contain one or more digits.")
-                .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("'Password' must contain one or more special characters.");
+                .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("'Password' must contain one or more special characters.")
+                .When(p => !string.IsNullOrWhiteSpace(p.Password));
         }
     }
 }

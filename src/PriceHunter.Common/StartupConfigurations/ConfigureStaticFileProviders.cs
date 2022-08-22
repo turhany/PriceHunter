@@ -36,6 +36,13 @@ namespace PriceHunter.Common.StartupConfigurations
         { 
             var fileConfigurations = new FileConfigurationOptions();
             configuration.GetSection(AppConstants.FileConfigurationsOptionName).Bind(fileConfigurations);
+
+            var imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), fileConfigurations.UserProfilePhysicalPath);
+
+            if (!Directory.Exists(imageFolderPath))
+            {
+                Directory.CreateDirectory(imageFolderPath);
+            }
              
             app.UseStaticFiles(new StaticFileOptions()
             {

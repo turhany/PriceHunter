@@ -1,8 +1,172 @@
 ﻿@page "/User/Profile"
-@attribute [Authorize(Roles ="Root")]
+@using PriceHunter.Web.Data.User.Api
+
+@using PriceHunter.Web.Data.Login
+@using PriceHunter.Web.Data.User.App
+@using PriceHunter.Web.Data.User.Api
+@using System.Net.Http.Headers
+@inject IToastService _toastService
+@inject HttpClient _http
+
+@attribute [Authorize]
 
 <h3>Profile</h3>
 
+<EditForm Model="model" OnValidSubmit="@HandleSave">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="firstname">First Name</label>
+        <InputText id="firstname" @bind-Value="model.FirstName" class="form-control" style="width:50%;"></InputText>
+        <br />
+    </div>
+    <div class="form-group">
+        <label for="lastname">Last Name</label>
+        <InputText id="lastname" @bind-Value="model.LastName" class="form-control" style="width:50%;"></InputText>
+        <br />
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="model.Email" class="form-control" style="width:50%;" disabled="true"></InputText>
+        <br />
+    </div>
+    <div class="form-group">
+        <label for="type">Type</label>
+        <InputText id="type" @bind-Value="model.Type" class="form-control" style="width:50%;" disabled="true"></InputText>
+        <br />
+    </div>
+    <div class="form-group">
+        <label for="type">Image</label>        
+        @if (!string.IsNullOrWhiteSpace(model.Image))
+        {
+            <br />
+           <img src="@model.Image" alt="Profile Image" />
+        }
+        <br />
+        <InputFile OnChange="@((InputFileChangeEventArgs args) => OnInputFileChange(args))" style="width:50%;" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" @on>Save</button>
+</EditForm>
+
+
 @code {
-    
+    UserViewModel model = new UserViewModel();
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authState { get; set; }
+    private string UserId { get; set; }
+    private string RequestUrl { get; set; }
+    public IBrowserFile SelectedFile { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            UserId = (await authState).User.Claims.FirstOrDefault(p => p.Type == ClaimConstants.Id)?.Value;
+            RequestUrl = string.Format(AppConstants.V1UserUrl, UserId);
+
+            var httpRequester = new HttpRequester(_http, _toastService);
+
+            var result = await httpRequester.GetAsync<UserApiModel>(RequestUrl);
+            if (result.IsSuccess)
+            {
+                model.FirstName = result.Response.Data.FirstName;
+                model.LastName = result.Response.Data.LastName;
+                model.Email = result.Response.Data.Email;
+                model.Type = result.Response.Data.Type;
+                model.Image = result.Response.Data.Image;
+            }
+
+            //var result = await _http.GetAsync(requestUrl);
+            //var response = await result.Content.ReadFromJsonAsync<DataResponse<UserResponse>>();
+
+            //if (response.Status == ServiceStatusMessages.Success)
+            //{
+            //    model.FirstName = response.Data.FirstName;
+            //    model.LastName = response.Data.LastName;
+            //    model.Email = response.Data.Email;
+            //    model.Type = response.Data.Type;
+            //}
+            //else
+            //{
+            //    var errorMessageBuilder = new StringBuilder();
+            //    if (!string.IsNullOrEmpty(response.Message))
+            //    {
+            //        errorMessageBuilder.AppendLine(response.Message);
+            //    }
+            //    if (response.ValidationMessages != null && response.ValidationMessages.Any())
+            //    {
+            //        foreach (var error in response.ValidationMessages)
+            //        {
+            //            errorMessageBuilder.AppendLine(error);
+            //        }
+            //    }
+
+            //    _toastService.ShowError(errorMessageBuilder.ToString());
+            //}
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.Message);
+        }
+    }
+
+    private async void HandleSave()
+    {
+        try
+        { 
+            var httpRequester = new HttpRequester(_http, _toastService);
+
+            var requestModel = new UserUpdateApiModel(){
+                FirstName = model.FirstName,
+                LastName = model.LastName, 
+                Email = model.Email,
+                //Password = string.Empty
+                //Type = model.Type
+            };
+
+            var result = await httpRequester.PutAsync<UserUpdateApiModel, dynamic>(RequestUrl, requestModel);
+            if (result.IsSuccess)
+            {
+                _toastService.ShowSuccess(result.Response.Message);
+            }
+
+            //var requestUrl = string.Format(AppConstants.V1UserUrl, UserId);
+            //var result = await _http.PutAsJsonAsync(requestUrl, model);
+            //var response = await result.Content.ReadFromJsonAsync<BaseResponse>();
+
+            //if (response.Status == ServiceStatusMessages.Success)
+            //{
+            //    _toastService.ShowSuccess(response.Message);
+            //}
+            //else
+            //{
+            //    var errorMessageBuilder = new StringBuilder();
+            //    if (!string.IsNullOrEmpty(response.Message))
+            //    {
+            //        errorMessageBuilder.AppendLine(response.Message);
+            //    }
+            //    if (response.ValidationMessages != null && response.ValidationMessages.Any())
+            //    {
+            //        foreach (var error in response.ValidationMessages)
+            //        {
+            //            errorMessageBuilder.AppendLine(error);
+            //        }
+            //    }
+
+            //    _toastService.ShowError(errorMessageBuilder.ToString());
+            //}
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.Message);
+        }
+    }
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        SelectedFile = e.File;        
+        this.StateHasChanged();
+    }
 }

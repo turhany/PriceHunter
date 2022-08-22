@@ -16,13 +16,13 @@ services:
       context: .
       dockerfile: PriceHunter.Api/Dockerfile
     ports:
-      - "5010:5010"
+      - "5010:80"
     environment:
       ASPNETCORE_ENVIRONMENT: "DockerCompose"
     networks:
       - bridge-network
-
-   PriceHunter.scheduleService:
+     
+  PriceHunter.scheduleService:
      image: ${DOCKER_REGISTRY-}pricehunterscheduleservice
      restart: always
      depends_on:
@@ -48,7 +48,7 @@ services:
       - "message_rabbitmq"
     build:
       context: .
-      dockerfile: PriceHunter.Consumer/Dockerfile
+      dockerfile: PriceHunter.Consumer.Notification/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: "DockerCompose"
     networks:
@@ -63,7 +63,7 @@ services:
       - "message_rabbitmq"
     build:
       context: .
-      dockerfile: PriceHunter.Consumer/Dockerfile
+      dockerfile: PriceHunter.Consumer.Parser/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: "DockerCompose"
     networks:
@@ -76,6 +76,8 @@ services:
     restart: always
     networks:
       - bridge-network
+    environment:      
+      MONGO_INITDB_DATABASE: PriceHunterDB
 
   database_redis:
     image: "redis:alpine"

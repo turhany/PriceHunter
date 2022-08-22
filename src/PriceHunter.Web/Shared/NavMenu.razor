@@ -25,7 +25,7 @@
             </NotAuthorized>
             <Authorized >                
                 <div class="nav-item px-3">
-                    <span style="color:white;"> Welcome @context.User.Claims.FirstOrDefault(p => p.Type == "name")?.Value </span>
+                    <span style="color:white;"> Welcome @context.User.Claims.FirstOrDefault(p => p.Type == ClaimConstants.Name)?.Value </span>
                 </div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="User/Profile">

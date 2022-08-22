@@ -1,4 +1,4 @@
-﻿namespace PriceHunter.Web.Helpers
+﻿namespace PriceHunter.Web.Helpers.Constants
 {
     public static class ServiceStatusMessages
     {

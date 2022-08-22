@@ -177,13 +177,18 @@ namespace PriceHunter.Business.User.Concrete
                 entity.FirstName = request.FirstName.Trim();
                 entity.LastName = request.LastName.Trim();
                 entity.Email = request.Email;
-                entity.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-                if (request.Image != null)
+                if (string.IsNullOrWhiteSpace(request.Password))
                 {
-                    DeleteImage(entity.Image);
-                    entity.Image = UploadImage(request.Image);
-                }
+                    entity.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
+                }                
+
+                //TODO:add image update endpoint
+                //if (request.Image != null)
+                //{
+                //    DeleteImage(entity.Image);
+                //    entity.Image = UploadImage(request.Image);
+                //}
 
                 entity = await _userRepository.UpdateAsync(entity);
 
@@ -382,7 +387,7 @@ namespace PriceHunter.Business.User.Concrete
             {
                 try
                 {
-                    var imageFolderPath = $"{Directory.GetCurrentDirectory()}\\{_fileConfigurationOptions.UserProfilePhysicalPath}";
+                    var imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), _fileConfigurationOptions.UserProfilePhysicalPath);
 
                     if (!Directory.Exists(imageFolderPath))
                     {
@@ -410,7 +415,7 @@ namespace PriceHunter.Business.User.Concrete
         {
             if (!string.IsNullOrWhiteSpace(imageName))
             {
-                var imageFolderPath = $"{Directory.GetCurrentDirectory()}\\{_fileConfigurationOptions.UserProfilePhysicalPath}";
+                var imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), _fileConfigurationOptions.UserProfilePhysicalPath);
                 var oldImageFileFullPath = Path.Combine(imageFolderPath, imageName);
                 if (File.Exists(oldImageFileFullPath))
                 {
