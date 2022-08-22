@@ -63,6 +63,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Notification.Sm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.BusinessTests", "PriceHunter.BusinessTests\PriceHunter.BusinessTests.csproj", "{5B3F3338-D93E-4DFB-B674-6CA8ECCC1296}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Web", "PriceHunter.Web\PriceHunter.Web.csproj", "{CE02AD09-966A-48F5-82BF-70696CE69ACD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +159,10 @@ Global
 		{5B3F3338-D93E-4DFB-B674-6CA8ECCC1296}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B3F3338-D93E-4DFB-B674-6CA8ECCC1296}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B3F3338-D93E-4DFB-B674-6CA8ECCC1296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE02AD09-966A-48F5-82BF-70696CE69ACD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE02AD09-966A-48F5-82BF-70696CE69ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE02AD09-966A-48F5-82BF-70696CE69ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE02AD09-966A-48F5-82BF-70696CE69ACD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,6 +189,7 @@ Global
 		{AFC53014-235F-4328-9722-7ADE13A387E0} = {DA93EFDB-6C6A-40D8-815E-94F2CB7C2518}
 		{5B7737B5-34DD-46DD-A3F7-22679BF11FD8} = {DA93EFDB-6C6A-40D8-815E-94F2CB7C2518}
 		{5B3F3338-D93E-4DFB-B674-6CA8ECCC1296} = {DD3B41EF-9B25-415E-A9DE-507BB1E7F241}
+		{CE02AD09-966A-48F5-82BF-70696CE69ACD} = {1CFF9733-DFCE-46CC-BF6E-93D381778ADA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E19CE82-A48A-4C99-BA41-43EC8DBE7E36}
