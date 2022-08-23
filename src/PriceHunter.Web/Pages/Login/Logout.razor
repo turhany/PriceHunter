@@ -1,16 +1,16 @@
 ﻿@page "/Logout" 
 
-@inject ILocalStorageService LocalStorage
-@inject AuthenticationStateProvider AuthStateProvider
-@inject NavigationManager NavigationManager
+@inject ILocalStorageService _localStorage
+@inject AuthenticationStateProvider _authStateProvider
+@inject NavigationManager _navigationManager
 
 <h3>Logout</h3>
 
 @code {
     protected override async Task OnInitializedAsync()
     {
-        await LocalStorage.RemoveItemAsync(AppConstants.TokenStorageKey);
-        await AuthStateProvider.GetAuthenticationStateAsync();  
-        NavigationManager.NavigateTo("");
+        await _localStorage.RemoveItemAsync(AppConstants.TokenStorageKey);
+        await _authStateProvider.GetAuthenticationStateAsync();
+        _navigationManager.NavigateTo("");
     }
 }

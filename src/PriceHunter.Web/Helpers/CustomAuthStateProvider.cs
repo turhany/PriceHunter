@@ -1,7 +1,9 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using PriceHunter.Web.Data.Base;
 using PriceHunter.Web.Data.Login;
 using PriceHunter.Web.Helpers.Constants;
+using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -10,37 +12,48 @@ namespace PriceHunter.Web.Helpers
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
         private readonly ILocalStorageService _localStorage;
+        private readonly HttpClient _httpClient;
 
-        public CustomAuthStateProvider(ILocalStorageService localStorage)
+        public CustomAuthStateProvider(
+            ILocalStorageService localStorage,
+            HttpClient httpClient)
         {
             _localStorage = localStorage;
+            _httpClient = httpClient;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            //var sampleJwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjdlZjIxNjQwLTI2ZmYtNDMwZS04MGMxLThjYTQ5ZmQ0ZjY0YiIsIm5hbWUiOiJUw7xyaGFuIFnEsWxkxLFyxLFtIiwiZW1haWwiOiJ5aWxkaXJpbXR1cmhhbkBnbWFpbC5jb20iLCJyb2xlIjoiUm9vdCIsIm5iZiI6MTY2MTA4NDExNCwiZXhwIjoxNjYxMTA1NzE0LCJpYXQiOjE2NjEwODQxMTR9.DZquyGGrh4B_KSzFK7MtdYoLpFxN1BdnZ8e1RkOKp9g";
-            //var jwtClaims = ParseClaimsFromJwt(sampleJwtToken);
-            //var jwtIdentity = new ClaimsIdentity(jwtClaims, "jwt");
-
-            //var jwtUser = new ClaimsPrincipal(jwtIdentity);
-            //var jwtState = new AuthenticationState(jwtUser);
-
-            //NotifyAuthenticationStateChanged(Task.FromResult(jwtState));
-
-            //return jwtState;
-
-            var state = new AuthenticationState(new ClaimsPrincipal()); 
+            var state = new AuthenticationState(new ClaimsPrincipal());
 
             var tokenData = await _localStorage.GetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey);
             if (tokenData != null)
             {
-                //TODO: Add token expire check and refresh token logic
+                var tokenExpireDate = ConvertFromUnixTimestamp(tokenData.ExpiresIn.Value);
+                if (tokenExpireDate < DateTime.UtcNow)
+                {
+                    await _localStorage.RemoveItemAsync(AppConstants.TokenStorageKey);
 
-                var claims = ParseClaimsFromJwt(tokenData.AccessToken);
-                var identity = new ClaimsIdentity(claims, AppConstants.AuthenticationType);
+                    if (tokenData.RefreshTokenExpireDate > DateTime.UtcNow)
+                    {
+                        try
+                        {
+                            var response = await _httpClient.PostAsJsonAsync(AppConstants.V1ApiRefreshTokenUrl, new RefreshTokenRequest { Token = tokenData.RefreshToken });
+                            var responseModel = await response.Content.ReadFromJsonAsync<DataResponse<GetTokenResponse>>();
 
-                var user = new ClaimsPrincipal(identity);
-                state = new AuthenticationState(user);
+                            await _localStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, responseModel.Data);
+                            state = Authenticate(responseModel.Data.AccessToken);
+                        }
+                        catch (Exception)
+                        {
+                            //Ignored    
+                        }
+                    }
+                }
+                else
+                {
+                    state = Authenticate(tokenData.AccessToken);
+                }
             }
 
             NotifyAuthenticationStateChanged(Task.FromResult(state));
@@ -48,7 +61,16 @@ namespace PriceHunter.Web.Helpers
             return state;
         }
 
-        public static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
+        private AuthenticationState Authenticate(string accessToken)
+        {
+            var claims = ParseClaimsFromJwt(accessToken);
+            var identity = new ClaimsIdentity(claims, AppConstants.AuthenticationType);
+
+            var user = new ClaimsPrincipal(identity);
+            return new AuthenticationState(user);
+        }
+
+        public IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
             var payload = jwt.Split('.')[1];
             var jsonBytes = ParseBase64WithoutPadding(payload);
@@ -56,7 +78,7 @@ namespace PriceHunter.Web.Helpers
             return keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()));
         }
 
-        private static byte[] ParseBase64WithoutPadding(string base64)
+        private byte[] ParseBase64WithoutPadding(string base64)
         {
             switch (base64.Length % 4)
             {
@@ -64,6 +86,12 @@ namespace PriceHunter.Web.Helpers
                 case 3: base64 += "="; break;
             }
             return Convert.FromBase64String(base64);
+        }
+
+        private DateTime ConvertFromUnixTimestamp(int timestamp)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(timestamp); //
         }
     }
 }
