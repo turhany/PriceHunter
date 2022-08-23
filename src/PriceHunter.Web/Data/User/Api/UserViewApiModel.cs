@@ -1,7 +1,7 @@
 ﻿namespace PriceHunter.Web.Data.User.Api
 {
     [Serializable]
-    public class UserApiModel
+    public class UserViewApiModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

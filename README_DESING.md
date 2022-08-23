@@ -199,6 +199,15 @@ public class UpdateUserRequest
     public bool IsActive { get; set; }
 }
 ```
+#### Update User > {url}/users/uploadprofileimage/{id} - POST
+```cs
+//Request
+public class ProfileFileContractServiceRequest
+{
+    public string FileName { get; set; }
+    public byte[] FileData { get; set; }
+}
+```
 #### Search User > {url}/users/search - POST
 Use generic filter request - response data type
 ```cs

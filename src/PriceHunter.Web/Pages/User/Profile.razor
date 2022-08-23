@@ -1,5 +1,4 @@
 ﻿@page "/User/Profile"
-@using PriceHunter.Web.Data.User.Api
 
 @using PriceHunter.Web.Data.Login
 @using PriceHunter.Web.Data.User.App
@@ -12,42 +11,52 @@
 
 <h3>Profile</h3>
 
-<EditForm Model="model" OnValidSubmit="@HandleSave">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="form-group">
-        <label for="firstname">First Name</label>
-        <InputText id="firstname" @bind-Value="model.FirstName" class="form-control" style="width:50%;"></InputText>
-        <br />
-    </div>
-    <div class="form-group">
-        <label for="lastname">Last Name</label>
-        <InputText id="lastname" @bind-Value="model.LastName" class="form-control" style="width:50%;"></InputText>
-        <br />
-    </div>
-    <div class="form-group">
-        <label for="email">Email</label>
-        <InputText id="email" @bind-Value="model.Email" class="form-control" style="width:50%;" disabled="true"></InputText>
-        <br />
-    </div>
-    <div class="form-group">
-        <label for="type">Type</label>
-        <InputText id="type" @bind-Value="model.Type" class="form-control" style="width:50%;" disabled="true"></InputText>
-        <br />
-    </div>
-    <div class="form-group">
-        <label for="type">Image</label>        
-        @if (!string.IsNullOrWhiteSpace(model.Image))
-        {
+@if (model == null || string.IsNullOrWhiteSpace(model.FirstName))
+{
+    <text>
+        Loading...
+    </text>
+}
+else
+{
+    <EditForm Model="model" OnValidSubmit="@HandleSave">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="firstname">First Name</label>
+            <InputText id="firstname" @bind-Value="model.FirstName" class="form-control" style="width:50%;"></InputText>
             <br />
-           <img src="@model.Image" alt="Profile Image" />
-        }
+        </div>
+        <div class="form-group">
+            <label for="lastname">Last Name</label>
+            <InputText id="lastname" @bind-Value="model.LastName" class="form-control" style="width:50%;"></InputText>
+            <br />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <InputText id="email" @bind-Value="model.Email" class="form-control" style="width:50%;"></InputText>
+            <br />
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <InputText id="type" @bind-Value="model.Type" class="form-control" style="width:50%;" disabled="true"></InputText>
+            <br />
+        </div>
+        <div class="form-group">
+            <label for="type">Image</label>
+            @if (!string.IsNullOrWhiteSpace(model.Image))
+            {
+                <br />
+                <img src="@("http://localhost:5010" + model.Image)" width="100" alt="Profile Image" />
+                <br />
+            }
+            <br />
+            <InputFile OnChange="@((InputFileChangeEventArgs args) => OnInputFileChange(args))" style="width:50%;" />
+        </div>
         <br />
-        <InputFile OnChange="@((InputFileChangeEventArgs args) => OnInputFileChange(args))" style="width:50%;" />
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary" @on>Save</button>
-</EditForm>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+}
 
 
 @code {
@@ -57,7 +66,7 @@
     private Task<AuthenticationState> authState { get; set; }
     private string UserId { get; set; }
     private string RequestUrl { get; set; }
-    public IBrowserFile SelectedFile { get; set; }
+    private string ImageRequestUrl { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -65,10 +74,11 @@
         {
             UserId = (await authState).User.Claims.FirstOrDefault(p => p.Type == ClaimConstants.Id)?.Value;
             RequestUrl = string.Format(AppConstants.V1UserUrl, UserId);
+            ImageRequestUrl = string.Format(AppConstants.V1UserUploadProfileImageUrl, UserId);
 
             var httpRequester = new HttpRequester(_http, _toastService);
 
-            var result = await httpRequester.GetAsync<UserApiModel>(RequestUrl);
+            var result = await httpRequester.GetAsync<UserViewApiModel>(RequestUrl);
             if (result.IsSuccess)
             {
                 model.FirstName = result.Response.Data.FirstName;
@@ -77,34 +87,6 @@
                 model.Type = result.Response.Data.Type;
                 model.Image = result.Response.Data.Image;
             }
-
-            //var result = await _http.GetAsync(requestUrl);
-            //var response = await result.Content.ReadFromJsonAsync<DataResponse<UserResponse>>();
-
-            //if (response.Status == ServiceStatusMessages.Success)
-            //{
-            //    model.FirstName = response.Data.FirstName;
-            //    model.LastName = response.Data.LastName;
-            //    model.Email = response.Data.Email;
-            //    model.Type = response.Data.Type;
-            //}
-            //else
-            //{
-            //    var errorMessageBuilder = new StringBuilder();
-            //    if (!string.IsNullOrEmpty(response.Message))
-            //    {
-            //        errorMessageBuilder.AppendLine(response.Message);
-            //    }
-            //    if (response.ValidationMessages != null && response.ValidationMessages.Any())
-            //    {
-            //        foreach (var error in response.ValidationMessages)
-            //        {
-            //            errorMessageBuilder.AppendLine(error);
-            //        }
-            //    }
-
-            //    _toastService.ShowError(errorMessageBuilder.ToString());
-            //}
         }
         catch (Exception ex)
         {
@@ -115,48 +97,22 @@
     private async void HandleSave()
     {
         try
-        { 
+        {
             var httpRequester = new HttpRequester(_http, _toastService);
 
-            var requestModel = new UserUpdateApiModel(){
-                FirstName = model.FirstName,
-                LastName = model.LastName, 
-                Email = model.Email,
-                //Password = string.Empty
-                //Type = model.Type
-            };
+            var requestModel = new UserUpdateApiModel()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Type = model.Type
+                };
 
             var result = await httpRequester.PutAsync<UserUpdateApiModel, dynamic>(RequestUrl, requestModel);
             if (result.IsSuccess)
             {
                 _toastService.ShowSuccess(result.Response.Message);
             }
-
-            //var requestUrl = string.Format(AppConstants.V1UserUrl, UserId);
-            //var result = await _http.PutAsJsonAsync(requestUrl, model);
-            //var response = await result.Content.ReadFromJsonAsync<BaseResponse>();
-
-            //if (response.Status == ServiceStatusMessages.Success)
-            //{
-            //    _toastService.ShowSuccess(response.Message);
-            //}
-            //else
-            //{
-            //    var errorMessageBuilder = new StringBuilder();
-            //    if (!string.IsNullOrEmpty(response.Message))
-            //    {
-            //        errorMessageBuilder.AppendLine(response.Message);
-            //    }
-            //    if (response.ValidationMessages != null && response.ValidationMessages.Any())
-            //    {
-            //        foreach (var error in response.ValidationMessages)
-            //        {
-            //            errorMessageBuilder.AppendLine(error);
-            //        }
-            //    }
-
-            //    _toastService.ShowError(errorMessageBuilder.ToString());
-            //}
         }
         catch (Exception ex)
         {
@@ -164,9 +120,39 @@
         }
     }
 
-    private void OnInputFileChange(InputFileChangeEventArgs e)
-    {
-        SelectedFile = e.File;        
-        this.StateHasChanged();
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    { 
+        try
+        {
+            if (e.File == null)
+            {
+                return;
+            }
+
+            Stream stream = e.File.OpenReadStream();
+            MemoryStream ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            stream.Close();
+
+            UserProfileImageUpdateApiModel fileUploadRequest = new UserProfileImageUpdateApiModel();
+            fileUploadRequest.FileName = e.File.Name;
+            fileUploadRequest.FileData = ms.ToArray();
+            ms.Close();
+
+            var httpRequester = new HttpRequester(_http, _toastService);
+
+            var result = await httpRequester.PutAsync<UserProfileImageUpdateApiModel, UserProfileImageViewApiModel>(ImageRequestUrl, fileUploadRequest);
+            if (result.IsSuccess)
+            {
+                model.Image = result.Response.Data.Image;
+                _toastService.ShowSuccess(result.Response.Message);
+            }
+
+            this.StateHasChanged(); 
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.Message);
+        }
     }
 }

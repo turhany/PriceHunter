@@ -40,34 +40,7 @@
                 await _localStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, result.Response.Data);
                 await _authStateProvider.GetAuthenticationStateAsync();
                 _navigationManager.NavigateTo(NavigationConstants.UserProfile);
-            }
-
-            //var result = await _http.PostAsJsonAsync(AppConstants.V1ApiTokenUrl, model);
-            //var response = await result.Content.ReadFromJsonAsync<DataResponse<GetTokenResponse>>();
-
-            //if (response.Status == ServiceStatusMessages.Success)
-            //{
-            //    await _localStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, response.Data);
-            //    await _authStateProvider.GetAuthenticationStateAsync();
-            //    _navigationManager.NavigateTo(NavigationConstants.UserProfile);
-            //}
-            //else
-            //{
-            //    var errorMessageBuilder = new StringBuilder();
-            //    if (!string.IsNullOrEmpty(response.Message))
-            //    {
-            //        errorMessageBuilder.AppendLine(response.Message);
-            //    }
-            //    if (response.ValidationMessages != null && response.ValidationMessages.Any())
-            //    {
-            //        foreach (var error in response.ValidationMessages)
-            //        {
-            //            errorMessageBuilder.AppendLine(error);
-            //        }
-            //    }
-
-            //    _toastService.ShowError(errorMessageBuilder.ToString());
-            //}
+            } 
         }
         catch (Exception ex)
         {

@@ -15,9 +15,11 @@ namespace PriceHunter.Business.User.Abstract
         Task<ServiceResult<PagedList<UserViewModel>>> SearchAsync(FilteryRequest request);
         Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request);
         Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request);
+        Task<ServiceResult<UserProfileImageViewModel>> UploadProfileImageAsync(ProfileFileContractServiceRequest request);
         Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id);
-         
+        
 
+        
         Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request);
         Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request);
     }

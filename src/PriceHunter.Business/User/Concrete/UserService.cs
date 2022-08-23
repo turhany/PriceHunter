@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Filtery.Extensions;
 using Filtery.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -111,15 +110,13 @@ namespace PriceHunter.Business.User.Concrete
                 };
             }
 
-            var imageName = UploadImage(request.Image);
             var entity = new Model.User.User
             {
                 FirstName = request.FirstName.Trim(),
                 LastName = request.LastName.Trim(),
                 Email = request.Email.Trim().ToLowerInvariant(),
                 Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                Type = Model.User.UserType.Root, //TODO: this need to be change as your logic                
-                Image = imageName
+                Type = Model.User.UserType.Root //TODO: this need to be change as your logic                
             };
 
             entity = await _userRepository.InsertAsync(entity);
@@ -178,17 +175,10 @@ namespace PriceHunter.Business.User.Concrete
                 entity.LastName = request.LastName.Trim();
                 entity.Email = request.Email;
 
-                if (string.IsNullOrWhiteSpace(request.Password))
+                if (!string.IsNullOrWhiteSpace(request.Password))
                 {
                     entity.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
-                }                
-
-                //TODO:add image update endpoint
-                //if (request.Image != null)
-                //{
-                //    DeleteImage(entity.Image);
-                //    entity.Image = UploadImage(request.Image);
-                //}
+                }
 
                 entity = await _userRepository.UpdateAsync(entity);
 
@@ -204,6 +194,54 @@ namespace PriceHunter.Business.User.Concrete
                 Status = ResultStatus.Successful,
                 Message = Resource.Updated(Entities.User, entity.Email),
                 Data = userWrapper
+            };
+        }
+        public async Task<ServiceResult<UserProfileImageViewModel>> UploadProfileImageAsync(ProfileFileContractServiceRequest request)
+        {
+            var validationResponse = _validationService.Validate(typeof(ProfileFileContractServiceRequestValidator), request);
+
+            if (!validationResponse.IsValid)
+            {
+                return new ServiceResult<UserProfileImageViewModel>
+                {
+                    Status = ResultStatus.InvalidInput,
+                    Message = ServiceResponseMessage.INVALID_INPUT_ERROR,
+                    ValidationMessages = validationResponse.ErrorMessages
+                };
+            }
+
+            var entity = await _userRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false);
+
+            if (entity == null)
+            {
+                return new ServiceResult<UserProfileImageViewModel>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.User)
+                };
+            }
+
+            var lockKey = string.Format(LockKeyConstants.UserLockKey, entity.Id);
+            var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, entity.Id);
+
+            using (await _lockService.CreateLockAsync(lockKey))
+            {
+                DeleteImage(entity.Image);
+                entity.Image = await UploadImageAsync(request.FileName, request.FileData);
+
+                entity = await _userRepository.UpdateAsync(entity);
+
+                await _cacheService.RemoveAsync(cacheKey);
+            }
+
+            var response = new UserProfileImageViewModel();
+            response.Image =  Path.Combine(_fileConfigurationOptions.UserProfileVirtualPath, entity.Image);
+
+            return new ServiceResult<UserProfileImageViewModel>
+            {
+                Status = ResultStatus.Successful,
+                Message = Resource.Updated(Entities.User, entity.Email),
+                Data = response
             };
         }
         public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id)
@@ -380,9 +418,9 @@ namespace PriceHunter.Business.User.Concrete
 
         #endregion
 
-        private string UploadImage(IFormFile image)
+        private async Task<string> UploadImageAsync(string fileName, byte[] image)
         {
-            string fileName = null;
+            string newFileName = null;
             if (image != null)
             {
                 try
@@ -394,22 +432,19 @@ namespace PriceHunter.Business.User.Concrete
                         Directory.CreateDirectory(imageFolderPath);
                     }
 
-                    FileInfo imageFileInfo = new FileInfo(image.FileName);
+                    FileInfo imageFileInfo = new FileInfo(fileName);
 
-                    fileName = $"{Guid.NewGuid().ToString()}{imageFileInfo.Extension}";
-                    var fileFullPath = Path.Combine(imageFolderPath, fileName);
+                    newFileName = $"{Guid.NewGuid().ToString()}{imageFileInfo.Extension}";
+                    var fileFullPath = Path.Combine(imageFolderPath, newFileName);
 
-                    using (var stream = new FileStream(fileFullPath, FileMode.Create))
-                    {
-                        image.CopyTo(stream);
-                    }          
+                    await File.WriteAllBytesAsync(fileFullPath, image);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex.Message, ex);
                 }
             }
-            return fileName;
+            return newFileName;
         }
         private void DeleteImage(string imageName)
         {

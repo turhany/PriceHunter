@@ -15,6 +15,7 @@ namespace PriceHunter.Contract.Mappings.AutoMapper
             CreateMap<RefreshTokenContract, RefreshTokenContractServiceRequest>();
             CreateMap<GetTokenContract, GetTokenContractServiceRequest>();
             CreateMap<User, UserViewModel>().ForMember(p => p.Type, b => b.MapFrom(p => p.Type.GetDisplayName()));
+            CreateMap<ProfileFileContract, ProfileFileContractServiceRequest>();
         }
     }
 }

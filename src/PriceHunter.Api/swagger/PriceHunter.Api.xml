@@ -292,6 +292,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.UploadProfileImage(PriceHunter.Contract.App.User.ProfileFileContract,System.Guid)">
+            <summary>
+            Update User
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:PriceHunter.Api.Controllers.V1.UsersController.DeleteUser(System.Guid)">
             <summary>
             Delete User

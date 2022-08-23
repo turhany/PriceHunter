@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
-using PriceHunter.Common.Validation;
-using Microsoft.AspNetCore.Http;
+using FluentValidation.Validators; 
 using PriceHunter.Contract.Service.User;
 using PriceHunter.Resources.Service;
   
@@ -31,26 +29,7 @@ namespace PriceHunter.Business.User.Validator
                 .Matches("[A-Z]").WithMessage("'Password' must contain one or more capital letters.")
                 .Matches("[a-z]").WithMessage("'Password' must contain one or more lowercase letters.")
                 .Matches(@"\d").WithMessage("'Password' must contain one or more digits.")
-                .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("'Password' must contain one or more special characters.");
-
-            RuleFor(x => x.Image)                    
-                .Must(IsHaveExtension).WithMessage("Extension can't be null.")
-                .Must(file => IsValidMime(file, new[] { MimeValidation.MimeTypes.Jpeg, MimeValidation.MimeTypes.Jpg, MimeValidation.MimeTypes.Png })).WithMessage("Wrong file type!")
-                .When(p => p.Image != null);
-        }
-
-        private static bool IsValidMime(IFormFile file, string[] fileTypes)
-        {
-            using var ms = new MemoryStream();
-            file.CopyTo(ms);
-            var fileBytes = ms.ToArray();
-            return MimeValidation.IsValidMime(fileBytes, file.FileName, fileTypes);
-        }
-
-        private static bool IsHaveExtension(IFormFile file)
-        {
-            var extension = Path.GetExtension(file.FileName);
-            return !string.IsNullOrEmpty(extension);
-        }
+                .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("'Password' must contain one or more special characters.");            
+        }        
     }
 }

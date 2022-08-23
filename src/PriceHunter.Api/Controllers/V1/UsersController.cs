@@ -44,7 +44,7 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpPost]
         //[Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> CreateUser([FromForm]CreateUserRequest request)
+        public async Task<ActionResult> CreateUser([FromBody]CreateUserRequest request)
         {
             if (request == null) return ApiResponse.InvalidInputResult;
 
@@ -66,6 +66,23 @@ namespace PriceHunter.Api.Controllers.V1
             model.Id = id;
 
             var result = await _userService.UpdateAsync(model);
+            return ApiResponse.CreateResult(result);
+        }
+
+        /// <summary>
+        /// Update User
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("uploadprofileimage/{id:guid}")]
+        //[Authorize(Roles = "Root")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> UploadProfileImage([FromBody]ProfileFileContract request, Guid id)
+        {
+            if (request == null) return ApiResponse.InvalidInputResult;
+            var model = Mapper.Map<ProfileFileContractServiceRequest>(request);
+            model.Id = id;
+
+            var result = await _userService.UploadProfileImageAsync(model);
             return ApiResponse.CreateResult(result);
         }
 
