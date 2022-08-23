@@ -38,7 +38,7 @@ namespace PriceHunter.Web.Helpers.Auth
                     {
                         try
                         {
-                            var response = await _httpClient.PostAsJsonAsync(AppConstants.V1ApiRefreshTokenUrl, new RefreshTokenRequest { Token = tokenData.RefreshToken });
+                            var response = await _httpClient.PostAsJsonAsync(ApiUrls.V1ApiRefreshTokenUrl, new RefreshTokenRequest { Token = tokenData.RefreshToken });
                             var responseModel = await response.Content.ReadFromJsonAsync<DataResponse<GetTokenResponse>>();
 
                             await _localStorage.SetItemAsync(AppConstants.TokenStorageKey, responseModel.Data);

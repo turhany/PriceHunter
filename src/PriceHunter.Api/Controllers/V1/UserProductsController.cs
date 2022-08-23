@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Filtery.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc; 
 using PriceHunter.Business.UserProduct.Abstract;
 using PriceHunter.Common.BaseModels.Api;
@@ -82,6 +83,19 @@ namespace PriceHunter.Api.Controllers.V1
                 return ApiResponse.InvalidInputResult;
 
             var result = await _userProductService.DeleteAsync(id);
+            return ApiResponse.CreateResult(result);
+        }
+
+        /// <summary>
+        /// User Product Search
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("search")]
+        [Authorize(Roles = "Root")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserProductSearchViewModel))]
+        public async Task<ActionResult> Search([FromBody] FilteryRequest request)
+        {
+            var result = await _userProductService.SearchAsync(request);
             return ApiResponse.CreateResult(result);
         }
 

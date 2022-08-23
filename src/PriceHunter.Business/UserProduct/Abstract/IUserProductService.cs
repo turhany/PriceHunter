@@ -1,5 +1,7 @@
-﻿using PriceHunter.Common.BaseModels.Service;
+﻿using Filtery.Models;
+using PriceHunter.Common.BaseModels.Service;
 using PriceHunter.Common.Data.Abstract;
+using PriceHunter.Common.Pager;
 using PriceHunter.Contract.App.Product;
 using PriceHunter.Contract.App.UserProduct;
 using PriceHunter.Contract.Service.UserProduct;
@@ -10,6 +12,7 @@ namespace PriceHunter.Business.UserProduct.Abstract
     public interface IUserProductService : IService
     {
         Task<ServiceResult<UserProductViewModel>> GetAsync(Guid id);
+        Task<ServiceResult<PagedList<UserProductSearchViewModel>>> SearchAsync(FilteryRequest request);
         Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserProductRequestServiceRequest request);
         Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserProductRequestServiceRequest request);
         Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id);

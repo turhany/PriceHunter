@@ -1,0 +1,9 @@
+﻿namespace PriceHunter.Web.Data.Filter
+{
+    public class FilterItem
+    {
+        public object Value { get; set; }
+        public string TargetFieldName { get; set; }
+        public FilterOperation Operation { get; set; }
+    }
+}

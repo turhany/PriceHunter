@@ -31,7 +31,7 @@
     {
         try
         { 
-            var result = await _httpRequester.PostAsync<GetTokenRequest, GetTokenResponse>(AppConstants.V1ApiTokenUrl, model, false);
+            var result = await _httpRequester.PostAsync<GetTokenRequest, GetTokenResponse>(ApiUrls.V1ApiTokenUrl, model, false);
             if (result.IsSuccess)
             {
                 await _localStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, result.Response.Data);

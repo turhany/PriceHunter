@@ -46,6 +46,7 @@ namespace PriceHunter.Api.Middlewares
 
                 httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 httpContext.Response.ContentType = AppConstants.JsonContentType;
+                await httpContext.Response.WriteAsync(JsonConvert.SerializeObject(response));
             }
             catch (AcquireLockException ex)
             {

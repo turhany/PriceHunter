@@ -13,6 +13,7 @@ namespace PriceHunter.Contract.Mappings.AutoMapper
             CreateMap<UpdateUserProductRequest, UpdateUserProductRequestServiceRequest>();
             CreateMap<UrlSupplierMappingViewModel, UrlSupplierMappingServiceModel>();
             CreateMap<UserProduct, UserProductViewModel>();
+            CreateMap<UserProduct, UserProductSearchViewModel>();            
             CreateMap<UserProductSupplierMapping, UrlSupplierMappingViewModel>();
         }
     }

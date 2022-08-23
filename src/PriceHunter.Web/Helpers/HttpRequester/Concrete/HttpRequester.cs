@@ -7,6 +7,10 @@ using System.Net.Http.Headers;
 using Blazored.LocalStorage;
 using PriceHunter.Web.Data.Login;
 using PriceHunter.Web.Helpers.HttpRequester.Abstract;
+using System.Text.Json.Nodes;
+using System.Text.Json;
+using Microsoft.CSharp.RuntimeBinder;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace PriceHunter.Web.Helpers.HttpRequester.Concrete
 {
@@ -91,6 +95,23 @@ namespace PriceHunter.Web.Helpers.HttpRequester.Concrete
 
         private async Task<RequesterResponse<DataResponse<ResponseT>>> ProcessAsync<ResponseT>(HttpResponseMessage httpResponseMessage)
         {
+            //var a = await httpResponseMessage.Content.ReadAsStringAsync();
+
+            //DataResponse<ResponseT> responseModel = await httpResponseMessage.Content.ReadFromJsonAsync<DataResponse<ResponseT>>();
+
+            //try
+            //{
+            //    responseModel = await httpResponseMessage.Content.ReadFromJsonAsync<DataResponse<ResponseT>>();
+            //}
+            //catch (System.Text.Json.JsonException ex)
+            //{
+            //    responseModel = (DataResponse<ResponseT>)await httpResponseMessage.Content.ReadFromJsonAsync<BaseResponse>();
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw;
+            //}
             var responseModel = await httpResponseMessage.Content.ReadFromJsonAsync<DataResponse<ResponseT>>();
 
             if (responseModel.Status == ServiceStatusMessages.Success)

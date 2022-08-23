@@ -72,8 +72,8 @@ else
         try
         {
             UserId = (await authState).User.Claims.FirstOrDefault(p => p.Type == ClaimConstants.Id)?.Value;
-            RequestUrl = string.Format(AppConstants.V1UserUrl, UserId);
-            ImageRequestUrl = string.Format(AppConstants.V1UserUploadProfileImageUrl, UserId);
+            RequestUrl = string.Format(ApiUrls.V1UserUrl, UserId);
+            ImageRequestUrl = string.Format(ApiUrls.V1UserUploadProfileImageUrl, UserId);
              
             var result = await _httpRequester.GetAsync<UserViewApiModel>(RequestUrl, true);
             if (result.IsSuccess)

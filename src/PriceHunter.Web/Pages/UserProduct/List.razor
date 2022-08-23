@@ -1,8 +1,40 @@
 ﻿@page "/User/Products"
+
+@using PriceHunter.Web.Data.Filter
+@using PriceHunter.Web.Data.Pager
+@using PriceHunter.Web.Data.UserProduct.Api
+@using PriceHunter.Web.Data.UserProduct.App
+@inject IToastService _toastService
+@inject IHttpRequester _httpRequester
+
 @attribute [Authorize]
 
 <h3>List</h3>
 
 @code {
+    List<UserProductViewModel> entities = new List<UserProductViewModel>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var requestModel = new FilterRequest();
+            requestModel.OrderOperations.Add(UserProductFilterFilelds.Name, OrderOperation.Ascending);
+             
+
+            var result = await _httpRequester.PostAsync<FilterRequest, PagedList<UserProductViewApiModel>>(ApiUrls.V1ApiUserProductSearchUrl, requestModel, true);
+            if (result.IsSuccess)
+            {
+                entities = result.Response.Data.Data.Select(p => new UserProductViewModel
+                    {
+                        Id = p.Id,
+                        Name = p.Name
+                    }).ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.Message);
+        }
+    }
 }
