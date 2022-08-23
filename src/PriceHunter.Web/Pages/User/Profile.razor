@@ -3,9 +3,8 @@
 @using PriceHunter.Web.Data.Login
 @using PriceHunter.Web.Data.User.App
 @using PriceHunter.Web.Data.User.Api
-@using System.Net.Http.Headers
-@inject IToastService _toastService
-@inject HttpClient _http
+@inject IToastService _toastService 
+@inject IHttpRequester _httpRequester
 
 @attribute [Authorize]
 
@@ -75,10 +74,8 @@ else
             UserId = (await authState).User.Claims.FirstOrDefault(p => p.Type == ClaimConstants.Id)?.Value;
             RequestUrl = string.Format(AppConstants.V1UserUrl, UserId);
             ImageRequestUrl = string.Format(AppConstants.V1UserUploadProfileImageUrl, UserId);
-
-            var httpRequester = new HttpRequester(_http, _toastService);
-
-            var result = await httpRequester.GetAsync<UserViewApiModel>(RequestUrl);
+             
+            var result = await _httpRequester.GetAsync<UserViewApiModel>(RequestUrl, true);
             if (result.IsSuccess)
             {
                 model.FirstName = result.Response.Data.FirstName;
@@ -97,9 +94,7 @@ else
     private async void HandleSave()
     {
         try
-        {
-            var httpRequester = new HttpRequester(_http, _toastService);
-
+        { 
             var requestModel = new UserUpdateApiModel()
                 {
                     FirstName = model.FirstName,
@@ -108,7 +103,7 @@ else
                     Type = model.Type
                 };
 
-            var result = await httpRequester.PutAsync<UserUpdateApiModel, dynamic>(RequestUrl, requestModel);
+            var result = await _httpRequester.PutAsync<UserUpdateApiModel, dynamic>(RequestUrl, requestModel, true);
             if (result.IsSuccess)
             {
                 _toastService.ShowSuccess(result.Response.Message);
@@ -138,10 +133,8 @@ else
             fileUploadRequest.FileName = e.File.Name;
             fileUploadRequest.FileData = ms.ToArray();
             ms.Close();
-
-            var httpRequester = new HttpRequester(_http, _toastService);
-
-            var result = await httpRequester.PutAsync<UserProfileImageUpdateApiModel, UserProfileImageViewApiModel>(ImageRequestUrl, fileUploadRequest);
+             
+            var result = await _httpRequester.PutAsync<UserProfileImageUpdateApiModel, UserProfileImageViewApiModel>(ImageRequestUrl, fileUploadRequest, true);
             if (result.IsSuccess)
             {
                 model.Image = result.Response.Data.Image;

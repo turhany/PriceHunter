@@ -1,12 +1,11 @@
 ﻿@page "/Login"
 
 @using PriceHunter.Web.Data.Login
-@using static PriceHunter.Web.Helpers.HttpRequester
 @inject ILocalStorageService _localStorage
 @inject NavigationManager _navigationManager
-@inject AuthenticationStateProvider _authStateProvider
+@inject AuthenticationStateProvider _authStateProvider 
+@inject IHttpRequester _httpRequester
 @inject IToastService _toastService
-@inject HttpClient _http
 
 <h3>Login</h3>
 
@@ -31,10 +30,8 @@
     private async void HandleLogin()
     {
         try
-        {
-            var httpRequester = new HttpRequester(_http, _toastService);
-
-            var result = await httpRequester.PostAsync<GetTokenRequest, GetTokenResponse>(AppConstants.V1ApiTokenUrl, model);
+        { 
+            var result = await _httpRequester.PostAsync<GetTokenRequest, GetTokenResponse>(AppConstants.V1ApiTokenUrl, model, false);
             if (result.IsSuccess)
             {
                 await _localStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, result.Response.Data);

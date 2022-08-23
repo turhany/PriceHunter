@@ -29,7 +29,7 @@ namespace PriceHunter.Api.Controllers.V1
         /// Get User
         /// </summary>
         [HttpGet("{id:guid}")]
-        //[Authorize(Roles = "Root")]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel))]
         public async Task<ActionResult> Get(Guid id)
         {
@@ -42,7 +42,7 @@ namespace PriceHunter.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        //[Authorize(Roles = "Root")]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> CreateUser([FromBody]CreateUserRequest request)
         {
@@ -57,7 +57,7 @@ namespace PriceHunter.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPut("{id:guid}")]
-        //[Authorize(Roles = "Root")]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> UpdateUser([FromBody]UpdateUserRequest request, Guid id)
         {
@@ -74,7 +74,7 @@ namespace PriceHunter.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPut("uploadprofileimage/{id:guid}")]
-        //[Authorize(Roles = "Root")]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> UploadProfileImage([FromBody]ProfileFileContract request, Guid id)
         {

@@ -7,7 +7,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text.Json;
 
-namespace PriceHunter.Web.Helpers
+namespace PriceHunter.Web.Helpers.Auth
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
@@ -41,7 +41,7 @@ namespace PriceHunter.Web.Helpers
                             var response = await _httpClient.PostAsJsonAsync(AppConstants.V1ApiRefreshTokenUrl, new RefreshTokenRequest { Token = tokenData.RefreshToken });
                             var responseModel = await response.Content.ReadFromJsonAsync<DataResponse<GetTokenResponse>>();
 
-                            await _localStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, responseModel.Data);
+                            await _localStorage.SetItemAsync(AppConstants.TokenStorageKey, responseModel.Data);
                             state = Authenticate(responseModel.Data.AccessToken);
                         }
                         catch (Exception)
@@ -70,7 +70,7 @@ namespace PriceHunter.Web.Helpers
             return new AuthenticationState(user);
         }
 
-        public IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
+        private IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
             var payload = jwt.Split('.')[1];
             var jsonBytes = ParseBase64WithoutPadding(payload);
