@@ -9,6 +9,7 @@
 
 <h3>Login</h3>
 
+
 <EditForm Model="model" OnValidSubmit="@HandleLogin">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -21,27 +22,42 @@
         <InputText id="password" @bind-Value="model.Password" type="password" class="form-control" style="width:50%;"></InputText>
     </div>
     <br />
-    <button type="submit" class="btn btn-primary">Login</button>
+
+    @if (_pageState == PageState.Loading)
+    {
+        <button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+    }else
+    {
+        <button type="submit" class="btn btn-primary">Login</button>
+    }    
 </EditForm>
 
 @code {
     GetTokenRequest model = new GetTokenRequest();
+    public PageState _pageState { get; set; } = PageState.Loaded;
 
     private async void HandleLogin()
     {
         try
-        { 
+        {
+            _pageState = PageState.Loading;
             var result = await _httpRequester.PostAsync<GetTokenRequest, GetTokenResponse>(ApiUrls.V1ApiTokenUrl, model, false);
             if (result.IsSuccess)
             {
                 await _localStorage.SetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey, result.Response.Data);
                 await _authStateProvider.GetAuthenticationStateAsync();
                 _navigationManager.NavigateTo(NavigationConstants.UserProfile);
-            } 
+            }
+            _pageState = PageState.Loaded;
         }
         catch (Exception ex)
         {
+            _pageState = PageState.Loaded;
             _toastService.ShowError(ex.Message);
         }
+        StateHasChanged();
     }
 }

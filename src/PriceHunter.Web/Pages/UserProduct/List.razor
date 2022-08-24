@@ -11,29 +11,121 @@
 
 <h3>List</h3>
 
+@if (_pageState == PageState.Loading)
+{
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden"></span>
+        </div>
+    </div>
+}
+else if (_pageState == PageState.NoData)
+{
+    <text>
+        No Data...
+    </text>
+}
+else if (_pageState == PageState.Error)
+{
+    <text>
+        Loading Error...
+    </text>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entity in entities)
+            {
+                <tr>
+                    <td>@entity.Name</td>
+                    <td class="float-right ">
+                        <div class=" float-end ">
+                            <a href="/UserProduct/Detail/@entity.Id" class="btn btn-primary">Detail</a>
+                            <a href="/UserProduct/Edit/@entity.Id" class="btn btn-primary">Edit</a>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    if (PageInfo.TotalItemCount > 0 && PageInfo.TotalPageCount > 1)
+    {
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item @(PageInfo.PageNumber == 1 ? "disabled" : string.Empty)">
+                    <button class="page-link" @onclick="@(async () => await FilterAsync(1))">First</button>
+                </li>
+                @for (int pageNumber = 1; pageNumber <= PageInfo.TotalPageCount; pageNumber++)
+                {
+                    <li class="page-item @(PageInfo.PageNumber == pageNumber ? "active" : string.Empty)">
+                        <button class="page-link" @onclick="@(async () => await FilterAsync(pageNumber))">@pageNumber</button>
+                    </li>
+                }
+                <li class="page-item @(PageInfo.PageNumber == PageInfo.TotalPageCount ? "disabled" : string.Empty)">
+                    <button class="page-link" @onclick="@(async () => await FilterAsync(PageInfo.TotalPageCount))">Last</button>
+                </li>
+            </ul>
+        </nav>
+    }
+}
+
+
 @code {
     List<UserProductViewModel> entities = new List<UserProductViewModel>();
+    public PageState _pageState { get; set; } = PageState.Loading;
+    public Page PageInfo { get; set; }
 
     protected override async Task OnInitializedAsync()
+    {
+        await FilterAsync(1);
+    }
+
+    private async Task FilterAsync(int pageNumber)
     {
         try
         {
             var requestModel = new FilterRequest();
             requestModel.OrderOperations.Add(UserProductFilterFilelds.Name, OrderOperation.Ascending);
-             
+            requestModel.PageNumber = pageNumber;
 
             var result = await _httpRequester.PostAsync<FilterRequest, PagedList<UserProductViewApiModel>>(ApiUrls.V1ApiUserProductSearchUrl, requestModel, true);
             if (result.IsSuccess)
             {
-                entities = result.Response.Data.Data.Select(p => new UserProductViewModel
-                    {
-                        Id = p.Id,
-                        Name = p.Name
-                    }).ToList();
+                if (result.Response.Data.Data != null ||
+                    result.Response.Data.Data.Any())
+                {
+                    _pageState = PageState.DataLoaded;
+
+                    PageInfo = result.Response.Data.PageInfo;
+                    entities = result.Response.Data.Data.Select(p => new UserProductViewModel
+                        {
+                            Id = p.Id,
+                            Name = p.Name
+                        }).ToList();
+                }
+                else
+                {
+                    _pageState = PageState.NoData;
+                }
+            }
+            else
+            {
+                _pageState = PageState.Error;
             }
         }
         catch (Exception ex)
         {
+            _pageState = PageState.Error;
             _toastService.ShowError(ex.Message);
         }
     }

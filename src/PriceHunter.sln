@@ -63,7 +63,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Notification.Sm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.BusinessTests", "PriceHunter.BusinessTests\PriceHunter.BusinessTests.csproj", "{5B3F3338-D93E-4DFB-B674-6CA8ECCC1296}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Web", "PriceHunter.Web\PriceHunter.Web.csproj", "{CE02AD09-966A-48F5-82BF-70696CE69ACD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Web", "PriceHunter.Web\PriceHunter.Web.csproj", "{CE02AD09-966A-48F5-82BF-70696CE69ACD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

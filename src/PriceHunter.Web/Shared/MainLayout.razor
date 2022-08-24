@@ -8,7 +8,13 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <AuthorizeView>
+                <Authorized>
+                    <div class="nav-item px-3">
+                        <span> Welcome @context.User.Claims.FirstOrDefault(p => p.Type == ClaimConstants.Name)?.Value </span>
+                    </div>
+                </Authorized>
+            </AuthorizeView>
         </div>
 
         <article class="content px-4">

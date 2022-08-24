@@ -3,7 +3,7 @@
 @using PriceHunter.Web.Data.Login
 @using PriceHunter.Web.Data.User.App
 @using PriceHunter.Web.Data.User.Api
-@inject IToastService _toastService 
+@inject IToastService _toastService
 @inject IHttpRequester _httpRequester
 
 @attribute [Authorize]
@@ -12,9 +12,9 @@
 
 @if (model == null || string.IsNullOrWhiteSpace(model.FirstName))
 {
-    <text>
-        Loading...
-    </text>
+    <div class="spinner-border m-5" role="status">
+        <span class="sr-only"></span>
+    </div>
 }
 else
 {
@@ -74,7 +74,7 @@ else
             UserId = (await authState).User.Claims.FirstOrDefault(p => p.Type == ClaimConstants.Id)?.Value;
             RequestUrl = string.Format(ApiUrls.V1UserUrl, UserId);
             ImageRequestUrl = string.Format(ApiUrls.V1UserUploadProfileImageUrl, UserId);
-             
+
             var result = await _httpRequester.GetAsync<UserViewApiModel>(RequestUrl, true);
             if (result.IsSuccess)
             {
@@ -94,7 +94,7 @@ else
     private async void HandleSave()
     {
         try
-        { 
+        {
             var requestModel = new UserUpdateApiModel()
                 {
                     FirstName = model.FirstName,
@@ -116,7 +116,7 @@ else
     }
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
-    { 
+    {
         try
         {
             if (e.File == null)
@@ -133,7 +133,7 @@ else
             fileUploadRequest.FileName = e.File.Name;
             fileUploadRequest.FileData = ms.ToArray();
             ms.Close();
-             
+
             var result = await _httpRequester.PutAsync<UserProfileImageUpdateApiModel, UserProfileImageViewApiModel>(ImageRequestUrl, fileUploadRequest, true);
             if (result.IsSuccess)
             {
@@ -141,7 +141,7 @@ else
                 _toastService.ShowSuccess(result.Response.Message);
             }
 
-            this.StateHasChanged(); 
+            this.StateHasChanged();
         }
         catch (Exception ex)
         {
