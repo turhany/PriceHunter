@@ -26,7 +26,7 @@ namespace PriceHunter.Api.Controllers.V1
         /// <summary>
         /// Get Suppliers
         /// </summary>
-        [HttpGet]
+        [HttpGet("all")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SupplierViewModel))]
         public async Task<ActionResult> All()

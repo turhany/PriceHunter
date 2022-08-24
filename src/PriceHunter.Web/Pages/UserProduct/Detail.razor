@@ -2,6 +2,7 @@
 
 @using PriceHunter.Web.Data.UserProduct.Api
 @using PriceHunter.Web.Data.UserProduct.App
+@using PriceHunter.Web.Data.Supplier.App
 
 @inject IHttpRequester _httpRequester
 @inject IToastService _toastService
@@ -34,9 +35,9 @@ else
 
     <br />
 
+    <h4>URL(s)</h4>
     if (model.UrlSupplierMapping.Any())
-    {
-        <h4>URL(s)</h4>
+    {        
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -56,6 +57,44 @@ else
                 }
             </tbody>
         </table>
+    }else
+    {
+        <text>
+            Not defined.
+        </text>
+    }
+     
+    <br />
+    <br />
+
+    <h4>Price History</h4>
+    if (priceChanges.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" class="w-25">Month</th>
+                    <th scope="col" class="w-25">Year</th>
+                    <th scope="col" class="w-50">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entity in priceChanges)
+                {
+                    <tr>
+                        <td>@entity.Month</td>
+                        <td>@entity.Year</td>
+                        <td>@entity.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <text>
+            Processing.
+        </text>
     }
 }
 
@@ -64,21 +103,24 @@ else
     public Guid id { get; set; }
     private PageState _pageState { get; set; } = PageState.Loading;
     private UserProductViewModel model = new UserProductViewModel();
+    List<ProductPriceChangesViewModel> priceChanges = new List<ProductPriceChangesViewModel>();
 
     protected override async Task OnInitializedAsync()
     {
-        _pageState = PageState.Loaded;
-
         try
         {
             var requestUrl = string.Format(ApiUrls.V1UserProductUrl, id);
             var result = await _httpRequester.GetAsync<UserProductViewApiModel>(requestUrl, true);
-            if (result.IsSuccess)
+            var supplierResult = await _httpRequester.GetAsync<List<SupplierViewModel>>(ApiUrls.V1SupplierAllUrl, true);
+            var last6monthChangesRequestUrl = string.Format(ApiUrls.V1UserProductLast6MonthChangesUrl, id);
+            var last6MonthChangesResult = await _httpRequester.GetAsync<List<ProductPriceChangesViewModel>>(last6monthChangesRequestUrl, true);
+
+            if (result.IsSuccess && supplierResult.IsSuccess && last6MonthChangesResult.IsSuccess)
             {
                 model.Name = result.Response.Data.Name;
                 model.UrlSupplierMapping = result.Response.Data.UrlSupplierMapping?.Select(p => new UrlSupplierMappingViewModel
                     {
-                        Supplier = p.SupplierId.ToString(),
+                        Supplier = supplierResult.Response.Data.FirstOrDefault(k => k.Id == p.SupplierId).Name,
                         Url = p.Url
                     }).ToList();
 
@@ -86,6 +128,9 @@ else
                 {
                     model.UrlSupplierMapping = new List<UrlSupplierMappingViewModel>();
                 }
+
+                priceChanges = last6MonthChangesResult.Response.Data;
+
                 _pageState = PageState.DataLoaded;
             }
             else

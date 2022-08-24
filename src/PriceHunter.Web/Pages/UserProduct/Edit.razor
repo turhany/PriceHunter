@@ -1,7 +1,10 @@
 ﻿@page "/UserProduct/Edit/{id:guid}"
 
-<h3>Edit</h3>
+@using PriceHunter.Web.Data.UserProduct.App
 @attribute [Authorize]
+
+<h3>Product Edit</h3>
+
 
 @if (_pageState == PageState.Loading)
 {
@@ -21,10 +24,22 @@ else if (_pageState == PageState.Error)
 }
 else
 {
-    
+    <EditForm Model="model" OnValidSubmit="@HandleSave">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="name">Name</label>
+            <InputText id="name" @bind-Value="model.Name" class="form-control w-50"></InputText>
+            <br />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
 }
 
 @code {
+    UserProductViewModel model = new UserProductViewModel();
+
     [Parameter]
     public Guid id { get; set; }
     private PageState _pageState { get; set; } = PageState.Loading;
@@ -34,5 +49,10 @@ else
         _pageState = PageState.Loaded;
 
         return base.OnInitializedAsync();
+    }
+
+    private async void HandleSave()
+    { 
+
     }
 }

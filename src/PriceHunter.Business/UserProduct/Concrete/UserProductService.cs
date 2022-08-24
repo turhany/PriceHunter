@@ -443,6 +443,8 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     Message = Resource.NotFound(Entities.UserProduct)
                 };
             }
+            
+            var response = new List<ProductPriceChangesViewModel>();
 
             var userProductMappings = _userProductSupplierMappingRepository.Find(p =>
                p.UserProductId == userProduct.Id &&
@@ -453,8 +455,9 @@ namespace PriceHunter.Business.UserProduct.Concrete
             {
                 return new ServiceResult<List<ProductPriceChangesViewModel>>
                 {
-                    Status = ResultStatus.ResourceNotFound,
-                    Message = Resource.NotFound(Entities.UserProduct)
+                    Status = ResultStatus.Successful,
+                    Message = Resource.Retrieved(),
+                    Data = response
                 };
             }
 
@@ -463,8 +466,9 @@ namespace PriceHunter.Business.UserProduct.Concrete
             {
                 return new ServiceResult<List<ProductPriceChangesViewModel>>
                 {
-                    Status = ResultStatus.ResourceNotFound,
-                    Message = Resource.NotFound(Entities.Product)
+                    Status = ResultStatus.Successful,
+                    Message = Resource.Retrieved(),
+                    Data = response
                 };
             }
 
@@ -476,7 +480,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                                     .Take(monthCount)
                                     .ToList();
 
-            var response = new List<ProductPriceChangesViewModel>();
+            
 
             if (groupedPriceHistory != null && groupedPriceHistory.Any())
             {
