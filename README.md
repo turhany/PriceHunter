@@ -89,7 +89,7 @@ Infrastructure Infrastructure
 
 ###### Local Development Docker Codes [here](README_LOCALDEVDOCKER.md)
 
-###### GUI(s) [here](README_GUIS.md)
+###### App GUI(s) [here](README_GUIS.md)
 
 ###### DB, Distributed Cache - Lock, Message Queue Settings  [here](README_CONFIG.md)
 
