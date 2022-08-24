@@ -3,12 +3,11 @@
 @using PriceHunter.Web.Data.Login
 @inject ILocalStorageService _localStorage
 @inject NavigationManager _navigationManager
-@inject AuthenticationStateProvider _authStateProvider 
+@inject AuthenticationStateProvider _authStateProvider
 @inject IHttpRequester _httpRequester
 @inject IToastService _toastService
 
 <h3>Login</h3>
-
 
 <EditForm Model="model" OnValidSubmit="@HandleLogin">
     <DataAnnotationsValidator />
@@ -25,14 +24,12 @@
 
     @if (_pageState == PageState.Loading)
     {
-        <button class="btn btn-primary" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Loading...
-        </button>
-    }else
+        <Loading />
+    }
+    else
     {
         <button type="submit" class="btn btn-primary">Login</button>
-    }    
+    }
 </EditForm>
 
 @code {
@@ -51,12 +48,14 @@
                 await _authStateProvider.GetAuthenticationStateAsync();
                 _navigationManager.NavigateTo(NavigationConstants.UserProfile);
             }
-            _pageState = PageState.Loaded;
         }
         catch (Exception ex)
         {
-            _pageState = PageState.Loaded;
             _toastService.ShowError(ex.Message);
+        }
+        finally
+        {
+            _pageState = PageState.Loaded;
         }
         StateHasChanged();
     }

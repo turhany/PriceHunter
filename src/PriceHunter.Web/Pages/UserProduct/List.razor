@@ -14,11 +14,7 @@
 
 @if (_pageState == PageState.Loading)
 {
-    <div class="text-center">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden"></span>
-        </div>
-    </div>
+    <Loading />
 }
 else if (_pageState == PageState.NoData)
 {
@@ -143,7 +139,7 @@ else
             if (result.IsSuccess)
             {
                 _toastService.ShowSuccess(result.Response.Message);
-                await FilterAsync(1);                
+                await FilterAsync(1);
             }
             else
             {
