@@ -1,6 +1,12 @@
 ﻿@page "/UserProduct/Detail/{id:guid}"
 
-<h3>Detail</h3>
+@using PriceHunter.Web.Data.UserProduct.Api
+@using PriceHunter.Web.Data.UserProduct.App
+
+@inject IHttpRequester _httpRequester
+@inject IToastService _toastService
+
+<h3>Product Detail</h3>
 @attribute [Authorize]
 
 @if (_pageState == PageState.Loading)
@@ -20,19 +26,77 @@ else if (_pageState == PageState.Error)
     </text>
 }
 else
-{
-   @id
+{ 
+    <div class="mb-3 w-50">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" disabled value="@model.Name">
+    </div>
+
+    <br />
+
+    if (model.UrlSupplierMapping.Any())
+    {
+        <h4>URL(s)</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" class="w-25">Supplier</th>
+                    <th scope="col" class="w-75">Url</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entity in model.UrlSupplierMapping)
+                {
+                    <tr>
+                        <td>@entity.Supplier</td>
+                        <td>
+                            <a href="@entity.Url" target="_blank">@entity.Url</a>                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }
 
 @code {
     [Parameter]
     public Guid id { get; set; }
-    public PageState _pageState { get; set; } = PageState.Loading;
+    private PageState _pageState { get; set; } = PageState.Loading;
+    private UserProductViewModel model = new UserProductViewModel();
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         _pageState = PageState.Loaded;
 
-        return base.OnInitializedAsync();
+        try
+        {
+            var requestUrl = string.Format(ApiUrls.V1UserProductUrl, id);
+            var result = await _httpRequester.GetAsync<UserProductViewApiModel>(requestUrl, true);
+            if (result.IsSuccess)
+            {
+                model.Name = result.Response.Data.Name;
+                model.UrlSupplierMapping = result.Response.Data.UrlSupplierMapping?.Select(p => new UrlSupplierMappingViewModel
+                    {
+                        Supplier = p.SupplierId.ToString(),
+                        Url = p.Url
+                    }).ToList();
+
+                if (model.UrlSupplierMapping == null)
+                {
+                    model.UrlSupplierMapping = new List<UrlSupplierMappingViewModel>();
+                }
+                _pageState = PageState.DataLoaded;
+            }
+            else
+            {
+                _pageState = PageState.Error;
+            }
+        }
+        catch (Exception ex)
+        {
+            _pageState = PageState.Error;
+            _toastService.ShowError(ex.Message);
+        }
     }
 }

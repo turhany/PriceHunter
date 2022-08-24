@@ -2,7 +2,7 @@
 {
     public class UserProductViewModel
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
+        public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; } = new List<UrlSupplierMappingViewModel>();
     }
 }

@@ -77,7 +77,7 @@ else
 }
 
 @code {
-    List<UserProductViewModel> entities = new List<UserProductViewModel>();
+    List<UserProductSearchViewModel> entities = new List<UserProductSearchViewModel>();
     public PageState _pageState { get; set; } = PageState.Loading;
     public Page PageInfo { get; set; }
 
@@ -94,7 +94,7 @@ else
             requestModel.OrderOperations.Add(UserProductFilterFilelds.Name, OrderOperation.Ascending);
             requestModel.PageNumber = pageNumber;
 
-            var result = await _httpRequester.PostAsync<FilterRequest, PagedList<UserProductViewApiModel>>(ApiUrls.V1ApiUserProductSearchUrl, requestModel, true);
+            var result = await _httpRequester.PostAsync<FilterRequest, PagedList<UserProductSearchViewApiModel>>(ApiUrls.V1ApiUserProductSearchUrl, requestModel, true);
             if (result.IsSuccess)
             {
                 if (result.Response.Data.Data != null ||
@@ -103,7 +103,7 @@ else
                     _pageState = PageState.DataLoaded;
 
                     PageInfo = result.Response.Data.PageInfo;
-                    entities = result.Response.Data.Data.Select(p => new UserProductViewModel
+                    entities = result.Response.Data.Data.Select(p => new UserProductSearchViewModel
                         {
                             Id = p.Id,
                             Name = p.Name

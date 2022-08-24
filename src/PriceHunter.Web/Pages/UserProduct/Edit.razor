@@ -21,13 +21,13 @@ else if (_pageState == PageState.Error)
 }
 else
 {
-    @id
+    
 }
 
 @code {
     [Parameter]
     public Guid id { get; set; }
-    public PageState _pageState { get; set; } = PageState.Loading;
+    private PageState _pageState { get; set; } = PageState.Loading;
 
     protected override Task OnInitializedAsync()
     {

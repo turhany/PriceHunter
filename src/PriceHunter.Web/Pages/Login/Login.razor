@@ -14,11 +14,11 @@
     <ValidationSummary />
     <div class="form-group">
         <label for="email">Email</label>
-        <InputText id="email" @bind-Value="model.Email" class="form-control" style="width:50%;"></InputText>
+        <InputText id="email" @bind-Value="model.Email" class="form-control w-50"></InputText>
     </div>
     <div>
         <label for="password">Password</label>
-        <InputText id="password" @bind-Value="model.Password" type="password" class="form-control" style="width:50%;"></InputText>
+        <InputText id="password" @bind-Value="model.Password" type="password" class="form-control w-50"></InputText>
     </div>
     <br />
 
@@ -34,7 +34,7 @@
 
 @code {
     GetTokenRequest model = new GetTokenRequest();
-    public PageState _pageState { get; set; } = PageState.Loaded;
+    private PageState _pageState { get; set; } = PageState.Loaded;
 
     private async void HandleLogin()
     {
