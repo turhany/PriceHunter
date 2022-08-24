@@ -109,6 +109,26 @@
         <li>Add docker-commpose for start all system</li>
     </ol>
 </li> 
-<li>UI blazor project items will be add.</li>
+<li>UI App 
+    <ol>
+        <li>Develop Auth provider
+        <li>Find and Develop/Implement LocalStorage system
+        <li>Find and Develop/Implement Notification(Toast) system
+        <li>Develop http request helper</li>
+        <li>Pages
+        <ol>
+            <li>Login page</li>
+            <li>Logout page</li>
+            <li>Profile page</li>
+            <li>Develop User product list page/business flow</li>
+            <li>Develop User product detail page/business flow</li>
+            <li>Develop User product edit page/business flow</li>
+            <li>Develop User product add page/business flow</li>
+            <li>Develop User product delete flow</li>
+            <li>Develop User product last 6 month price changes flow</li>
+        </ol> 
+        </li>  
+    </ol>
+</li>
 <li>Service discovery mesh gateway implentation</li>
 </ol>
