@@ -92,6 +92,26 @@ namespace PriceHunter.Web.Helpers.HttpRequester.Concrete
 
             return await ProcessAsync<ResponseT>(result);
         }
+        
+        public async Task<RequesterResponse<DataResponse<ResponseT>>> DeleteAsync<ResponseT>(string url, bool includeToken)
+        {
+            HttpResponseMessage result;
+            using (var requestMessage = new HttpRequestMessage(HttpMethod.Delete, url))
+            {
+                if (includeToken)
+                {
+                    var tokenData = await _localStorage.GetItemAsync<GetTokenResponse>(AppConstants.TokenStorageKey);
+                    if (tokenData != null)
+                    {
+                        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenData.AccessToken);
+                    }
+                }
+
+                result = await _httpClient.SendAsync(requestMessage);
+            }
+
+            return await ProcessAsync<ResponseT>(result);
+        }
 
         private async Task<RequesterResponse<DataResponse<ResponseT>>> ProcessAsync<ResponseT>(HttpResponseMessage httpResponseMessage)
         {

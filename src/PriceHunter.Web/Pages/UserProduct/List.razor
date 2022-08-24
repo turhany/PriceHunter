@@ -6,6 +6,7 @@
 @using PriceHunter.Web.Data.UserProduct.App
 @inject IToastService _toastService
 @inject IHttpRequester _httpRequester
+@inject IJSRuntime JSRuntime
 
 @attribute [Authorize]
 
@@ -49,7 +50,7 @@ else
                         <div class=" float-end ">
                             <a href="/UserProduct/Detail/@entity.Id" class="btn btn-primary">Detail</a>
                             <a href="/UserProduct/Edit/@entity.Id" class="btn btn-primary">Edit</a>
-                            <button type="button" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-danger" @onclick="@(async () => await DeleteAsync(entity.Id, entity.Name))">Delete</button>
                         </div>
 
                     </td>
@@ -78,7 +79,6 @@ else
         </nav>
     }
 }
-
 
 @code {
     List<UserProductViewModel> entities = new List<UserProductViewModel>();
@@ -117,6 +117,33 @@ else
                 {
                     _pageState = PageState.NoData;
                 }
+            }
+            else
+            {
+                _pageState = PageState.Error;
+            }
+        }
+        catch (Exception ex)
+        {
+            _pageState = PageState.Error;
+            _toastService.ShowError(ex.Message);
+        }
+    }
+
+    private async Task DeleteAsync(Guid id, string name)
+    {
+        try
+        {
+            var message = $"Are you sure you want to delete the product ''{name}'' ?";
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", message))
+                return;
+
+            var requestUrl = string.Format(ApiUrls.V1UserProductUrl, id);
+            var result = await _httpRequester.DeleteAsync<dynamic>(requestUrl, true);
+            if (result.IsSuccess)
+            {
+                _toastService.ShowSuccess(result.Response.Message);
+                await FilterAsync(1);                
             }
             else
             {

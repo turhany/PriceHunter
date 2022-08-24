@@ -8,5 +8,6 @@ namespace PriceHunter.Web.Helpers.HttpRequester.Abstract
         Task<RequesterResponse<DataResponse<ResponseT>>> GetAsync<ResponseT>(string url, bool includeToken);
         Task<RequesterResponse<DataResponse<ResponseT>>> PostAsync<RequestT, ResponseT>(string url, RequestT requestModel, bool includeToken);
         Task<RequesterResponse<DataResponse<ResponseT>>> PutAsync<RequestT, ResponseT>(string url, RequestT requestModel, bool includeToken);
+        Task<RequesterResponse<DataResponse<ResponseT>>> DeleteAsync<ResponseT>(string url, bool includeToken);
     }
 }
