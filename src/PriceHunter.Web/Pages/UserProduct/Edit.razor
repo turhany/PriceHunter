@@ -1,6 +1,12 @@
 ﻿@page "/UserProduct/Edit/{id:guid}"
 
 @using PriceHunter.Web.Data.UserProduct.App
+@using PriceHunter.Web.Data.UserProduct.Api
+@using PriceHunter.Web.Data.Supplier.App
+
+@inject IHttpRequester _httpRequester
+@inject IToastService _toastService
+
 @attribute [Authorize]
 
 <h3>Product Edit</h3>
@@ -32,8 +38,36 @@ else
             <InputText id="name" @bind-Value="model.Name" class="form-control w-50"></InputText>
             <br />
         </div>
+        <div class="form-group">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" class="w-25">Supplier</th>
+                        <th scope="col" class="w-75">Url</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entity in model.UrlSupplierMapping)
+                    {
+                        <tr>
+                            <td>@entity.Supplier</td>
+                            <td>
+                                <InputText id="name" @bind-Value="entity.Url" class="form-control"></InputText>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         <br />
-        <button type="submit" class="btn btn-primary">Save</button>
+        @if (_pageState == PageState.Loading)
+        {
+            <Loading />
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary">Save</button>
+        }
     </EditForm>
 }
 
@@ -42,17 +76,84 @@ else
 
     [Parameter]
     public Guid id { get; set; }
+    private string RequestUrl { get; set; }
     private PageState _pageState { get; set; } = PageState.Loading;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        _pageState = PageState.Loaded;
+        try
+        {
+            RequestUrl = string.Format(ApiUrls.V1UserProductUrl, id);
+            var result = await _httpRequester.GetAsync<UserProductViewApiModel>(RequestUrl, true);
+            var supplierResult = await _httpRequester.GetAsync<List<SupplierViewModel>>(ApiUrls.V1SupplierAllUrl, true);
 
-        return base.OnInitializedAsync();
+            if (result.IsSuccess && supplierResult.IsSuccess)
+            {
+                model.Name = result.Response.Data.Name;
+                model.UrlSupplierMapping = supplierResult.Response.Data.Select(p => new UrlSupplierMappingViewModel
+                    {
+                        Supplier = p.Name,
+                        SupplierId = p.Id
+                    }).ToList();
+
+                foreach (var mapping in result.Response.Data.UrlSupplierMapping)
+                {
+                    model.UrlSupplierMapping
+                    .Where(p => p.SupplierId == mapping.SupplierId).ToList()
+                    .ForEach(p => p.Url = mapping.Url);
+                }
+
+                _pageState = PageState.Loaded;
+            }
+            else
+            {
+                _pageState = PageState.Error;
+            }
+        }
+        catch (Exception ex)
+        {
+            _pageState = PageState.Error;
+            _toastService.ShowError(ex.Message);
+        }
+
     }
 
     private async void HandleSave()
-    { 
+    {
+        try
+        {
+            _pageState = PageState.Loading;
 
+            var requestModel = new UserProductCreateApiModel();
+            requestModel.Name = model.Name;
+            if (model.UrlSupplierMapping != null && 
+                model.UrlSupplierMapping.Any(p => !string.IsNullOrWhiteSpace(p.Url)))
+            {
+                requestModel.UrlSupplierMapping =
+                model.UrlSupplierMapping
+                .Where(p => !string.IsNullOrWhiteSpace(p.Url))
+                .Select(p => new UrlSupplierMappingCreateModel
+                    {
+                        SupplierId = p.SupplierId,
+                        Url = p.Url.Trim()
+                    }).ToList();
+            }
+
+            var result = await _httpRequester.PutAsync<UserProductCreateApiModel, dynamic>(RequestUrl, requestModel, true);
+            if (result.IsSuccess)
+            {
+                _pageState = PageState.Loaded;
+                _toastService.ShowSuccess(result.Response.Message);
+            }
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.Message);
+        }
+        finally
+        {
+            _pageState = PageState.Loaded;
+            this.StateHasChanged();
+        }
     }
 }

@@ -15,6 +15,7 @@ using PriceHunter.Contract.App.Product;
 using PriceHunter.Contract.App.UserProduct;
 using PriceHunter.Contract.Mappings.Filtery;
 using PriceHunter.Contract.Service.UserProduct;
+using PriceHunter.Model.Product;
 using PriceHunter.Model.UserProduct;
 using PriceHunter.Resources.Extensions;
 using PriceHunter.Resources.Model;
@@ -125,13 +126,13 @@ namespace PriceHunter.Business.UserProduct.Concrete
 
                 foreach (var mapping in request.UrlSupplierMapping)
                 {
-                    if (await _userProductSupplierMappingRepository
-                        .AnyAsync(p =>
-                        p.Url.Equals(mapping.Url) &&
-                        p.IsDeleted == false &&
-                        p.UserId == userId))
+                    if (request.UrlSupplierMapping.Select(p => p.Url).GroupBy(p => p).Any(p => p.Count() > 1))
                     {
-                        errors.Add(string.Format(ServiceResponseMessage.USERPRODUCT_URL_DUPLICATE_ERROR, mapping.Url));
+                        var errorMessage = string.Format(ServiceResponseMessage.USERPRODUCT_URL_DUPLICATE_ERROR, mapping.Url);
+                        if (!errors.Contains(errorMessage))
+                        {
+                            errors.Add(errorMessage);
+                        }
                     }
 
                     if (!await _supplierRepository.AnyAsync(p => p.Id == mapping.SupplierId && p.IsDeleted == false))
@@ -255,13 +256,13 @@ namespace PriceHunter.Business.UserProduct.Concrete
 
                 foreach (var mapping in request.UrlSupplierMapping)
                 {
-                    if (await _userProductSupplierMappingRepository
-                        .AnyAsync(p =>
-                        p.Url.Equals(mapping.Url) &&
-                        p.IsDeleted == false &&
-                        p.UserId == userId))
+                    if (request.UrlSupplierMapping.Select(p => p.Url).GroupBy(p => p).Any(p => p.Count() > 1))
                     {
-                        errors.Add(string.Format(ServiceResponseMessage.USERPRODUCT_URL_DUPLICATE_ERROR, mapping.Url));
+                        var errorMessage = string.Format(ServiceResponseMessage.USERPRODUCT_URL_DUPLICATE_ERROR, mapping.Url);
+                        if (!errors.Contains(errorMessage))
+                        {
+                            errors.Add(errorMessage);
+                        }                        
                     }
 
                     if (!await _supplierRepository.AnyAsync(p => p.Id == mapping.SupplierId && p.IsDeleted == false))
@@ -283,6 +284,9 @@ namespace PriceHunter.Business.UserProduct.Concrete
                 Guid createdProductId = Guid.Empty;
                 foreach (var mapping in request.UrlSupplierMapping)
                 {
+                    Console.WriteLine(mapping.SupplierId);
+                    Console.WriteLine(mapping.Url);
+
                     Guid productId = Guid.Empty;
                     var productSupplierInfoMapping = await _productSupplierInfoMappingRepository.FindOneAsync(p =>
                        p.Url.Equals(mapping.Url) &&
@@ -332,8 +336,9 @@ namespace PriceHunter.Business.UserProduct.Concrete
                 entity = await _userProductRepository.UpdateAsync(entity);
 
                 var dbProductSupplierMappings = _userProductSupplierMappingRepository.Find(p =>
-                    p.IsDeleted == false &&
-                    p.UserId == userId).ToList();
+                    p.UserProductId == request.Id &&
+                    p.UserId == userId &&
+                    p.IsDeleted == false).ToList();
 
                 if (dbProductSupplierMappings.Any())
                 {
@@ -443,7 +448,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     Message = Resource.NotFound(Entities.UserProduct)
                 };
             }
-            
+
             var response = new List<ProductPriceChangesViewModel>();
 
             var userProductMappings = _userProductSupplierMappingRepository.Find(p =>
@@ -480,7 +485,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                                     .Take(monthCount)
                                     .ToList();
 
-            
+
 
             if (groupedPriceHistory != null && groupedPriceHistory.Any())
             {

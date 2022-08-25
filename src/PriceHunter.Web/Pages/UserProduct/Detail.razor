@@ -120,6 +120,7 @@ else
                 model.Name = result.Response.Data.Name;
                 model.UrlSupplierMapping = result.Response.Data.UrlSupplierMapping?.Select(p => new UrlSupplierMappingViewModel
                     {
+                        SupplierId = p.SupplierId,
                         Supplier = supplierResult.Response.Data.FirstOrDefault(k => k.Id == p.SupplierId).Name,
                         Url = p.Url
                     }).ToList();
