@@ -83,16 +83,11 @@ Infrastructure Infrastructure
 
 ###### Doc Version : PriceHunter-Requirements v 0.5
 
-###### Architecture Documentation [here](README_DESING.md)
-
-###### Development Task Documentation [here](README_TASKS.md)
-
-###### Local Development Docker Codes [here](README_LOCALDEVDOCKER.md)
-
-###### App GUI(s) [here](README_GUIS.md)
-
-###### DB, Distributed Cache - Lock, Message Queue Settings  [here](README_CONFIG.md)
-
-###### Sample Data Flow (Usage)  [here](README_USAGE.md)
-
-###### Application URLS [here](README_URLS.md)
+## Docs
+* Architecture Documentation [here](README_DESING.md)
+* Development Task Documentation [here](README_TASKS.md)
+* Local Development Docker Codes [here](README_LOCALDEVDOCKER.md)
+* App GUI(s) [here](README_GUIS.md)
+* DB, Distributed Cache - Lock, Message Queue Settings  [here](README_CONFIG.md)
+* Sample Data Flow (Usage)  [here](README_USAGE.md)
+* Application URLS [here](README_URLS.md)
