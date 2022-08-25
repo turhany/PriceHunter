@@ -4,6 +4,7 @@
 * Add Gateway project
 * Develop parser's business logic
 * Develop notification's business logic
+* Save notifications to database
 
 
 #### Suggestions
