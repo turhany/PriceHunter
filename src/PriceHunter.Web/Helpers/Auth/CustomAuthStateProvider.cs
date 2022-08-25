@@ -91,7 +91,7 @@ namespace PriceHunter.Web.Helpers.Auth
         private DateTime ConvertFromUnixTimestamp(int timestamp)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return origin.AddSeconds(timestamp); //
+            return origin.AddSeconds(timestamp); 
         }
     }
 }
