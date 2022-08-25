@@ -85,6 +85,7 @@ Infrastructure Infrastructure
 
 ## Docs
 * Architecture Documentation [here](README_DESING.md)
+* Technologies [here](README_TECHNOLOGIES.md)
 * Development Task Documentation [here](README_TASKS.md)
 * Local Development Docker Codes [here](README_LOCALDEVDOCKER.md)
 * App GUI(s) [here](README_GUIS.md)
