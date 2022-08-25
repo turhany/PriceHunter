@@ -11,6 +11,23 @@ PriceHunter is full scalable, microservice application.
 
 ![alt tag](files/images/database_diagram.png) 
 
+## Project Diagram
+
+![alt tag](files/images/project_diagram.png) 
+
+#### Structure
+- **WEB:** Blazor based ui project  
+- **API:** Endpoint project for client usage  
+- **Business:** Project for business logic        
+- **Common:** Cross cutting consern items (like cache, lock...)   
+- **Container:** DI configuration project   
+- **Contract:** Dtos, layer transfer and api response - request objects   
+- **Data:** Database layer files (Mongo implementations and repositories)    
+- **Model:** Database entity models   
+- **Resources:** Language resx files project   
+- **Messaging/Consumer:** Message service(RabbitMQ) implementation project
+- **ScheduleService:** Schedule tasks project   
+- **Tests:** Unit test project
 
 ## Comon interfaces of interservice comunications
 Will be add.
