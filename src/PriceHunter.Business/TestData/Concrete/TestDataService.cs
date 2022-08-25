@@ -97,7 +97,7 @@ namespace PriceHunter.Business.TestData.Concrete
 
             var userProduct2 = await _userProductRepository.InsertAsync(new Model.UserProduct.UserProduct
             {
-                Name = product.Name,
+                Name = product.Name + 2,
                 UserId = user.Id
             });
 
