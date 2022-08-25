@@ -92,3 +92,4 @@ Infrastructure Infrastructure
 * DB, Distributed Cache - Lock, Message Queue Settings  [here](README_CONFIG.md)
 * Sample Data Flow (Usage)  [here](README_USAGE.md)
 * Application URLS [here](README_URLS.md)
+* Blazor Resources [here](README_BLAZOR.md)
