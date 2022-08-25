@@ -1,7 +1,7 @@
 ﻿<AuthorizeView>
     <Authorized>
         <div class="nav-item px-3">
-            <span> <a href="/User/Profile"> Welcome @context.User.Claims.FirstOrDefault(p => p.Type == ClaimConstants.Name)?.Value </a></span>
+            <span> <a href="@NavigationConstants.UserProfile"> Welcome @context.User.Claims.FirstOrDefault(p => p.Type == ClaimConstants.Name)?.Value </a></span>
         </div>
     </Authorized>
 </AuthorizeView>

@@ -1,4 +1,4 @@
-﻿@page "/User/Products/Edit/{id:guid}"
+﻿@page "/User/Products/Add"
 
 @using PriceHunter.Web.Data.UserProduct.App
 @using PriceHunter.Web.Data.UserProduct.Api
@@ -6,11 +6,9 @@
 
 @inject IHttpRequester _httpRequester
 @inject IToastService _toastService
+@inject NavigationManager _navigationManager
 
-@attribute [Authorize]
-
-<h3>Product Edit</h3>
-
+<h3>New Product</h3>
 
 @if (_pageState == PageState.Loading)
 {
@@ -67,7 +65,7 @@ else
         else
         {
             <a href="@NavigationConstants.UserProductList" class="btn btn-primary">Back</a>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary">Save</button>
         }
     </EditForm>
 }
@@ -75,34 +73,21 @@ else
 @code {
     UserProductViewModel model = new UserProductViewModel();
 
-    [Parameter]
-    public Guid id { get; set; }
-    private string RequestUrl { get; set; }
     private PageState _pageState { get; set; } = PageState.Loading;
 
     protected override async Task OnInitializedAsync()
     {
         try
-        {
-            RequestUrl = string.Format(ApiUrls.V1UserProductUrl, id);
-            var result = await _httpRequester.GetAsync<UserProductViewApiModel>(RequestUrl, true);
+        {            
             var supplierResult = await _httpRequester.GetAsync<List<SupplierViewModel>>(ApiUrls.V1SupplierAllUrl, true);
 
-            if (result.IsSuccess && supplierResult.IsSuccess)
+            if (supplierResult.IsSuccess)
             {
-                model.Name = result.Response.Data.Name;
                 model.UrlSupplierMapping = supplierResult.Response.Data.Select(p => new UrlSupplierMappingViewModel
                     {
                         Supplier = p.Name,
                         SupplierId = p.Id
                     }).ToList();
-
-                foreach (var mapping in result.Response.Data.UrlSupplierMapping)
-                {
-                    model.UrlSupplierMapping
-                    .Where(p => p.SupplierId == mapping.SupplierId).ToList()
-                    .ForEach(p => p.Url = mapping.Url);
-                }
 
                 _pageState = PageState.Loaded;
             }
@@ -120,14 +105,14 @@ else
     }
 
     private async void HandleSave()
-    {
+    { 
         try
         {
             _pageState = PageState.Loading;
 
             var requestModel = new UserProductCreateApiModel();
             requestModel.Name = model.Name;
-            if (model.UrlSupplierMapping != null && 
+            if (model.UrlSupplierMapping != null &&
                 model.UrlSupplierMapping.Any(p => !string.IsNullOrWhiteSpace(p.Url)))
             {
                 requestModel.UrlSupplierMapping =
@@ -140,10 +125,11 @@ else
                     }).ToList();
             }
 
-            var result = await _httpRequester.PutAsync<UserProductCreateApiModel, dynamic>(RequestUrl, requestModel, true);
+            var result = await _httpRequester.PostAsync<UserProductCreateApiModel, dynamic>(ApiUrls.V1UserProductCreateUrl, requestModel, true);
             if (result.IsSuccess)
             {
                 _pageState = PageState.Loaded;
+                _navigationManager.NavigateTo(NavigationConstants.UserProductList);
                 _toastService.ShowSuccess(result.Response.Message);
             }
         }

@@ -1,4 +1,4 @@
-﻿@page "/User/Products"
+﻿@page "/User/Products/List"
 
 @using PriceHunter.Web.Data.Filter
 @using PriceHunter.Web.Data.Pager
@@ -10,7 +10,7 @@
 
 @attribute [Authorize]
 
-<h3>Products List</h3>
+<h3>Product List</h3>
 
 @if (_pageState == PageState.Loading)
 {
@@ -30,6 +30,9 @@ else if (_pageState == PageState.Error)
 }
 else
 {
+    <div class=" float-end">
+        <a class="btn btn-primary" href="@NavigationConstants.UserProductAdd">New</a>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -43,9 +46,9 @@ else
                 <tr>
                     <td>@entity.Name</td>
                     <td class="float-right ">
-                        <div class=" float-end ">
-                            <a href="/UserProduct/Detail/@entity.Id" class="btn btn-primary">Detail</a>
-                            <a href="/UserProduct/Edit/@entity.Id" class="btn btn-primary">Edit</a>
+                        <div class=" float-end">
+                            <a href="@(NavigationConstants.UserProductDetail + entity.Id)" class="btn btn-primary">Detail</a>
+                            <a href="@(NavigationConstants.UserProductEdit + entity.Id)" class="btn btn-primary">Edit</a>
                             <button type="button" class="btn btn-danger" @onclick="@(async () => await DeleteAsync(entity.Id, entity.Name))">Delete</button>
                         </div>
 

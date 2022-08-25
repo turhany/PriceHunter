@@ -1,4 +1,4 @@
-﻿@page "/UserProduct/Detail/{id:guid}"
+﻿@page "/User/Products/Detail/{id:guid}"
 
 @using PriceHunter.Web.Data.UserProduct.Api
 @using PriceHunter.Web.Data.UserProduct.App
@@ -96,6 +96,11 @@ else
             Processing.
         </text>
     }
+
+    <div>
+        <br />
+        <a href="@NavigationConstants.UserProductList" class="btn btn-primary">Back</a>
+    </div>
 }
 
 @code {

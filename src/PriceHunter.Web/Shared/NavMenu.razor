@@ -18,24 +18,24 @@
         <AuthorizeView>
             <NotAuthorized>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="login">
+                    <NavLink class="nav-link" href="@NavigationConstants.Login">
                         <span class="oi oi-account-login" aria-hidden="true"></span> Login
                     </NavLink>
                 </div>
             </NotAuthorized>
             <Authorized>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="User/Profile">
+                    <NavLink class="nav-link" href="@NavigationConstants.UserProfile">
                         <span class="oi oi-person" aria-hidden="true"></span> Profile
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="User/Products">
+                    <NavLink class="nav-link" href="@NavigationConstants.UserProductList">
                         <span class="oi oi-spreadsheet" aria-hidden="true"></span> Products
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="logout">
+                    <NavLink class="nav-link" href="@NavigationConstants.Logout">
                         <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
                     </NavLink>
                 </div>
