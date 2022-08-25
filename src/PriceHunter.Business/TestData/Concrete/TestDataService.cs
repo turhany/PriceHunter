@@ -70,7 +70,7 @@ namespace PriceHunter.Business.TestData.Concrete
 
             var product = await _productRepository.InsertAsync(new Model.Product.Product
             {
-                Name = "Araba",                
+                Name = "Headphones",                
             });
 
             await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
@@ -93,6 +93,21 @@ namespace PriceHunter.Business.TestData.Concrete
                 Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031",
                 UserId= user.Id,
                 UserProductId = userProduct.Id
+            });
+
+            var userProduct2 = await _userProductRepository.InsertAsync(new Model.UserProduct.UserProduct
+            {
+                Name = product.Name,
+                UserId = user.Id
+            });
+
+            await _userProductSupplierMappingRepository.InsertAsync(new Model.UserProduct.UserProductSupplierMapping
+            {
+                ProductId = product.Id,
+                SupplierId = suppliers.First().Id,
+                Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031",
+                UserId = user.Id,
+                UserProductId = userProduct2.Id
             });
         }
     }
