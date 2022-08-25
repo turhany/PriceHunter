@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using Autofac;
+﻿using Autofac;
 using AutoMapper;
 using PriceHunter.Common.Application;
-using PriceHunter.Common.Cache.Abstract; 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using PriceHunter.Common.Lock.Abstract;
@@ -15,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Mongo2Go;
 using Microsoft.Extensions.Options;
 using PriceHunter.Data.MongoDB.Options;
+using PriceHunter.Common.Options;
+using Microsoft.Extensions.Logging;
+using PriceHunter.Business.User.Concrete;
 
 namespace PriceHunter.BusinessTests
 {
@@ -44,9 +42,17 @@ namespace PriceHunter.BusinessTests
             mockMongoOptions.Setup(ap => ap.Value).Returns(mongoDBOption);
             builder.RegisterInstance(mockMongoOptions.Object).As<IOptions<MongoDBOption>>();
 
+            var mockLogger = new Mock<ILogger<UserService>>(); 
+            builder.RegisterInstance(mockLogger.Object).As<ILogger<UserService>>();
+
+            var mockFileConfigurationOptions = new Mock<IOptions<FileConfigurationOptions>>();
+            builder.RegisterInstance(mockFileConfigurationOptions.Object).As<IOptions<FileConfigurationOptions>>();
+
             builder.RegisterModule(new ApplicationModule());
             builder.RegisterModule(new RepositoryModule());
-            builder.RegisterModule(new ServiceModule()); 
+            builder.RegisterModule(new ServiceModule());
+            builder.RegisterModule(new NotificationModule());
+            builder.RegisterModule(new ParserModule());
 
             var mockLock = new Mock<ILockService>();
             builder.RegisterInstance(mockLock.Object).As<ILockService>();
