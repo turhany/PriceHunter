@@ -5,6 +5,7 @@
 * Develop parser's business logic
 * Develop notification's business logic
 * Save notifications to database
+* Implement Role Auth to Blazor flow
 
 
 #### Suggestions
