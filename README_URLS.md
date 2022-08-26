@@ -1,3 +1,6 @@
+#### Blazor UI   
+* http://localhost:5260
+
 #### Swagger Endpoint   
 * http://localhost:5010/swagger/index.html
 
