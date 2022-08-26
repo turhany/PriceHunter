@@ -64,16 +64,6 @@ The app which parse product web pages for the get and save price info.
 #### Background Worker
 The app run background jobs, for example prepare notification for send and put them in releated queue.
 
-### Technologies
-* .Net 6
-* Mongo DB for database
-* Blazor for Front end
-* RabbitMQ for queue(Publisher/Consumer system) 
-* Email/SMS/Push Notification system 
-* Redis for distributed cache and lock
-* Hangfire for background services
-* Ocelot for gateway system
-
 <!-- ## Define all api endpoints and their schema -->
 #### Generic Base Response Type
 ```cs 
@@ -139,7 +129,6 @@ public class Page
 #### Standart Types
 ```cs
 public enum SupplierType{
-    None = 0,
     Amazon = 1,
     Alibaba = 2,
     AliExpress = 3
