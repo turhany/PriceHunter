@@ -101,9 +101,3 @@ services:
       RABBITMQ_DEFAULT_VHOST: "pricehunter"
     networks:
       - bridge-network
-  pricehunter.web:
-    image: ${DOCKER_REGISTRY-}pricehunterweb
-    build:
-      context: .
-      dockerfile: PriceHunter.Web/Dockerfile
-
