@@ -1,15 +1,26 @@
 #### What next?
+* Add Blazor app into DockerCompose
+* Add currency type for product
+* Add sample json response for api endpoint's
+* check (product,userproduct)"last6monthchanges" response business logic
 * Refactor UI App
 * Refactor Api App
 * Add Gateway project
 * Develop parser's business logic
 * Develop notification's business logic
 * Save notifications to database
-* Implement Role Auth to Blazor flow
+* Implement Role Auth to Blazor flow 
+* Try add Database as volume in docker 
 
 
 #### Suggestions
 * Seperate Cache, Lock systems from Common project
 
+
 #### V2 Suggestions
-* Implement on demand serach flow for not added products
+* Implement on demand search flow for not added products
+* Seperate all domains as a microservice api
+* Service mesh / Service Discovery
+
+#### Research
+* Kafka vs RabbitMQ
