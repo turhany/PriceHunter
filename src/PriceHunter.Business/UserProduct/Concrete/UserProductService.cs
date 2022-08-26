@@ -84,7 +84,6 @@ namespace PriceHunter.Business.UserProduct.Concrete
 
             var userProductMappings = _userProductSupplierMappingRepository.Find(p =>
             p.UserProductId == product.Id &&
-            p.UserId == userId &&
             p.IsDeleted == false).ToList();
 
             if (userProductMappings != null && userProductMappings.Any())
@@ -188,8 +187,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     {
                         Url = mapping.Url,
                         ProductId = productIdForMap,
-                        SupplierId = mapping.SupplierId,
-                        UserId = userId
+                        SupplierId = mapping.SupplierId
                     });
                 }
             }
@@ -321,7 +319,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                         Url = mapping.Url,
                         ProductId = productIdForMap,
                         SupplierId = mapping.SupplierId,
-                        UserId = userId
+                        UserProductId = request.Id                       
                     });
                 }
             }
@@ -336,8 +334,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                 entity = await _userProductRepository.UpdateAsync(entity);
 
                 var dbProductSupplierMappings = _userProductSupplierMappingRepository.Find(p =>
-                    p.UserProductId == request.Id &&
-                    p.UserId == userId &&
+                    p.UserProductId == request.Id && 
                     p.IsDeleted == false).ToList();
 
                 if (dbProductSupplierMappings.Any())
@@ -393,8 +390,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
 
                 var dbProductSupplierMappings = _userProductSupplierMappingRepository.Find(p =>
                     p.UserProductId == entity.Id &&
-                    p.IsDeleted == false &&
-                    p.UserId == userId).ToList();
+                    p.IsDeleted == false).ToList();
 
                 if (dbProductSupplierMappings.Any())
                 {
@@ -452,8 +448,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             var response = new List<ProductPriceChangesViewModel>();
 
             var userProductMappings = _userProductSupplierMappingRepository.Find(p =>
-               p.UserProductId == userProduct.Id &&
-               p.UserId == userId &&
+               p.UserProductId == userProduct.Id && 
                p.IsDeleted == false).ToList();
 
             if (userProductMappings == null)

@@ -9,6 +9,8 @@ PriceHunter is full scalable, microservice application.
 
 ## Database Diagram
 
+https://dbdiagram.io/d/62ea4d95f31da965e86f8388
+
 ![alt tag](files/images/database_diagram.png) 
 
 ## Project Diagram

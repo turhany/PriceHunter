@@ -16,11 +16,7 @@ namespace PriceHunter.Business.User.Validator
             RuleFor(request => request.Password)
                 .NotEmpty()
                 .WithMessage(string.Format(ServiceResponseMessage.PROPERTY_REQUIRED, nameof(GetTokenContractServiceRequest.Password)))
-                .MinimumLength(8)
-                .Matches("[A-Z]").WithMessage("'Password' must contain one or more capital letters.")
-                .Matches("[a-z]").WithMessage("'Password' must contain one or more lowercase letters.")
-                .Matches(@"\d").WithMessage("'Password' must contain one or more digits.")
-                .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("'Password' must contain one or more special characters.");
+                .MinimumLength(8);
         }
     }
 }
