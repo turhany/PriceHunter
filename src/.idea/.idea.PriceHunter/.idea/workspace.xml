@@ -10,6 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc101660-f9cc-44c1-9bbb-614be5d9c5d9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/PriceHunter.Web/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PriceHunter.Web/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/../LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
@@ -18,11 +20,17 @@
       <change beforePath="$PROJECT_DIR$/../README_DESING.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_DESING.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README_GUIS.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_GUIS.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README_LOCALDEVDOCKER.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_LOCALDEVDOCKER.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README_NEXT.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_NEXT.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README_TASKS.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_TASKS.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README_TECHNOLOGIES.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_TECHNOLOGIES.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README_URLS.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_URLS.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README_USAGE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_USAGE.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureApiVersioning.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureApiVersioning.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureCORS.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureCORS.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureIdentityServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureIdentityServer.cs" afterDir="false" />
@@ -317,20 +325,23 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2DqgWu88TDmaVjgvR3VwplLmBer" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.PriceHunter.Api">
     <configuration name="PriceHunter.Api" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/PriceHunter.Api/PriceHunter.Api.csproj" />
@@ -432,6 +443,7 @@
       <option name="presentableId" value="Default" />
       <updated>1661432064968</updated>
       <workItem from="1661432086137" duration="305000" />
+      <workItem from="1661512703390" duration="772000" />
     </task>
     <servers />
   </component>

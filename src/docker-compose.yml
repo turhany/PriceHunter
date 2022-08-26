@@ -5,6 +5,20 @@ networks:
     driver: bridge
 
 services:
+  
+  PriceHunter.web:
+    image: ${DOCKER_REGISTRY-}pricehunterweb
+    restart: always
+    depends_on:
+      - "PriceHunter.api"
+    build:
+      context: .
+      dockerfile: PriceHunter.Web/Dockerfile
+    ports:
+      - "5260:80"    
+    networks:
+      - bridge-network
+  
   PriceHunter.api:
     image: ${DOCKER_REGISTRY-}pricehunterapi
     restart : always
