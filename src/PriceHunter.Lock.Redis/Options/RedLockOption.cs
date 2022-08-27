@@ -1,4 +1,4 @@
-﻿namespace PriceHunter.Common.Lock.Concrete
+﻿namespace PriceHunter.Lock.Options
 {
     public class RedLockOption
     {

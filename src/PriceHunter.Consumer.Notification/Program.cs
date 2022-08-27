@@ -12,6 +12,9 @@ using Serilog;
 using PriceHunter.Consumer.Notification.Configurations;
 using PriceHunter.Data.MongoDB.Options;
 using PriceHunter.Consumer.Notification;
+using PriceHunter.Common.Constans;
+using PriceHunter.Cache.Redis.StartupConfigurations;
+using PriceHunter.Lock.Redis.StartupConfigurations;
 
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 var hostBuilder = Host.CreateDefaultBuilder()
@@ -28,7 +31,8 @@ var hostBuilder = Host.CreateDefaultBuilder()
     .ConfigureServices((hostingContext, services) =>
     {
         services.Configure<MongoDBOption>(hostingContext.Configuration.GetSection("mongo"));
-        services.AddDistributedCacheConfiguration(hostingContext.Configuration);
+        services.AddDistributedCacheConfiguration(hostingContext.Configuration[AppConstants.RedisConnectionString], hostingContext.Configuration[AppConstants.RedisCacheInstanceName]);
+        services.AddDistributedLockConfiguration(hostingContext.Configuration, AppConstants.RedLockSettingsOptionName);
         services.AddMassTransitConfigurationForConsumer(hostingContext.Configuration);
         services.AddAutoMapper(typeof(ProductMapping));
         services.AddHostedService<QueueWorker>();

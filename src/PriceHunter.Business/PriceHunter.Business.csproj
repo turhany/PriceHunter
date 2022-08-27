@@ -9,7 +9,9 @@
   <ItemGroup>
     <ProjectReference Include="..\PriceHunter.Common\PriceHunter.Common.csproj" />
     <ProjectReference Include="..\PriceHunter.Contract\PriceHunter.Contract.csproj" />
+    <ProjectReference Include="..\PriceHunter.Lock\PriceHunter.Lock.csproj" />
     <ProjectReference Include="..\PriceHunter.Model\PriceHunter.Model.csproj" />
+    <ProjectReference Include="..\PriceHunter.Cache\PriceHunter.Cache.csproj" />
   </ItemGroup>
 
 </Project>

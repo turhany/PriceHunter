@@ -1,8 +1,8 @@
-﻿using Autofac; 
-using PriceHunter.Common.Cache.Abstract;
-using PriceHunter.Common.Cache.Concrete;
-using PriceHunter.Common.Lock.Abstract;
-using PriceHunter.Common.Lock.Concrete;
+﻿using Autofac;
+using PriceHunter.Cache.Abstract;
+using PriceHunter.Cache.Concrete;
+using PriceHunter.Lock.Abstract;
+using PriceHunter.Lock.Concrete;
 using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Common.Validation.Concrete;
 

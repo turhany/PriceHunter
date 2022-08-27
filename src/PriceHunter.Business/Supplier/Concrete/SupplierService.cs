@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using PriceHunter.Business.Supplier.Abstract;
+using PriceHunter.Cache.Abstract;
 using PriceHunter.Common.BaseModels.Service;
-using PriceHunter.Common.Cache.Abstract;
 using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract; 
 using PriceHunter.Contract.App.Supplier;

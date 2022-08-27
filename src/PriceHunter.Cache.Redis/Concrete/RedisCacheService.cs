@@ -1,12 +1,9 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
-using PriceHunter.Common.Cache.Abstract;
-using PriceHunter.Common.Constans; 
+using PriceHunter.Cache.Abstract;
+using PriceHunter.Cache.Constants;
 
-namespace PriceHunter.Common.Cache.Concrete
+namespace PriceHunter.Cache.Concrete
 {
     public class RedisCacheService : ICacheService
     {
@@ -17,7 +14,7 @@ namespace PriceHunter.Common.Cache.Concrete
             _distributedCache = distributedCache;
         }
 
-        public async  Task<T> GetOrSetObjectAsync<T>(string key, Func<T> code, int durationAsMinute = AppConstants.DefaultCacheDuration)
+        public async  Task<T> GetOrSetObjectAsync<T>(string key, Func<T> code, int durationAsMinute = CacheConstants.DefaultCacheDuration)
         {
             if (await ExistObjectAsync<T>(key))
             {
@@ -30,7 +27,7 @@ namespace PriceHunter.Common.Cache.Concrete
             return result;
         }
         
-        public async  Task<T> GetOrSetObjectAsync<T>(string key, Func<Task<T>> code, int durationAsMinute = AppConstants.DefaultCacheDuration)
+        public async  Task<T> GetOrSetObjectAsync<T>(string key, Func<Task<T>> code, int durationAsMinute = CacheConstants.DefaultCacheDuration)
         {
             if (await ExistObjectAsync<T>(key))
             {
@@ -43,7 +40,7 @@ namespace PriceHunter.Common.Cache.Concrete
             return result;
         }
 
-        public async Task SetObjectAsync<T>(string key, T value, int durationAsMinute = AppConstants.DefaultCacheDuration)
+        public async Task SetObjectAsync<T>(string key, T value, int durationAsMinute = CacheConstants.DefaultCacheDuration)
         {
             key = $"{key}_{Thread.CurrentThread.CurrentUICulture.Name}";
             await _distributedCache.SetStringAsync(key, JsonConvert.SerializeObject(value), new DistributedCacheEntryOptions

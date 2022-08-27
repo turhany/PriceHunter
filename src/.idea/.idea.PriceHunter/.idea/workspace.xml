@@ -10,320 +10,48 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc101660-f9cc-44c1-9bbb-614be5d9c5d9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/PriceHunter.Web/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PriceHunter.Web/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/../LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_BLAZOR.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_BLAZOR.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_CONFIG.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_CONFIG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_DESING.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_DESING.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_GUIS.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_GUIS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_LOCALDEVDOCKER.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_LOCALDEVDOCKER.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_NEXT.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_NEXT.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_TASKS.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_TASKS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_TECHNOLOGIES.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_TECHNOLOGIES.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_URLS.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_URLS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README_USAGE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README_USAGE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureApiVersioning.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureApiVersioning.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureCORS.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureCORS.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureIdentityServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureIdentityServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureLocalization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureLocalization.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureSwagger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Configurations/Startup/ConfigureSwagger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Controllers/BaseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Controllers/BaseController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/LoginController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/LoginController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/ProductsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/ProductsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/SuppliersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/SuppliersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/TestDataController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/TestDataController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/UserProductsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/UserProductsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Controllers/V1/UsersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Middlewares/ExceptionHandlerMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Middlewares/ExceptionHandlerMiddleware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Middlewares/RequestLogMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Middlewares/RequestLogMiddleware.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Api/PriceHunter.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/PriceHunter.Api.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/appsettings.DockerCompose.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/appsettings.DockerCompose.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/swagger/PriceHunter.Api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/swagger/PriceHunter.Api.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Business/PriceHunter.Business.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/PriceHunter.Business.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/Product/Abstract/IProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/Product/Abstract/IProductService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Business/Product/Concrete/ProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/Product/Concrete/ProductService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/Product/Validator/CreateProductRequestValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/Product/Validator/CreateProductRequestValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/Product/Validator/ProductSupplierInfoMappingServiceModelValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/Product/Validator/ProductSupplierInfoMappingServiceModelValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/Product/Validator/UpdateProductRequestValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/Product/Validator/UpdateProductRequestValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/RequestLog/Abstract/IRequestLogService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/RequestLog/Abstract/IRequestLogService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/RequestLog/Concrete/RequestLogService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/RequestLog/Concrete/RequestLogService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/Supplier/Abstract/ISupplierService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/Supplier/Abstract/ISupplierService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Business/Supplier/Concrete/SupplierService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/Supplier/Concrete/SupplierService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/TestData/Abstract/ITestDataService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/TestData/Abstract/ITestDataService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/TestData/Concrete/TestDataService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/TestData/Concrete/TestDataService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/User/Abstract/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/User/Abstract/IUserService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Business/User/Concrete/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/User/Concrete/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/CreateUserRequestValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/CreateUserRequestValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/GetTokenContractServiceRequestValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/GetTokenContractServiceRequestValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/ProfileFileContractServiceRequestValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/ProfileFileContractServiceRequestValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/RefreshTokenContractServiceRequestValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/RefreshTokenContractServiceRequestValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/UpdateUserRequestValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/User/Validator/UpdateUserRequestValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Abstract/IUserProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Abstract/IUserProductService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Concrete/UserProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Concrete/UserProductService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Validator/CreateUserProductRequestValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Validator/CreateUserProductRequestValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Validator/UpdateUserProductRequestValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Validator/UpdateUserProductRequestValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Validator/UrlSupplierMappingServiceModelValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Validator/UrlSupplierMappingServiceModelValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.BusinessTests/PriceHunter.BusinessTests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.BusinessTests/PriceHunter.BusinessTests.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.BusinessTests/TestBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.BusinessTests/TestBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.BusinessTests/User/Concrete/RequestLogServiceTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.BusinessTests/User/Concrete/RequestLogServiceTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.BusinessTests/User/Concrete/UserServiceTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.BusinessTests/User/Concrete/UserServiceTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Application/ApplicationContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Application/ApplicationContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Application/CurrentUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Application/CurrentUser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Attributes/DatabaseIdAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Attributes/DatabaseIdAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Auth/Concrete/AccessTokenContract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Auth/Concrete/AccessTokenContract.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Auth/Concrete/JwtContract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Auth/Concrete/JwtContract.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Auth/JwtManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Auth/JwtManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Api/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Api/ApiResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Api/BaseResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Api/BaseResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Api/DataResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Api/DataResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Service/ResultStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Service/ResultStatus.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Service/ServiceResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/BaseModels/Service/ServiceResult.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Cache/Abstract/ICacheService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Cache/Abstract/ICacheService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Cache/Concrete/RedisCacheService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Cache/Concrete/RedisCacheService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Cache/Abstract/ICacheService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Cache/Abstract/ICacheService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Cache/Concrete/RedisCacheService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Cache.Redis/Concrete/RedisCacheService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Constans/AppConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Constans/AppConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Constans/CacheKeyConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Constans/CacheKeyConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Constans/LockKeyConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Constans/LockKeyConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Data/Abstract/IGenericRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Data/Abstract/IGenericRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Data/Abstract/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Data/Abstract/IRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Data/Abstract/IService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Data/Abstract/IService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Data/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Data/Entity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Data/SoftDeleteEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Data/SoftDeleteEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Extensions/EnumExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Extensions/EnumExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Abstract/ILockService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Lock/Abstract/ILockService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/AcquireLockException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/AcquireLockException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/RedLockOption.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/RedLockOption.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/RedisLockService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/RedisLockService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Options/FileConfigurationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Options/FileConfigurationOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Options/RabbitMqOption.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Options/RabbitMqOption.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Pager/Page.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Pager/Page.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Pager/PagedList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Pager/PagedList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Abstract/ILockService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/AcquireLockException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/RedLockOption.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/RedisLockService.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Common/PriceHunter.Common.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/PriceHunter.Common.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/RateLimiting/RateLimitingMode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/RateLimiting/RateLimitingMode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureCompression.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureCompression.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureDistributedCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureDistributedCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureHealthCheck.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureHealthCheck.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureMassTransit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureMassTransit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureRateLimiting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureRateLimiting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureSecuritySettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureSecuritySettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureStaticFileProviders.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureStaticFileProviders.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Swagger/ConfigureSwaggerOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Swagger/ConfigureSwaggerOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Swagger/EnumSchemaFilter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Swagger/EnumSchemaFilter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Swagger/SwaggerConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Swagger/SwaggerConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Swagger/SwaggerDefaultValues.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Swagger/SwaggerDefaultValues.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Swagger/SwaggerHttpHeaderFilter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Swagger/SwaggerHttpHeaderFilter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Validation/Abstract/IValidationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Validation/Abstract/IValidationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Validation/Concrete/ValidationResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Validation/Concrete/ValidationResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Validation/Concrete/ValidationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Validation/Concrete/ValidationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Validation/MimeValidation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Validation/MimeValidation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Configurations/ConfigureMassTransit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Configurations/ConfigureMassTransit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Consumers/NotificationConsumer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Consumers/NotificationConsumer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureDistributedCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Cache.Redis/StartupConfigurations/ConfigureDistributedCache.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/PriceHunter.Consumer.Notification.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/PriceHunter.Consumer.Notification.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/QueueWorker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/QueueWorker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/appsettings.DockerCompose.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/appsettings.DockerCompose.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Configurations/ConfigureMassTransit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Configurations/ConfigureMassTransit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Consumers/ParserConsumer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Consumers/ParserConsumer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/PriceHunter.Consumer.Parser.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/PriceHunter.Consumer.Parser.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/QueueWorker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/QueueWorker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/appsettings.DockerCompose.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/appsettings.DockerCompose.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Container/Modules/ApplicationModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Container/Modules/ApplicationModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Container/Modules/NotificationModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Container/Modules/NotificationModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Container/Modules/ParserModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Container/Modules/ParserModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Container/Modules/RepositoryModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Container/Modules/RepositoryModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Container/Modules/ServiceModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Container/Modules/ServiceModule.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Container/PriceHunter.Container.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Container/PriceHunter.Container.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/CreateProductRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/CreateProductRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductPriceChangesViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductPriceChangesViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductPriceHistorySearchViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductPriceHistorySearchViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductSearchViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductSearchViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductSupplierInfoMappingViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductSupplierInfoMappingViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/ProductViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/UpdateProductRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/Product/UpdateProductRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/Supplier/SupplierViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/Supplier/SupplierViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/User/CreateUserRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/User/CreateUserRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/User/GetTokenContract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/User/GetTokenContract.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/User/ProfileFileContract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/User/ProfileFileContract.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/User/RefreshTokenContract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/User/RefreshTokenContract.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/User/UpdateUserRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/User/UpdateUserRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/User/UserProfileImageViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/User/UserProfileImageViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/User/UserViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/User/UserViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/CreateUserProductRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/CreateUserProductRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/UpdateUserProductRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/UpdateUserProductRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/UrlSupplierMappingViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/UrlSupplierMappingViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/UserProductSearchViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/UserProductSearchViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/UserProductViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/App/UserProduct/UserProductViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Consumer/Notification/SendNotificationCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Consumer/Notification/SendNotificationCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Consumer/Parser/SendParserCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Consumer/Parser/SendParserCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/AutoMapper/ProductMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/AutoMapper/ProductMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/AutoMapper/SupplierMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/AutoMapper/SupplierMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/AutoMapper/UserMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/AutoMapper/UserMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/AutoMapper/UserProductMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/AutoMapper/UserProductMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/Filtery/ProductFilteryMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/Filtery/ProductFilteryMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/Filtery/ProductPriceHistoryFilteryMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/Filtery/ProductPriceHistoryFilteryMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/Filtery/UserFilteryMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/Filtery/UserFilteryMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/Filtery/UserProductFilteryMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Mappings/Filtery/UserProductFilteryMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/PriceHunter.Contract.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/PriceHunter.Contract.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/Product/CreateProductRequestServiceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/Product/CreateProductRequestServiceRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/Product/ProductSupplierInfoMappingServiceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/Product/ProductSupplierInfoMappingServiceModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/Product/UpdateProductRequestServiceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/Product/UpdateProductRequestServiceRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/CreateUserRequestServiceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/CreateUserRequestServiceRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/GetTokenContractServiceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/GetTokenContractServiceRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/ProfileFileContractServiceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/ProfileFileContractServiceRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/RefreshTokenContractServiceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/RefreshTokenContractServiceRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/UpdateUserRequestServiceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/User/UpdateUserRequestServiceRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/UserProduct/CreateUserProductRequestServiceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/UserProduct/CreateUserProductRequestServiceRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/UserProduct/UpdateUserProductRequestServiceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/UserProduct/UpdateUserProductRequestServiceRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Contract/Service/UserProduct/UrlSupplierMappingServiceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Contract/Service/UserProduct/UrlSupplierMappingServiceModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Data.MongoDB/Entity/IMongoEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Data.MongoDB/Entity/IMongoEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Data.MongoDB/Options/MongoDBOption.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Data.MongoDB/Options/MongoDBOption.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Data.MongoDB/PriceHunter.Data.MongoDB.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Data.MongoDB/PriceHunter.Data.MongoDB.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Data.MongoDB/Repositories/MongoDBGenericRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Data.MongoDB/Repositories/MongoDBGenericRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Data/PriceHunter.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Data/PriceHunter.Data.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Data/Repositories/Abstract/IProductRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Data/Repositories/Abstract/IProductRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Data/Repositories/Concrete/ProductRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Data/Repositories/Concrete/ProductRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/Notification/NotificationType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/Notification/NotificationType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/PriceHunter.Model.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/PriceHunter.Model.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/Product/Product.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/Product/Product.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/Product/ProductPriceHistory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/Product/ProductPriceHistory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/Product/ProductSupplierInfoMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/Product/ProductSupplierInfoMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/RequestLog/RequestLog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/RequestLog/RequestLog.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/Supplier/Supplier.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/Supplier/Supplier.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/Supplier/SupplierType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/Supplier/SupplierType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/User/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/User/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/User/UserType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/User/UserType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/UserProduct/UserProduct.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/UserProduct/UserProduct.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Model/UserProduct/UserProductSupplierMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Model/UserProduct/UserProductSupplierMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Notification.Email/EmailNotifiactionAdapter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Notification.Email/EmailNotifiactionAdapter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Notification.Email/PriceHunter.Notification.Email.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Notification.Email/PriceHunter.Notification.Email.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Notification.MobilePush/MobilePushNotificationAdapter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Notification.MobilePush/MobilePushNotificationAdapter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Notification.MobilePush/PriceHunter.Notification.MobilePush.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Notification.MobilePush/PriceHunter.Notification.MobilePush.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Notification.Sms/PriceHunter.Notification.Sms.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Notification.Sms/PriceHunter.Notification.Sms.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Notification.Sms/SmsNotificationAdapter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Notification.Sms/SmsNotificationAdapter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Notification/INotificationAdapter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Notification/INotificationAdapter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Notification/PriceHunter.Notification.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Notification/PriceHunter.Notification.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Parser.AliExpress/AliExpressParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Parser.AliExpress/AliExpressParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Parser.AliExpress/PriceHunter.Parser.AliExpress.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Parser.AliExpress/PriceHunter.Parser.AliExpress.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Parser.Alibaba/AlibabaParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Parser.Alibaba/AlibabaParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Parser.Alibaba/PriceHunter.Parser.Alibaba.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Parser.Alibaba/PriceHunter.Parser.Alibaba.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Parser.Amazon/AmazonParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Parser.Amazon/AmazonParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Parser.Amazon/PriceHunter.Parser.Amazon.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Parser.Amazon/PriceHunter.Parser.Amazon.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Parser/IParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Parser/IParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Parser/PriceHunter.Parser.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Parser/PriceHunter.Parser.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/App/Literals.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/App/Literals.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/App/Literals.resx" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/App/Literals.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/Extensions/Resource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/Extensions/Resource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/Model/Entities.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/Model/Entities.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/Model/Entities.resx" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/Model/Entities.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/PriceHunter.Resources.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/PriceHunter.Resources.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/Service/ServiceResponseMessage.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/Service/ServiceResponseMessage.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/Service/ServiceResponseMessage.resx" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/Service/ServiceResponseMessage.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/Service/ServiceResponseStatus.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/Service/ServiceResponseStatus.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Resources/Service/ServiceResponseStatus.resx" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Resources/Service/ServiceResponseStatus.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/Configurations/ConfigureHangfire.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/Configurations/ConfigureHangfire.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/Filters/DashboardNoAuthorizationFilter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/Filters/DashboardNoAuthorizationFilter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/PriceHunter.ScheduleService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/PriceHunter.ScheduleService.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/Schedules/RecurringJobs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/Schedules/RecurringJobs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/appsettings.DockerCompose.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/appsettings.DockerCompose.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/App.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/App.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Base/BaseResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Base/BaseResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Base/DataResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Base/DataResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Filter/FilterItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Filter/FilterItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Filter/FilterOperation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Filter/FilterOperation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Filter/FilterRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Filter/FilterRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Filter/OrderOperation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Filter/OrderOperation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Login/GetTokenRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Login/GetTokenRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Login/GetTokenResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Login/GetTokenResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Login/RefreshTokenRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Login/RefreshTokenRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/PageState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/PageState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Pager/Page.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Pager/Page.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Pager/PagedList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Pager/PagedList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/Supplier/App/SupplierViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/Supplier/App/SupplierViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/User/Api/UserProfileImageUpdateApiModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/User/Api/UserProfileImageUpdateApiModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/User/Api/UserProfileImageViewApiModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/User/Api/UserProfileImageViewApiModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/User/Api/UserUpdateApiModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/User/Api/UserUpdateApiModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/User/Api/UserViewApiModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/User/Api/UserViewApiModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/User/App/UserViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/User/App/UserViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/User/UserResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/User/UserResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UrlSupplierMappingCreateModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UrlSupplierMappingCreateModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UrlSupplierMappingViewApiModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UrlSupplierMappingViewApiModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UserProductCreateApiModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UserProductCreateApiModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UserProductFilterFilelds.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UserProductFilterFilelds.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UserProductSearchViewApiModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UserProductSearchViewApiModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UserProductViewApiModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/Api/UserProductViewApiModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/App/ProductPriceChangesViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/App/ProductPriceChangesViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/App/UrlSupplierMappingViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/App/UrlSupplierMappingViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/App/UserProductSearchViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/App/UserProductSearchViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/App/UserProductViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Data/UserProduct/App/UserProductViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Auth/CustomAuthStateProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Auth/CustomAuthStateProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/ApiUrls.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/ApiUrls.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/AppConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/AppConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/ClaimConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/ClaimConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/NavigationConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/NavigationConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/ServiceStatusMessages.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Helpers/Constants/ServiceStatusMessages.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Helpers/HttpRequester/Abstract/IHttpRequester.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Helpers/HttpRequester/Abstract/IHttpRequester.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Helpers/HttpRequester/Concrete/HttpRequester.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Helpers/HttpRequester/Concrete/HttpRequester.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Helpers/HttpRequester/Concrete/RequesterResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Helpers/HttpRequester/Concrete/RequesterResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Pages/Index.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Pages/Login/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Pages/Login/Login.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Pages/Login/Logout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Pages/Login/Logout.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Pages/User/Profile.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Pages/User/Profile.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Pages/UserProduct/Add.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Pages/UserProduct/Add.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Pages/UserProduct/Detail.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Pages/UserProduct/Detail.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Pages/UserProduct/Edit.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Pages/UserProduct/Edit.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Pages/UserProduct/List.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Pages/UserProduct/List.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/PriceHunter.Web.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/PriceHunter.Web.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Shared/Components/Loading.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Shared/Components/Loading.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Shared/Components/Profile.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Shared/Components/Profile.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Shared/MainLayout.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Shared/MainLayout.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Shared/MainLayout.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Shared/NavMenu.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Shared/NavMenu.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Shared/NavMenu.razor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/_Imports.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/open-iconic/FONT-LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/open-iconic/FONT-LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/open-iconic/ICON-LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/open-iconic/ICON-LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/open-iconic/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/open-iconic/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/open-iconic/font/fonts/open-iconic.svg" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/css/open-iconic/font/fonts/open-iconic.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/wwwroot/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.sln" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.sln" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.dcproj" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.dcproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f7bc381e9a9d4f8ba2b9567b2564bf856608/a2/b3e0253a/OptionsServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3839fc8fee5ae62538a4469ed86bbba1ccd15d4e0da63bba779abe1719da3/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/44cad551704bc7dae78cc7717b8b9f9313582aa8e67a6585a69de0cc33b4b8/IServiceCollection.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -444,6 +172,7 @@
       <updated>1661432064968</updated>
       <workItem from="1661432086137" duration="305000" />
       <workItem from="1661512703390" duration="772000" />
+      <workItem from="1661624244942" duration="2031000" />
     </task>
     <servers />
   </component>

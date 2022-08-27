@@ -1,22 +1,20 @@
-﻿{
-    "$schema": "http://json.schemastore.org/launchsettings.json",
-    "profiles": {
-        "PriceHunter.ScheduleService": {
-            "commandName": "Project",
-            "launchBrowser": true,
-            "launchUrl": "hangfire",
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "dotnetRunMessages": "true",
-            "applicationUrl": "http://localhost:5001"
-        },
-        "Docker": {
-            "commandName": "Docker",
-            "launchBrowser": true,
-            "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/hangfire",
-            "publishAllPorts": true,
-            "useSSL": false
-        }
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "PriceHunter.ScheduleService": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "hangfire",
+      "applicationUrl": "http://localhost:5001",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/hangfire",
+      "environmentVariables": {}
     }
+  }
 }
