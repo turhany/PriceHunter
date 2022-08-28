@@ -15,7 +15,7 @@
 
 
 #### Suggestions
-* Seperate Cache, Lock systems from Common project
+* ~~Seperate Cache, Lock systems from Common project~~
 
 
 #### V2 Suggestions
