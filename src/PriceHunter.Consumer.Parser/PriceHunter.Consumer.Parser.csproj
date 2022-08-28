@@ -26,6 +26,7 @@
     <ProjectReference Include="..\PriceHunter.Container\PriceHunter.Container.csproj" />
     <ProjectReference Include="..\PriceHunter.Contract\PriceHunter.Contract.csproj" />
     <ProjectReference Include="..\PriceHunter.Parser\PriceHunter.Parser.csproj" />
+    <ProjectReference Include="..\PriceHunter.Cache.Redis\PriceHunter.Cache.Redis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

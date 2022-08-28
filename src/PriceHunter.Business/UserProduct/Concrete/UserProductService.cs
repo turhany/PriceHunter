@@ -3,12 +3,11 @@ using Filtery.Extensions;
 using Filtery.Models;
 using PriceHunter.Business.UserProduct.Abstract;
 using PriceHunter.Business.UserProduct.Validator;
+using PriceHunter.Cache.Abstract;
 using PriceHunter.Common.Application;
 using PriceHunter.Common.BaseModels.Service;
-using PriceHunter.Common.Cache.Abstract;
 using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract;
-using PriceHunter.Common.Lock.Abstract;
 using PriceHunter.Common.Pager;
 using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Contract.App.Product;
@@ -21,6 +20,7 @@ using PriceHunter.Resources.Extensions;
 using PriceHunter.Resources.Model;
 using PriceHunter.Resources.Service;
 using System.Dynamic;
+using PriceHunter.Lock.Abstract;
 
 namespace PriceHunter.Business.UserProduct.Concrete
 {

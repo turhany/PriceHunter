@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace PriceHunter.Common.Lock.Abstract
+﻿namespace PriceHunter.Lock.Abstract
 {
     public interface ILockService
     {

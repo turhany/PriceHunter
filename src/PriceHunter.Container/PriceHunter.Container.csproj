@@ -15,6 +15,8 @@
     <ProjectReference Include="..\PriceHunter.Common\PriceHunter.Common.csproj" />
     <ProjectReference Include="..\PriceHunter.Data.MongoDB\PriceHunter.Data.MongoDB.csproj" />
     <ProjectReference Include="..\PriceHunter.Data\PriceHunter.Data.csproj" />
+    <ProjectReference Include="..\PriceHunter.Lock.Redis\PriceHunter.Lock.Redis.csproj" />
+    <ProjectReference Include="..\PriceHunter.Lock\PriceHunter.Lock.csproj" />
     <ProjectReference Include="..\PriceHunter.Notification.Email\PriceHunter.Notification.Email.csproj" />
     <ProjectReference Include="..\PriceHunter.Notification.MobilePush\PriceHunter.Notification.MobilePush.csproj" />
     <ProjectReference Include="..\PriceHunter.Notification.Sms\PriceHunter.Notification.Sms.csproj" />
@@ -23,6 +25,8 @@
     <ProjectReference Include="..\PriceHunter.Parser.AliExpress\PriceHunter.Parser.AliExpress.csproj" />
     <ProjectReference Include="..\PriceHunter.Parser.Amazon\PriceHunter.Parser.Amazon.csproj" />
     <ProjectReference Include="..\PriceHunter.Parser\PriceHunter.Parser.csproj" />
+    <ProjectReference Include="..\PriceHunter.Cache.Redis\PriceHunter.Cache.Redis.csproj" />
+    <ProjectReference Include="..\PriceHunter.Cache\PriceHunter.Cache.csproj" />
   </ItemGroup>
 
 </Project>

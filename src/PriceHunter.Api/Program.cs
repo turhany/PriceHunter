@@ -2,11 +2,14 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using PriceHunter.Api.Configurations.Startup;
 using PriceHunter.Api.Middlewares;
+using PriceHunter.Cache.Redis.StartupConfigurations;
 using PriceHunter.Common.Application;
+using PriceHunter.Common.Constans;
 using PriceHunter.Common.StartupConfigurations;
 using PriceHunter.Container.Modules;
 using PriceHunter.Contract.Mappings.AutoMapper;
 using PriceHunter.Data.MongoDB.Options;
+using PriceHunter.Lock.Redis.StartupConfigurations;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +31,8 @@ builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddIdentityConfigurations(builder.Configuration);
 builder.Services.AddLocalizationsConfigurations();
-builder.Services.AddDistributedCacheConfiguration(builder.Configuration);
+builder.Services.AddDistributedCacheConfiguration(builder.Configuration.GetConnectionString(AppConstants.RedisConnectionString), AppConstants.RedisCacheInstanceName);
+builder.Services.AddDistributedLockConfiguration(builder.Configuration, AppConstants.RedLockSettingsOptionName);
 builder.Services.Configure<MongoDBOption>(builder.Configuration.GetSection("mongo")); 
 builder.Services.AddStaticFileConfiguration(builder.Configuration);
 builder.Services.AddCorsConfigurations();

@@ -6,14 +6,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PriceHunter.Business.User.Abstract;
 using PriceHunter.Business.User.Validator;
+using PriceHunter.Cache.Abstract;
 using PriceHunter.Common.Application;
 using PriceHunter.Common.Auth;
 using PriceHunter.Common.Auth.Concrete;
 using PriceHunter.Common.BaseModels.Service;
-using PriceHunter.Common.Cache.Abstract;
 using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract;
-using PriceHunter.Common.Lock.Abstract;
 using PriceHunter.Common.Options;
 using PriceHunter.Common.Pager;
 using PriceHunter.Common.Validation.Abstract;
@@ -24,6 +23,7 @@ using PriceHunter.Resources.Extensions;
 using PriceHunter.Resources.Model;
 using PriceHunter.Resources.Service;
 using System.Dynamic;
+using PriceHunter.Lock.Abstract;
 using Page = PriceHunter.Common.Pager.Page;
 
 namespace PriceHunter.Business.User.Concrete

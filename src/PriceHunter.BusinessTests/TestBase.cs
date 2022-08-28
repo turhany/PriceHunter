@@ -3,7 +3,6 @@ using AutoMapper;
 using PriceHunter.Common.Application;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
-using PriceHunter.Common.Lock.Abstract;
 using PriceHunter.Container.Modules;
 using PriceHunter.Contract.Mappings.AutoMapper;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +12,7 @@ using PriceHunter.Data.MongoDB.Options;
 using PriceHunter.Common.Options;
 using Microsoft.Extensions.Logging;
 using PriceHunter.Business.User.Concrete;
+using PriceHunter.Lock.Abstract;
 
 namespace PriceHunter.BusinessTests
 {

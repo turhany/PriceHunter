@@ -24,6 +24,9 @@
   <ItemGroup>
     <ProjectReference Include="..\PriceHunter.Common\PriceHunter.Common.csproj" />
     <ProjectReference Include="..\PriceHunter.Container\PriceHunter.Container.csproj" />
+    <ProjectReference Include="..\PriceHunter.Cache.Redis\PriceHunter.Cache.Redis.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

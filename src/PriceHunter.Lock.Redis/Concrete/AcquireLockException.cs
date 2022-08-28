@@ -1,6 +1,6 @@
 ﻿using System; 
 
-namespace PriceHunter.Common.Lock.Concrete
+namespace PriceHunter.Lock.Concrete
 {
     public class AcquireLockException : Exception
     {

@@ -7,6 +7,9 @@ using PriceHunter.ScheduleService.Configurations;
 using PriceHunter.Contract.Mappings.AutoMapper;
 using PriceHunter.Common.Application;
 using PriceHunter.ScheduleService.Schedules;
+using PriceHunter.Common.Constans;
+using PriceHunter.Cache.Redis.StartupConfigurations;
+using PriceHunter.Lock.Redis.StartupConfigurations;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
@@ -22,7 +25,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddDistributedCacheConfiguration(builder.Configuration);
+builder.Services.AddDistributedCacheConfiguration(builder.Configuration.GetConnectionString(AppConstants.RedisConnectionString), AppConstants.RedisCacheInstanceName);
+builder.Services.AddDistributedLockConfiguration(builder.Configuration, AppConstants.RedLockSettingsOptionName);
 builder.Services.Configure<MongoDBOption>(builder.Configuration.GetSection("mongo"));
 builder.Services.AddHangfireConfiguration(builder.Configuration);
 builder.Services.AddControllers();

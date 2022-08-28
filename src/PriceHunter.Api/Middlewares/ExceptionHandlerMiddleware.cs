@@ -3,7 +3,7 @@ using Filtery.Exceptions;
 using Newtonsoft.Json;
 using PriceHunter.Common.BaseModels.Api;
 using PriceHunter.Common.Constans;
-using PriceHunter.Common.Lock.Concrete;
+using PriceHunter.Lock.Concrete;
 using PriceHunter.Resources.Service;
 
 namespace PriceHunter.Api.Middlewares
