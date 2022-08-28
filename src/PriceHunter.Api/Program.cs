@@ -31,7 +31,7 @@ builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddIdentityConfigurations(builder.Configuration);
 builder.Services.AddLocalizationsConfigurations();
-builder.Services.AddDistributedCacheConfiguration(builder.Configuration[AppConstants.RedisConnectionString], builder.Configuration[AppConstants.RedisCacheInstanceName]);
+builder.Services.AddDistributedCacheConfiguration(builder.Configuration.GetConnectionString(AppConstants.RedisConnectionString), AppConstants.RedisCacheInstanceName);
 builder.Services.AddDistributedLockConfiguration(builder.Configuration, AppConstants.RedLockSettingsOptionName);
 builder.Services.Configure<MongoDBOption>(builder.Configuration.GetSection("mongo")); 
 builder.Services.AddStaticFileConfiguration(builder.Configuration);

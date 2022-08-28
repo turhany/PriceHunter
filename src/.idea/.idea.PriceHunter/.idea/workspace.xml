@@ -11,37 +11,10 @@
   <component name="ChangeListManager">
     <list default="true" id="dc101660-f9cc-44c1-9bbb-614be5d9c5d9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PriceHunter/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Middlewares/ExceptionHandlerMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Middlewares/ExceptionHandlerMiddleware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/PriceHunter.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/PriceHunter.Api.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Api/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Api/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/PriceHunter.Business.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/PriceHunter.Business.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/Product/Concrete/ProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/Product/Concrete/ProductService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/Supplier/Concrete/SupplierService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/Supplier/Concrete/SupplierService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/User/Concrete/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/User/Concrete/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Concrete/UserProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Concrete/UserProductService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.BusinessTests/TestBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.BusinessTests/TestBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Cache/Abstract/ICacheService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Cache/Abstract/ICacheService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Cache/Concrete/RedisCacheService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Cache.Redis/Concrete/RedisCacheService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Constans/AppConstants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/Constans/AppConstants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Abstract/ILockService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/AcquireLockException.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/RedLockOption.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/Lock/Concrete/RedisLockService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/PriceHunter.Common.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Common/PriceHunter.Common.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Common/StartupConfigurations/ConfigureDistributedCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Cache.Redis/StartupConfigurations/ConfigureDistributedCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/PriceHunter.Consumer.Notification.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/PriceHunter.Consumer.Notification.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Notification/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/PriceHunter.Consumer.Parser.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/PriceHunter.Consumer.Parser.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Consumer.Parser/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Container/Modules/ApplicationModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Container/Modules/ApplicationModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Container/PriceHunter.Container.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Container/PriceHunter.Container.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/PriceHunter.ScheduleService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/PriceHunter.ScheduleService.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.ScheduleService/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.ScheduleService/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.Web/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.Web/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceHunter.sln" beforeDir="false" afterPath="$PROJECT_DIR$/PriceHunter.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.dcproj" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.dcproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +43,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.PriceHunter.Api">
+  <component name="RunManager" selected=".NET Launch Settings Profile.PriceHunter.Web">
     <configuration name="PriceHunter.Api" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/PriceHunter.Api/PriceHunter.Api.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -173,6 +146,8 @@
       <workItem from="1661432086137" duration="305000" />
       <workItem from="1661512703390" duration="772000" />
       <workItem from="1661624244942" duration="2031000" />
+      <workItem from="1661690924997" duration="108000" />
+      <workItem from="1661692254674" duration="1264000" />
     </task>
     <servers />
   </component>
@@ -194,5 +169,37 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/PriceHunter.Business/UserProduct/Concrete/UserProductService.cs</url>
+          <line>65</line>
+          <properties documentPath="$PROJECT_DIR$/PriceHunter.Business/UserProduct/Concrete/UserProductService.cs" initialLine="65" containingFunctionPresentation="method 'GetAsync'">
+            <startOffsets>
+              <option value="3384" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3456" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/PriceHunter.Api/Middlewares/ExceptionHandlerMiddleware.cs</url>
+          <line>61</line>
+          <properties documentPath="$PROJECT_DIR$/PriceHunter.Api/Middlewares/ExceptionHandlerMiddleware.cs" initialLine="61" containingFunctionPresentation="method 'InvokeAsync'">
+            <startOffsets>
+              <option value="2271" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2272" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

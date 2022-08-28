@@ -30,7 +30,7 @@ var hostBuilder = Host.CreateDefaultBuilder()
     .ConfigureServices((hostingContext, services) =>
     {
         services.Configure<MongoDBOption>(hostingContext.Configuration.GetSection("mongo"));
-        services.AddDistributedCacheConfiguration(hostingContext.Configuration[AppConstants.RedisConnectionString], hostingContext.Configuration[AppConstants.RedisCacheInstanceName]);
+        services.AddDistributedCacheConfiguration(hostingContext.Configuration.GetConnectionString(AppConstants.RedisConnectionString), AppConstants.RedisCacheInstanceName);
         services.AddDistributedLockConfiguration(hostingContext.Configuration, AppConstants.RedLockSettingsOptionName);
         services.AddMassTransitConfigurationForConsumer(hostingContext.Configuration);
         services.AddAutoMapper(typeof(ProductMapping));

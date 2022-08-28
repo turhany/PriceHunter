@@ -25,7 +25,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddDistributedCacheConfiguration(builder.Configuration[AppConstants.RedisConnectionString], builder.Configuration[AppConstants.RedisCacheInstanceName]);
+builder.Services.AddDistributedCacheConfiguration(builder.Configuration.GetConnectionString(AppConstants.RedisConnectionString), AppConstants.RedisCacheInstanceName);
 builder.Services.AddDistributedLockConfiguration(builder.Configuration, AppConstants.RedLockSettingsOptionName);
 builder.Services.Configure<MongoDBOption>(builder.Configuration.GetSection("mongo"));
 builder.Services.AddHangfireConfiguration(builder.Configuration);
