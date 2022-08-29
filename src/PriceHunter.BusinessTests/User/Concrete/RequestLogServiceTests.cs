@@ -30,7 +30,7 @@ namespace PriceHunter.Business.Services.Concrete.Tests
             };
             
             //act
-            var response = _requestLogService.SaveAsync(entity).Result;
+            var response = _requestLogService.SaveAsync(entity, CancellationToken.None).Result;
 
             //assert
             Assert.IsTrue(response);

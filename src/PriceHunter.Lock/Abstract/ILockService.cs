@@ -2,6 +2,6 @@
 {
     public interface ILockService
     {
-        Task<IDisposable> CreateLockAsync(string key);
+        Task<IDisposable> CreateLockAsync(string key, CancellationToken cancellationToken);
     }
 }

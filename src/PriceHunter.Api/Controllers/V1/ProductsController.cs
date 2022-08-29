@@ -31,9 +31,9 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpGet("{id:guid}")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductViewModel))]
-        public async Task<ActionResult> Get(Guid id)
+        public async Task<ActionResult> Get(Guid id, CancellationToken cancellationToken)
         {
-            var result = await _productService.GetAsync(id);
+            var result = await _productService.GetAsync(id, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -44,11 +44,11 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpPost]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> CreateProduct([FromBody] CreateProductRequest request)
+        public async Task<ActionResult> CreateProduct([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
         {
             if (request == null) return ApiResponse.InvalidInputResult;
 
-            var result = await _productService.CreateAsync(Mapper.Map<CreateProductRequestServiceRequest>(request));
+            var result = await _productService.CreateAsync(Mapper.Map<CreateProductRequestServiceRequest>(request), cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -59,13 +59,13 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpPut("{id:guid}")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductRequest request, Guid id)
+        public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductRequest request, Guid id, CancellationToken cancellationToken)
         {
             if (request == null) return ApiResponse.InvalidInputResult;
             var model = Mapper.Map<UpdateProductRequestServiceRequest>(request);
             model.Id = id;
 
-            var result = await _productService.UpdateAsync(model);
+            var result = await _productService.UpdateAsync(model, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -76,12 +76,12 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpDelete("{id:guid}")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> DeleteProduct(Guid id)
+        public async Task<ActionResult> DeleteProduct(Guid id, CancellationToken cancellationToken)
         {
             if (id == Guid.Empty)
                 return ApiResponse.InvalidInputResult;
 
-            var result = await _productService.DeleteAsync(id);
+            var result = await _productService.DeleteAsync(id, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -92,9 +92,9 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpPost("search")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductSearchViewModel))]
-        public async Task<ActionResult> Search([FromBody] FilteryRequest request)
+        public async Task<ActionResult> Search([FromBody] FilteryRequest request, CancellationToken cancellationToken)
         {
-            var result = await _productService.SearchAsync(request);
+            var result = await _productService.SearchAsync(request, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -105,9 +105,9 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpPost("pricehistory/search")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductPriceHistorySearchViewModel))]
-        public async Task<ActionResult> SearchPriceHistory([FromBody] FilteryRequest request)
+        public async Task<ActionResult> SearchPriceHistory([FromBody] FilteryRequest request, CancellationToken cancellationToken)
         {
-            var result = await _productService.SearchPriceHistoryAsync(request);
+            var result = await _productService.SearchPriceHistoryAsync(request, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -117,9 +117,9 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpGet("last6monthchanges/{id:guid}")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductPriceChangesViewModel))]
-        public async Task<ActionResult> Last6MonthChanges(Guid id)
+        public async Task<ActionResult> Last6MonthChanges(Guid id, CancellationToken cancellationToken)
         {
-            var result = await _productService.GetLastNMonthChangesAsync(id, 6);
+            var result = await _productService.GetLastNMonthChangesAsync(id, 6, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
     }

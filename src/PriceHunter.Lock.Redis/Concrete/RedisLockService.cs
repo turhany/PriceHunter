@@ -43,12 +43,12 @@ namespace PriceHunter.Lock.Concrete
             }
         }
 
-        public async Task<IDisposable> CreateLockAsync(string key)
+        public async Task<IDisposable> CreateLockAsync(string key, CancellationToken cancellationToken)
         {
             IRedLock locked;
             try
             {
-                locked = await RedisLockFactory.CreateLockAsync(key, ExpiryTime, WaitTime, RetryTime);
+                locked = await RedisLockFactory.CreateLockAsync(key, ExpiryTime, WaitTime, RetryTime, cancellationToken);
 
                 if (locked.IsAcquired)
                 {

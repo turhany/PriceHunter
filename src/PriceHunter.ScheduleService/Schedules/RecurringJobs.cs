@@ -20,7 +20,7 @@ namespace PriceHunter.ScheduleService.Schedules
                     var jobCron = string.Format(AppConstants.SupplierPriceControlCronJobTemplate, supplier.PriceControlPeriodAsMinute);
 
                     RecurringJob.RemoveIfExists(jobName);
-                    RecurringJob.AddOrUpdate<ProductService>(jobName, job => job.CheckProductPricesAsync(supplier.Id), jobCron, TimeZoneInfo.Local);
+                    RecurringJob.AddOrUpdate<ProductService>(jobName, job => job.CheckProductPricesAsync(supplier.Id, CancellationToken.None), jobCron, TimeZoneInfo.Local);
                 }
             }
         }

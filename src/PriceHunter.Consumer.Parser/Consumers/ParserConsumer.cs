@@ -46,7 +46,7 @@ namespace PriceHunter.Consumer.Parser.Consumers
             {
                 Console.WriteLine($"Parser Consumer - ProductId:{context.Message.ProductId} - SupplierId:{context.Message.SupplierId} - Url:{context.Message.Url} - EunmMapping:{context.Message.EnumMapping} - RequestTime:{context.Message.RequestTime} - ProcessTime:{DateTime.Now}");
 
-                var mapping = await _productSupplierInfoMappingRepository.FindOneAsync(p => p.ProductId == context.Message.ProductId && p.SupplierId == context.Message.SupplierId && p.IsDeleted == false);
+                var mapping = await _productSupplierInfoMappingRepository.FindOneAsync(p => p.ProductId == context.Message.ProductId && p.SupplierId == context.Message.SupplierId && p.IsDeleted == false, context.CancellationToken);
                 if (mapping == null)
                 {
                     _logger.LogInformation(string.Format($"{Resource.NotFound(Entities.Product)} - ProductId: {context.Message.ProductId} - SupplierId:{context.Message.SupplierId}"));
@@ -88,7 +88,7 @@ namespace PriceHunter.Consumer.Parser.Consumers
                     Month = operationTime.Month,
                     Day = operationTime.Day,
                     Time = operationTime.TimeOfDay
-                });
+                }, context.CancellationToken);
 
                 if (lastPriceHistoryItem != null && parsedPrice != null && lastPriceHistoryItem.Price > parsedPrice)
                 {

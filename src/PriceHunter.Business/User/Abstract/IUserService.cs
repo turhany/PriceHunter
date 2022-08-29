@@ -11,16 +11,16 @@ namespace PriceHunter.Business.User.Abstract
 {
     public interface IUserService : IService
     {
-        Task<ServiceResult<UserViewModel>> GetAsync(Guid id);
-        Task<ServiceResult<PagedList<UserViewModel>>> SearchAsync(FilteryRequest request);
-        Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request);
-        Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request);
-        Task<ServiceResult<UserProfileImageViewModel>> UploadProfileImageAsync(ProfileFileContractServiceRequest request);
-        Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id);
-        
+        Task<ServiceResult<UserViewModel>> GetAsync(Guid id, CancellationToken cancellationToken);
+        Task<ServiceResult<PagedList<UserViewModel>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<UserProfileImageViewModel>> UploadProfileImageAsync(ProfileFileContractServiceRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id, CancellationToken cancellationToken);
 
-        
-        Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request);
-        Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request);
+
+
+        Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request, CancellationToken cancellationToken);
     }
 }

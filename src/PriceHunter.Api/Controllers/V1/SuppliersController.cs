@@ -29,9 +29,9 @@ namespace PriceHunter.Api.Controllers.V1
         [HttpGet("all")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SupplierViewModel))]
-        public async Task<ActionResult> All()
+        public async Task<ActionResult> All(CancellationToken cancellationToken)
         {
-            var result = await _supplierService.GetAllAsync();
+            var result = await _supplierService.GetAllAsync(cancellationToken);
             return ApiResponse.CreateResult(result);
         }
     }

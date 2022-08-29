@@ -24,9 +24,9 @@ namespace PriceHunter.Api.Controllers.V1
         /// Insert Test Data
         /// </summary>
         [HttpGet()]
-        public async Task<ActionResult> InsertTestData()
+        public async Task<ActionResult> InsertTestData(CancellationToken cancellationToken)
         {
-            await _testDataService.InsertDataAsync();
+            await _testDataService.InsertDataAsync(cancellationToken);
             return Ok();
         }
     }

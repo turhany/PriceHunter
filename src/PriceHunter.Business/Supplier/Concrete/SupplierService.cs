@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PriceHunter.Business.Supplier.Abstract;
 using PriceHunter.Cache.Abstract;
+using PriceHunter.Cache.Constants;
 using PriceHunter.Common.BaseModels.Service;
 using PriceHunter.Common.Constans;
 using PriceHunter.Common.Data.Abstract; 
@@ -25,9 +27,9 @@ namespace PriceHunter.Business.Supplier.Concrete
             _mapper = mapper;
         }
 
-        public async Task<ServiceResult<List<SupplierViewModel>>> GetAllAsync()
+        public async Task<ServiceResult<List<SupplierViewModel>>> GetAllAsync(CancellationToken cancellationToken)
         {  
-            var suppliers = await _cacheService.GetOrSetObjectAsync(CacheKeyConstants.SuppliersAllCacheKey, () => _supplierRepository.Find(p => p.IsDeleted == false).ToList());
+            var suppliers = await _cacheService.GetOrSetObjectAsync(CacheKeyConstants.SuppliersAllCacheKey, async () => await _supplierRepository.Find(p => p.IsDeleted == false).ToListAsync(cancellationToken), CacheConstants.DefaultCacheDuration, cancellationToken);
 
             var response = new List<SupplierViewModel>();
 

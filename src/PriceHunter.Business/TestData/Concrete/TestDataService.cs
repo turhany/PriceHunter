@@ -30,7 +30,7 @@ namespace PriceHunter.Business.TestData.Concrete
             _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
         }
 
-        public async Task InsertDataAsync()
+        public async Task InsertDataAsync(CancellationToken cancellationToken)
         {
             var user = new Model.User.User
             {
@@ -41,7 +41,7 @@ namespace PriceHunter.Business.TestData.Concrete
                 Type = Model.User.UserType.Root
             };
 
-            await _userRepository.InsertAsync(user);
+            await _userRepository.InsertAsync(user, cancellationToken);
 
             var supplierList = new List<Model.Supplier.Supplier>();
             supplierList.Add(new Model.Supplier.Supplier
@@ -66,25 +66,25 @@ namespace PriceHunter.Business.TestData.Concrete
                 EnumMapping = SupplierType.AliExpress.GetHashCode()
             });
 
-            var suppliers = await _supplierRepository.InsertManyAsync(supplierList);
+            var suppliers = await _supplierRepository.InsertManyAsync(supplierList, cancellationToken);
 
             var product = await _productRepository.InsertAsync(new Model.Product.Product
             {
                 Name = "Headphones",                
-            });
+            }, cancellationToken);
 
             await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
             {
                 ProductId = product.Id,
                 SupplierId = suppliers.First().Id,
                 Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031"
-            });
+            }, cancellationToken);
 
             var userProduct = await _userProductRepository.InsertAsync(new Model.UserProduct.UserProduct
             {
                 Name = product.Name,
                 UserId = user.Id
-            });
+            }, cancellationToken);
 
             await _userProductSupplierMappingRepository.InsertAsync(new Model.UserProduct.UserProductSupplierMapping
             {
@@ -92,13 +92,13 @@ namespace PriceHunter.Business.TestData.Concrete
                 SupplierId = suppliers.First().Id,
                 Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031",
                 UserProductId = userProduct.Id
-            });
+            }, cancellationToken);
 
             var userProduct2 = await _userProductRepository.InsertAsync(new Model.UserProduct.UserProduct
             {
                 Name = product.Name + 2,
                 UserId = user.Id
-            });
+            }, cancellationToken);
 
             await _userProductSupplierMappingRepository.InsertAsync(new Model.UserProduct.UserProductSupplierMapping
             {
@@ -106,7 +106,7 @@ namespace PriceHunter.Business.TestData.Concrete
                 SupplierId = suppliers.First().Id,
                 Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031",
                 UserProductId = userProduct2.Id
-            });
+            }, cancellationToken);
         }
     }
 }

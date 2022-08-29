@@ -130,13 +130,13 @@
             </summary>
             <param name="userService">The user service.</param>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.LoginController.Token(PriceHunter.Contract.App.User.GetTokenContract)">
+        <member name="M:PriceHunter.Api.Controllers.V1.LoginController.Token(PriceHunter.Contract.App.User.GetTokenContract,System.Threading.CancellationToken)">
             <summary>
             Get Token
             </summary>
             <returns>Returns user jwt token.</returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.LoginController.RefreshToken(PriceHunter.Contract.App.User.RefreshTokenContract)">
+        <member name="M:PriceHunter.Api.Controllers.V1.LoginController.RefreshToken(PriceHunter.Contract.App.User.RefreshTokenContract,System.Threading.CancellationToken)">
             <summary>
             Refresh Token
             </summary>
@@ -153,42 +153,42 @@
             </summary>
             <param name="productService"></param>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.Get(System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.Get(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get Product
             </summary>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.CreateProduct(PriceHunter.Contract.App.Product.CreateProductRequest)">
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.CreateProduct(PriceHunter.Contract.App.Product.CreateProductRequest,System.Threading.CancellationToken)">
             <summary>
             Create Product
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.UpdateProduct(PriceHunter.Contract.App.Product.UpdateProductRequest,System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.UpdateProduct(PriceHunter.Contract.App.Product.UpdateProductRequest,System.Guid,System.Threading.CancellationToken)">
             <summary>
             Update Product
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.DeleteProduct(System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.DeleteProduct(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Delete Product
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.Search(Filtery.Models.FilteryRequest)">
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.Search(Filtery.Models.FilteryRequest,System.Threading.CancellationToken)">
             <summary>
             Product Search
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.SearchPriceHistory(Filtery.Models.FilteryRequest)">
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.SearchPriceHistory(Filtery.Models.FilteryRequest,System.Threading.CancellationToken)">
             <summary>
             Product Search
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.Last6MonthChanges(System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.ProductsController.Last6MonthChanges(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get Product
             </summary>
@@ -204,7 +204,7 @@
             </summary>
             <param name="supplierService"></param>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.SuppliersController.All">
+        <member name="M:PriceHunter.Api.Controllers.V1.SuppliersController.All(System.Threading.CancellationToken)">
             <summary>
             Get Suppliers
             </summary>
@@ -220,7 +220,7 @@
             </summary>
             <param name="testDataService"></param>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.TestDataController.InsertTestData">
+        <member name="M:PriceHunter.Api.Controllers.V1.TestDataController.InsertTestData(System.Threading.CancellationToken)">
             <summary>
             Insert Test Data
             </summary>
@@ -236,36 +236,36 @@
             </summary>
             <param name="userProductService"></param>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.Get(System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.Get(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get User Product
             </summary>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.CreateProduct(PriceHunter.Contract.App.UserProduct.CreateUserProductRequest)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.CreateProduct(PriceHunter.Contract.App.UserProduct.CreateUserProductRequest,System.Threading.CancellationToken)">
             <summary>
             Create User Product
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.UpdateProduct(PriceHunter.Contract.App.UserProduct.UpdateUserProductRequest,System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.UpdateProduct(PriceHunter.Contract.App.UserProduct.UpdateUserProductRequest,System.Guid,System.Threading.CancellationToken)">
             <summary>
             Update User Product
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.DeleteProduct(System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.DeleteProduct(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Delete User Product
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.Search(Filtery.Models.FilteryRequest)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.Search(Filtery.Models.FilteryRequest,System.Threading.CancellationToken)">
             <summary>
             User Product Search
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.Last6MonthChanges(System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UserProductsController.Last6MonthChanges(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get Product
             </summary>
@@ -281,36 +281,36 @@
             </summary>
             <param name="userService"></param>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.Get(System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.Get(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get User
             </summary>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.CreateUser(PriceHunter.Contract.App.User.CreateUserRequest)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.CreateUser(PriceHunter.Contract.App.User.CreateUserRequest,System.Threading.CancellationToken)">
             <summary>
             Create User
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.UpdateUser(PriceHunter.Contract.App.User.UpdateUserRequest,System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.UpdateUser(PriceHunter.Contract.App.User.UpdateUserRequest,System.Guid,System.Threading.CancellationToken)">
             <summary>
             Update User
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.UploadProfileImage(PriceHunter.Contract.App.User.ProfileFileContract,System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.UploadProfileImage(PriceHunter.Contract.App.User.ProfileFileContract,System.Guid,System.Threading.CancellationToken)">
             <summary>
             Update User
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.DeleteUser(System.Guid)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.DeleteUser(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Delete User
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.Search(Filtery.Models.FilteryRequest)">
+        <member name="M:PriceHunter.Api.Controllers.V1.UsersController.Search(Filtery.Models.FilteryRequest,System.Threading.CancellationToken)">
             <summary>
             User Search
             </summary>

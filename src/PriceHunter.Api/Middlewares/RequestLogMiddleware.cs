@@ -66,7 +66,7 @@ namespace PriceHunter.Api.Middlewares
                 RequestPath = httpContext.Request.Path.Value
             };
 
-            _ = Task.Run(async () => await SaveRequestLogAsync(requestLog, _serviceScopeFactory));
+            _ = Task.Run(async () => await SaveRequestLogAsync(requestLog, _serviceScopeFactory, httpContext.RequestAborted));
 
             await responseBody.CopyToAsync(originalBodyStream);
         }
@@ -94,7 +94,7 @@ namespace PriceHunter.Api.Middlewares
             return $"{response.StatusCode}: {text}";
         }
 
-        private async Task SaveRequestLogAsync(RequestLog requestLog, IServiceScopeFactory serviceScopeFactory)
+        private async Task SaveRequestLogAsync(RequestLog requestLog, IServiceScopeFactory serviceScopeFactory, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrWhiteSpace(requestLog.RequestPath) && _ignoreFileForLog.Any(p => requestLog.RequestPath.Contains(p, StringComparison.InvariantCultureIgnoreCase)))
             {
@@ -104,7 +104,7 @@ namespace PriceHunter.Api.Middlewares
             using (var scope = serviceScopeFactory.CreateScope())
             {
                 var requestLogService = (IRequestLogService)scope.ServiceProvider.GetRequiredService(typeof(IRequestLogService));
-                await requestLogService.SaveAsync(requestLog);
+                await requestLogService.SaveAsync(requestLog, cancellationToken);
             }
         }
     }

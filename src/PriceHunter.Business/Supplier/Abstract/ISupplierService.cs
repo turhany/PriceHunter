@@ -6,6 +6,6 @@ namespace PriceHunter.Business.Supplier.Abstract
 {
     public interface ISupplierService : IService
     {
-        Task<ServiceResult<List<SupplierViewModel>>> GetAllAsync();
+        Task<ServiceResult<List<SupplierViewModel>>> GetAllAsync(CancellationToken cancellationToken);
     }
 }

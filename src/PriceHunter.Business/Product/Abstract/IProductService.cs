@@ -10,12 +10,12 @@ namespace PriceHunter.Business.Product.Abstract
 {
     public interface IProductService : IService
     {
-        Task<ServiceResult<ProductViewModel>> GetAsync(Guid id);
-        Task<ServiceResult<PagedList<ProductSearchViewModel>>> SearchAsync(FilteryRequest request);
-        Task<ServiceResult<PagedList<ProductPriceHistorySearchViewModel>>> SearchPriceHistoryAsync(FilteryRequest request);        
-        Task<ServiceResult<ExpandoObject>> CreateAsync(CreateProductRequestServiceRequest request);
-        Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request);
-        Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id);
-        Task<ServiceResult<List<ProductPriceChangesViewModel>>> GetLastNMonthChangesAsync(Guid id, int monthCount);        
+        Task<ServiceResult<ProductViewModel>> GetAsync(Guid id, CancellationToken cancellationToken);
+        Task<ServiceResult<PagedList<ProductSearchViewModel>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<PagedList<ProductPriceHistorySearchViewModel>>> SearchPriceHistoryAsync(FilteryRequest request, CancellationToken cancellationToken);        
+        Task<ServiceResult<ExpandoObject>> CreateAsync(CreateProductRequestServiceRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id, CancellationToken cancellationToken);
+        Task<ServiceResult<List<ProductPriceChangesViewModel>>> GetLastNMonthChangesAsync(Guid id, int monthCount, CancellationToken cancellationToken);        
     }
 }

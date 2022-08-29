@@ -29,7 +29,7 @@ public class UserServiceTests : TestBase
     public async Task GetAsyncTest_NO_DATA()
     {
         //arrange - act
-        var response = await _userService.GetAsync(Guid.NewGuid());
+        var response = await _userService.GetAsync(Guid.NewGuid(), CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -40,10 +40,10 @@ public class UserServiceTests : TestBase
     {
         //arrange
         var user = new Model.User.User {Id = Guid.NewGuid(), Email = "test@test.com", Password = "Password", Type = UserType.Root};
-        await _userRepository.InsertAsync(user);
+        await _userRepository.InsertAsync(user, CancellationToken.None);
 
         //act
-        var response = await _userService.GetAsync(user.Id);
+        var response = await _userService.GetAsync(user.Id, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -56,7 +56,7 @@ public class UserServiceTests : TestBase
         var user = new CreateUserRequestServiceRequest {FirstName = ""};
 
         //act
-        var response = await _userService.CreateAsync(user);
+        var response = await _userService.CreateAsync(user, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.InvalidInput, response.Status);
@@ -67,12 +67,12 @@ public class UserServiceTests : TestBase
     {
         //arrange
         var user = new Model.User.User {Id = Guid.NewGuid(), Email = "test@test.com", Password = "Password", Type = UserType.Root};
-        await _userRepository.InsertAsync(user);
+        await _userRepository.InsertAsync(user, CancellationToken.None);
         
         var userCreateRequest = new CreateUserRequestServiceRequest {Email = "test@test.com", FirstName = "test", LastName = "test", Password = "123456789.tY"};
 
         //act
-        var response = await _userService.CreateAsync(userCreateRequest);
+        var response = await _userService.CreateAsync(userCreateRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.InvalidInput, response.Status);
@@ -85,7 +85,7 @@ public class UserServiceTests : TestBase
         var userCreateRequest = new CreateUserRequestServiceRequest {Email = "test1@test.com", FirstName = "test", LastName = "test", Password = "123456789.tY"};
 
         //act
-        var response = await _userService.CreateAsync(userCreateRequest);
+        var response = await _userService.CreateAsync(userCreateRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -98,7 +98,7 @@ public class UserServiceTests : TestBase
         var user = new UpdateUserRequestServiceRequest {FirstName = ""};
 
         //act
-        var response = await _userService.UpdateAsync(user);
+        var response = await _userService.UpdateAsync(user, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.InvalidInput, response.Status);
@@ -111,7 +111,7 @@ public class UserServiceTests : TestBase
         var user = new UpdateUserRequestServiceRequest {Id = Guid.NewGuid() ,Email = "test@test.com", FirstName = "test", LastName = "test", Password = "123456789.tY"};
 
         //act
-        var response = await _userService.UpdateAsync(user);
+        var response = await _userService.UpdateAsync(user, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -123,13 +123,13 @@ public class UserServiceTests : TestBase
         //arrange
         var user1 = new Model.User.User {Id = Guid.NewGuid(), Email = "test@test.com", Password = "Password", Type = UserType.Root};
         var user2 = new Model.User.User {Id = Guid.NewGuid(), Email = "test2@test.com", Password = "Password", Type = UserType.Root};
-        await _userRepository.InsertAsync(user1);
-        await _userRepository.InsertAsync(user2);
+        await _userRepository.InsertAsync(user1, CancellationToken.None);
+        await _userRepository.InsertAsync(user2, CancellationToken.None);
         
         var userUpdateRequest = new UpdateUserRequestServiceRequest {Id = user1.Id ,Email = "test2@test.com", FirstName = "test", LastName = "test", Password = "123456789.tY"};
 
         //act
-        var response = await _userService.UpdateAsync(userUpdateRequest);
+        var response = await _userService.UpdateAsync(userUpdateRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.InvalidInput, response.Status);
@@ -140,12 +140,12 @@ public class UserServiceTests : TestBase
     {
         //arrange
         var user = new Model.User.User {Id = Guid.NewGuid(), Email = "tes5t@test.com", Password = "Password", Type = UserType.Root};
-        await _userRepository.InsertAsync(user);
+        await _userRepository.InsertAsync(user, CancellationToken.None);
         
         var userUpdateRequest = new UpdateUserRequestServiceRequest {Id = user.Id ,Email = "test6@test.com", FirstName = "test", LastName = "test", Password = "123456789.tY"};
 
         //act
-        var response = await _userService.UpdateAsync(userUpdateRequest);
+        var response = await _userService.UpdateAsync(userUpdateRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -155,7 +155,7 @@ public class UserServiceTests : TestBase
     public async Task DeleteAsync_USER_NOT_FOUND()
     {
         //arrange - act
-        var response = await _userService.DeleteAsync(Guid.NewGuid());
+        var response = await _userService.DeleteAsync(Guid.NewGuid(), CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -166,10 +166,10 @@ public class UserServiceTests : TestBase
     {
         //arrange
         var user = new Model.User.User {Id = Guid.NewGuid(), Email = "test@test.com", Password = "Password", Type = UserType.Root};
-        await _userRepository.InsertAsync(user);
+        await _userRepository.InsertAsync(user, CancellationToken.None);
         
         //act
-        var response = await _userService.DeleteAsync(user.Id);
+        var response = await _userService.DeleteAsync(user.Id, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -180,14 +180,14 @@ public class UserServiceTests : TestBase
     {
         //arrange
         var user = new Model.User.User { Id = Guid.NewGuid(), Email = "test@test.com", Password = "Password", Type = UserType.Root };
-        await _userRepository.InsertAsync(user);
+        await _userRepository.InsertAsync(user, CancellationToken.None);
 
         //act
         var response = await _userService.SearchAsync(new FilteryRequest
         {
             PageNumber = 1,
             PageSize = 10
-        });
+        }, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -209,7 +209,7 @@ public class UserServiceTests : TestBase
                 },
                 PageNumber = 1,
                 PageSize = 10
-            });
+            }, CancellationToken.None);
         }
         catch (FilteryBaseException)
         {
@@ -225,10 +225,10 @@ public class UserServiceTests : TestBase
     public async Task GetTokenAsync_VALIDATION_ERROR()
     {
         //arrange
-        var tokenRequest = new GetTokenContractServiceRequest {Email = "test@test.com", Password = "Password"};
+        var tokenRequest = new GetTokenContractServiceRequest {Email = "test@test.com", Password = "Pass"};
         
         //act
-        var response = await _userService.GetTokenAsync(tokenRequest);
+        var response = await _userService.GetTokenAsync(tokenRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.InvalidInput, response.Status);
@@ -241,7 +241,7 @@ public class UserServiceTests : TestBase
         var tokenRequest = new GetTokenContractServiceRequest {Email = "test@4test.com", Password = "123456789.tY"};
         
         //act
-        var response = await _userService.GetTokenAsync(tokenRequest);
+        var response = await _userService.GetTokenAsync(tokenRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -252,12 +252,12 @@ public class UserServiceTests : TestBase
     {
         //arrange
         var user = new Model.User.User {Id = Guid.NewGuid(), Email = "test3@test.com", Password = BCrypt.Net.BCrypt.HashPassword("123456789.tY"), Type = UserType.Root};
-        await _userRepository.InsertAsync(user);
+        await _userRepository.InsertAsync(user, CancellationToken.None);
 
         var tokenRequest = new GetTokenContractServiceRequest {Email = "test3@test.com", Password = "123456789.Ty"};
         
         //act
-        var response = await _userService.GetTokenAsync(tokenRequest);
+        var response = await _userService.GetTokenAsync(tokenRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -268,12 +268,12 @@ public class UserServiceTests : TestBase
     {
         //arrange
         var user = new Model.User.User {Id = Guid.NewGuid(), Email = "test7@test.com", Password = BCrypt.Net.BCrypt.HashPassword("123456789.tY"), Type = UserType.Root};
-        await _userRepository.InsertAsync(user);
+        await _userRepository.InsertAsync(user, CancellationToken.None);
 
         var tokenRequest = new GetTokenContractServiceRequest {Email = "test7@test.com", Password = "123456789.tY"};
         
         //act
-        var response = await _userService.GetTokenAsync(tokenRequest);
+        var response = await _userService.GetTokenAsync(tokenRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -286,7 +286,7 @@ public class UserServiceTests : TestBase
         var tokenRequest = new RefreshTokenContractServiceRequest {Token = ""};
         
         //act
-        var response = await _userService.RefreshTokenAsync(tokenRequest);
+        var response = await _userService.RefreshTokenAsync(tokenRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.InvalidInput, response.Status);
@@ -299,7 +299,7 @@ public class UserServiceTests : TestBase
         var tokenRequest = new RefreshTokenContractServiceRequest {Token = "token"};
         
         //act
-        var response = await _userService.RefreshTokenAsync(tokenRequest);
+        var response = await _userService.RefreshTokenAsync(tokenRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -320,12 +320,12 @@ public class UserServiceTests : TestBase
         user.RefreshToken = token.RefreshToken;
         user.RefreshTokenExpireDate = DateTime.UtcNow.AddDays(1);
         
-        await _userRepository.InsertAsync(user);
+        await _userRepository.InsertAsync(user, CancellationToken.None);
          
         var tokenRequest = new RefreshTokenContractServiceRequest {Token = token.RefreshToken};
         
         //act
-        var response = await _userService.RefreshTokenAsync(tokenRequest);
+        var response = await _userService.RefreshTokenAsync(tokenRequest, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);

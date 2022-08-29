@@ -29,9 +29,9 @@ namespace PriceHunter.Api.Controllers.V1
         [AllowAnonymous]
         [HttpPost("token")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AccessTokenContract))]
-        public async Task<ActionResult> Token([FromBody] GetTokenContract tokenContract)
+        public async Task<ActionResult> Token([FromBody] GetTokenContract tokenContract, CancellationToken cancellationToken)
         {
-            var result = await _userService.GetTokenAsync(Mapper.Map<GetTokenContractServiceRequest>(tokenContract));
+            var result = await _userService.GetTokenAsync(Mapper.Map<GetTokenContractServiceRequest>(tokenContract), cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -42,9 +42,9 @@ namespace PriceHunter.Api.Controllers.V1
         [AllowAnonymous]
         [HttpPost("refresh-token")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AccessTokenContract))]
-        public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenContract tokenContract)
+        public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenContract tokenContract, CancellationToken cancellationToken)
         {
-            var result = await _userService.RefreshTokenAsync(Mapper.Map<RefreshTokenContractServiceRequest>(tokenContract));
+            var result = await _userService.RefreshTokenAsync(Mapper.Map<RefreshTokenContractServiceRequest>(tokenContract), cancellationToken);
             return ApiResponse.CreateResult(result);
         }
     }

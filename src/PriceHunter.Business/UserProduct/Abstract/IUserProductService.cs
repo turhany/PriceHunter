@@ -11,11 +11,11 @@ namespace PriceHunter.Business.UserProduct.Abstract
 {
     public interface IUserProductService : IService
     {
-        Task<ServiceResult<UserProductViewModel>> GetAsync(Guid id);
-        Task<ServiceResult<PagedList<UserProductSearchViewModel>>> SearchAsync(FilteryRequest request);
-        Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserProductRequestServiceRequest request);
-        Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserProductRequestServiceRequest request);
-        Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id);
-        Task<ServiceResult<List<ProductPriceChangesViewModel>>> GetLastNMonthChangesAsync(Guid id, int monthCount);
+        Task<ServiceResult<UserProductViewModel>> GetAsync(Guid id, CancellationToken cancellationToken);
+        Task<ServiceResult<PagedList<UserProductSearchViewModel>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserProductRequestServiceRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserProductRequestServiceRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id, CancellationToken cancellationToken);
+        Task<ServiceResult<List<ProductPriceChangesViewModel>>> GetLastNMonthChangesAsync(Guid id, int monthCount, CancellationToken cancellationToken);
     }
 }

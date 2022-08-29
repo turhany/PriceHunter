@@ -25,6 +25,8 @@ using PriceHunter.Resources.Service;
 using System.Dynamic;
 using PriceHunter.Lock.Abstract;
 using Page = PriceHunter.Common.Pager.Page;
+using PriceHunter.Cache.Constants;
+using System.Threading;
 
 namespace PriceHunter.Business.User.Concrete
 {
@@ -61,11 +63,11 @@ namespace PriceHunter.Business.User.Concrete
 
         #region CRUD Operations
 
-        public async Task<ServiceResult<UserViewModel>> GetAsync(Guid id)
+        public async Task<ServiceResult<UserViewModel>> GetAsync(Guid id, CancellationToken cancellationToken)
         {
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, id);
 
-            var user = await _cacheService.GetOrSetObjectAsync(cacheKey, async () => await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
+            var user = await _cacheService.GetOrSetObjectAsync(cacheKey, async () => await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false, cancellationToken), CacheConstants.DefaultCacheDuration, cancellationToken);
 
             if (user == null)
             {
@@ -86,7 +88,7 @@ namespace PriceHunter.Business.User.Concrete
                 Data = response
             };
         }
-        public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request)
+        public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(CreateUserRequestValidator), request);
 
@@ -101,7 +103,7 @@ namespace PriceHunter.Business.User.Concrete
             }
 
             request.Email = request.Email.Trim().ToLower();
-            if (await _userRepository.AnyAsync(p => p.Email.Equals(request.Email) && p.IsDeleted == false))
+            if (await _userRepository.AnyAsync(p => p.Email.Equals(request.Email) && p.IsDeleted == false, cancellationToken))
             {
                 return new ServiceResult<ExpandoObject>
                 {
@@ -119,7 +121,7 @@ namespace PriceHunter.Business.User.Concrete
                 Type = Model.User.UserType.Root //TODO: this need to be change as your logic                
             };
 
-            entity = await _userRepository.InsertAsync(entity);
+            entity = await _userRepository.InsertAsync(entity, cancellationToken);
 
             dynamic userWrapper = new ExpandoObject();
             userWrapper.Id = entity.Id;
@@ -131,7 +133,7 @@ namespace PriceHunter.Business.User.Concrete
                 Data = userWrapper
             };
         }
-        public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request)
+        public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(UpdateUserRequestValidator), request);
 
@@ -145,7 +147,7 @@ namespace PriceHunter.Business.User.Concrete
                 };
             }
 
-            var entity = await _userRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false);
+            var entity = await _userRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -157,7 +159,7 @@ namespace PriceHunter.Business.User.Concrete
             }
 
             request.Email = request.Email.Trim().ToLower();
-            if (await _userRepository.AnyAsync(p => p.Id != request.Id && p.Email.Equals(request.Email) && p.IsDeleted == false))
+            if (await _userRepository.AnyAsync(p => p.Id != request.Id && p.Email.Equals(request.Email) && p.IsDeleted == false, cancellationToken))
             {
                 return new ServiceResult<ExpandoObject>
                 {
@@ -169,7 +171,7 @@ namespace PriceHunter.Business.User.Concrete
             var lockKey = string.Format(LockKeyConstants.UserLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, entity.Id);
 
-            using (await _lockService.CreateLockAsync(lockKey))
+            using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
             {
                 entity.FirstName = request.FirstName.Trim();
                 entity.LastName = request.LastName.Trim();
@@ -180,12 +182,11 @@ namespace PriceHunter.Business.User.Concrete
                     entity.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
                 }
 
-                entity = await _userRepository.UpdateAsync(entity);
+                entity = await _userRepository.UpdateAsync(entity, cancellationToken);
 
-                await _cacheService.RemoveAsync(cacheKey);
+                await _cacheService.RemoveAsync(cacheKey, cancellationToken);
             }
-
-
+             
             dynamic userWrapper = new ExpandoObject();
             userWrapper.Id = entity.Id;
 
@@ -196,7 +197,7 @@ namespace PriceHunter.Business.User.Concrete
                 Data = userWrapper
             };
         }
-        public async Task<ServiceResult<UserProfileImageViewModel>> UploadProfileImageAsync(ProfileFileContractServiceRequest request)
+        public async Task<ServiceResult<UserProfileImageViewModel>> UploadProfileImageAsync(ProfileFileContractServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(ProfileFileContractServiceRequestValidator), request);
 
@@ -210,7 +211,7 @@ namespace PriceHunter.Business.User.Concrete
                 };
             }
 
-            var entity = await _userRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false);
+            var entity = await _userRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -224,18 +225,18 @@ namespace PriceHunter.Business.User.Concrete
             var lockKey = string.Format(LockKeyConstants.UserLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, entity.Id);
 
-            using (await _lockService.CreateLockAsync(lockKey))
+            using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
             {
                 DeleteImage(entity.Image);
-                entity.Image = await UploadImageAsync(request.FileName, request.FileData);
+                entity.Image = await UploadImageAsync(request.FileName, request.FileData, cancellationToken);
 
-                entity = await _userRepository.UpdateAsync(entity);
+                entity = await _userRepository.UpdateAsync(entity, cancellationToken);
 
-                await _cacheService.RemoveAsync(cacheKey);
+                await _cacheService.RemoveAsync(cacheKey, cancellationToken);
             }
 
             var response = new UserProfileImageViewModel();
-            response.Image =  Path.Combine(_fileConfigurationOptions.UserProfileVirtualPath, entity.Image);
+            response.Image = Path.Combine(_fileConfigurationOptions.UserProfileVirtualPath, entity.Image);
 
             return new ServiceResult<UserProfileImageViewModel>
             {
@@ -244,9 +245,9 @@ namespace PriceHunter.Business.User.Concrete
                 Data = response
             };
         }
-        public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id)
+        public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false);
+            var entity = await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -269,12 +270,12 @@ namespace PriceHunter.Business.User.Concrete
             var lockKey = string.Format(LockKeyConstants.UserLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, entity.Id);
 
-            using (await _lockService.CreateLockAsync(lockKey))
+            using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
             {
-                await _userRepository.DeleteAsync(entity);
+                await _userRepository.DeleteAsync(entity, cancellationToken);
                 DeleteImage(entity.Image);
 
-                await _cacheService.RemoveAsync(cacheKey);
+                await _cacheService.RemoveAsync(cacheKey, cancellationToken);
             }
 
             return new ServiceResult<ExpandoObject>
@@ -283,7 +284,7 @@ namespace PriceHunter.Business.User.Concrete
                 Message = Resource.Deleted(Entities.User, entity.Email)
             };
         }
-        public async Task<ServiceResult<PagedList<UserViewModel>>> SearchAsync(FilteryRequest request)
+        public async Task<ServiceResult<PagedList<UserViewModel>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken)
         {
             var filteryResponse = await _userRepository.Find(p => true).BuildFilteryAsync(new UserFilteryMapping(), request);
 
@@ -312,7 +313,7 @@ namespace PriceHunter.Business.User.Concrete
 
         #region Login Operations
 
-        public async Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request)
+        public async Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(GetTokenContractServiceRequestValidator), request);
 
@@ -327,7 +328,7 @@ namespace PriceHunter.Business.User.Concrete
             }
 
             request.Email = request.Email.Trim().ToLower();
-            var entity = await _userRepository.FindOneAsync(p => p.Email.Equals(request.Email) && p.IsDeleted == false);
+            var entity = await _userRepository.FindOneAsync(p => p.Email.Equals(request.Email) && p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -358,7 +359,7 @@ namespace PriceHunter.Business.User.Concrete
             entity.RefreshToken = token.RefreshToken;
             entity.RefreshTokenExpireDate = token.RefreshTokenExpireDate;
 
-            await _userRepository.UpdateAsync(entity);
+            await _userRepository.UpdateAsync(entity, cancellationToken);
 
             return new ServiceResult<AccessTokenContract>
             {
@@ -367,7 +368,7 @@ namespace PriceHunter.Business.User.Concrete
                 Data = token
             };
         }
-        public async Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request)
+        public async Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(RefreshTokenContractServiceRequestValidator), request);
 
@@ -384,7 +385,7 @@ namespace PriceHunter.Business.User.Concrete
             var entity = await _userRepository.FindOneAsync(p =>
                 p.RefreshToken == request.Token &&
                 p.RefreshTokenExpireDate > DateTime.UtcNow &&
-                p.IsDeleted == false);
+                p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -406,7 +407,7 @@ namespace PriceHunter.Business.User.Concrete
             entity.RefreshToken = token.RefreshToken;
             entity.RefreshTokenExpireDate = token.RefreshTokenExpireDate;
 
-            await _userRepository.UpdateAsync(entity);
+            await _userRepository.UpdateAsync(entity, cancellationToken);
 
             return new ServiceResult<AccessTokenContract>
             {
@@ -418,7 +419,7 @@ namespace PriceHunter.Business.User.Concrete
 
         #endregion
 
-        private async Task<string> UploadImageAsync(string fileName, byte[] image)
+        private async Task<string> UploadImageAsync(string fileName, byte[] image, CancellationToken cancellationToken)
         {
             string newFileName = null;
             if (image != null)
@@ -437,7 +438,7 @@ namespace PriceHunter.Business.User.Concrete
                     newFileName = $"{Guid.NewGuid().ToString()}{imageFileInfo.Extension}";
                     var fileFullPath = Path.Combine(imageFolderPath, newFileName);
 
-                    await File.WriteAllBytesAsync(fileFullPath, image);
+                    await File.WriteAllBytesAsync(fileFullPath, image, cancellationToken);
                 }
                 catch (Exception ex)
                 {

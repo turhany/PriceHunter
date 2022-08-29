@@ -23,50 +23,50 @@ namespace PriceHunter.Data.MongoDB.Repositories
             Collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
         }
 
-        public async Task<TEntity> InsertAsync(TEntity entity)
+        public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken)
         {
             entity.ThrowIfNull();
 
             SetAuditFields(entity, OperationFlow.Insert);
 
-            await Collection.InsertOneAsync(entity);
+            await Collection.InsertOneAsync(entity, new InsertOneOptions() ,cancellationToken);
             return entity;
         }
-        public async Task<List<TEntity>> InsertManyAsync(List<TEntity> entityList)
+        public async Task<List<TEntity>> InsertManyAsync(List<TEntity> entityList, CancellationToken cancellationToken)
         {
             entityList.ThrowIfNull();
             entityList.Throw().IfEmpty();
 
             SetAuditFields(entityList, OperationFlow.Insert);
 
-            await Collection.InsertManyAsync(entityList);
+            await Collection.InsertManyAsync(entityList, null, cancellationToken);
             return entityList;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken)
         {
             entity.ThrowIfNull();
 
             SetAuditFields(entity, OperationFlow.Update);
 
-            await Collection.ReplaceOneAsync(model => model.Id == entity.Id, entity);
+            await Collection.ReplaceOneAsync(model => model.Id == entity.Id, entity, new ReplaceOptions(), cancellationToken);
 
-            return await FindOneAsync(p => p.Id == entity.Id);
+            return await FindOneAsync(p => p.Id == entity.Id, cancellationToken);
         }
-        public async Task<List<TEntity>> UpdateManyAsync(List<TEntity> entityList)
+        public async Task<List<TEntity>> UpdateManyAsync(List<TEntity> entityList, CancellationToken cancellationToken)
         {
             entityList.ThrowIfNull();
             entityList.Throw().IfEmpty();
 
             for (int i = 0; i < entityList.Count; i++)
             {
-                entityList[i] = await UpdateAsync(entityList[i]);
+                entityList[i] = await UpdateAsync(entityList[i], cancellationToken);
             }
 
             return entityList;
         }
 
-        public async Task DeleteAsync(TEntity entity)
+        public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
         {
             entity.ThrowIfNull();
 
@@ -74,43 +74,43 @@ namespace PriceHunter.Data.MongoDB.Repositories
             {
                 SetDeleteFields(softDeleteEntity);
 
-                await UpdateAsync(entity);
+                await UpdateAsync(entity, cancellationToken);
             }
             else
             {
-                await Collection.DeleteOneAsync(model => model.Id == entity.Id);
+                await Collection.DeleteOneAsync(model => model.Id == entity.Id, cancellationToken);
             }
         }
-        public async Task DeleteManyAsync(List<TEntity> entityList)
+        public async Task DeleteManyAsync(List<TEntity> entityList, CancellationToken cancellationToken)
         {
             entityList.ThrowIfNull();
             entityList.Throw().IfEmpty();
 
             foreach (var entity in entityList)
             {
-                await DeleteAsync(entity);
+                await DeleteAsync(entity, cancellationToken);
             }
         }
 
-        public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
         {
-            return await Collection.Find(predicate).FirstOrDefaultAsync();
+            return await Collection.Find(predicate).FirstOrDefaultAsync(cancellationToken);
         }
         public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return Collection.AsQueryable().Where(predicate);
         }
 
-        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
         {
-            return await Collection.Find(predicate).AnyAsync();
+            return await Collection.Find(predicate).AnyAsync(cancellationToken);
         }
-        public async Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
         {
-            return await Collection.Find(predicate).CountAsync();
+            return await Collection.Find(predicate).CountDocumentsAsync(cancellationToken);
         }
 
-        public async Task BulkInsertAsync(List<TEntity> entityList)
+        public async Task BulkInsertAsync(List<TEntity> entityList, CancellationToken cancellationToken)
         {
             entityList.ThrowIfNull();
             entityList.Throw().IfEmpty();
@@ -122,7 +122,7 @@ namespace PriceHunter.Data.MongoDB.Repositories
                 insertList.Add(new InsertOneModel<TEntity>(entity));
             }
 
-            await Collection.BulkWriteAsync(insertList);
+            await Collection.BulkWriteAsync(insertList, new BulkWriteOptions(), cancellationToken);
         }
         public void BulkInsert(List<TEntity> entityList)
         {
@@ -145,7 +145,7 @@ namespace PriceHunter.Data.MongoDB.Repositories
             Guid? currentUserId = null;
             try
             {
-                 currentUserId = ApplicationContext.Instance.CurrentUser.Id; 
+                currentUserId = ApplicationContext.Instance.CurrentUser.Id;
             }
             catch
             {
@@ -161,13 +161,13 @@ namespace PriceHunter.Data.MongoDB.Repositories
                     if (entity.HasProperty(nameof(Common.Data.Entity.CreatedBy)) && currentUserId.HasValue)
                         entity.SetPropertyValue(nameof(Common.Data.Entity.CreatedBy), currentUserId.Value);
                     break;
-                case MongoDBGenericRepository<TEntity>.OperationFlow.Update: 
+                case MongoDBGenericRepository<TEntity>.OperationFlow.Update:
                     if (entity.HasProperty(nameof(Common.Data.Entity.UpdatedOn)))
                         entity.SetPropertyValue(nameof(Common.Data.Entity.UpdatedOn), DateTime.UtcNow);
 
                     if (entity.HasProperty(nameof(Common.Data.Entity.UpdatedBy)) && currentUserId.HasValue)
                         entity.SetPropertyValue(nameof(Common.Data.Entity.UpdatedBy), currentUserId.Value);
-                    break; 
+                    break;
                 default:
                     break;
             }

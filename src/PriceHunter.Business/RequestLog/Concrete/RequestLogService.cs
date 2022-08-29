@@ -17,9 +17,9 @@ namespace PriceHunter.Business.RequestLog.Concrete
         /// </summary>
         /// <param name="entity">RequestLog Item</param>
         /// <returns>bool</returns>
-        public async Task<bool> SaveAsync(Model.RequestLog.RequestLog entity)
+        public async Task<bool> SaveAsync(Model.RequestLog.RequestLog entity, CancellationToken cancellationToken)
         {
-            return await _requestLogRepository.InsertAsync(entity) != null;
+            return await _requestLogRepository.InsertAsync(entity, cancellationToken) != null;
         }
     }
 }

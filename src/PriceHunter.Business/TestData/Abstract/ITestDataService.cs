@@ -4,6 +4,6 @@ namespace PriceHunter.Business.TestData.Abstract
 {
     public interface ITestDataService : IService
     {
-        Task InsertDataAsync();
+        Task InsertDataAsync(CancellationToken cancellationToken);
     }
 }

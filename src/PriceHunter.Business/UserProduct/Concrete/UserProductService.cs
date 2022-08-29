@@ -13,14 +13,14 @@ using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Contract.App.Product;
 using PriceHunter.Contract.App.UserProduct;
 using PriceHunter.Contract.Mappings.Filtery;
-using PriceHunter.Contract.Service.UserProduct;
-using PriceHunter.Model.Product;
+using PriceHunter.Contract.Service.UserProduct; 
 using PriceHunter.Model.UserProduct;
 using PriceHunter.Resources.Extensions;
 using PriceHunter.Resources.Model;
 using PriceHunter.Resources.Service;
 using System.Dynamic;
 using PriceHunter.Lock.Abstract;
+using PriceHunter.Cache.Constants;
 
 namespace PriceHunter.Business.UserProduct.Concrete
 {
@@ -61,14 +61,16 @@ namespace PriceHunter.Business.UserProduct.Concrete
             _validationService = validationService;
         }
 
-        public async Task<ServiceResult<UserProductViewModel>> GetAsync(Guid id)
+        public async Task<ServiceResult<UserProductViewModel>> GetAsync(Guid id, CancellationToken cancellationToken)
         {
             var cacheKey = string.Format(CacheKeyConstants.UserProductCacheKey, id);
             var userId = ApplicationContext.Instance.CurrentUser.Id;
 
             var product = await _cacheService.GetOrSetObjectAsync(
                 cacheKey,
-                async () => await _userProductRepository.FindOneAsync(p => p.Id == id && p.UserId == userId && p.IsDeleted == false));
+                async () => await _userProductRepository.FindOneAsync(p => p.Id == id && p.UserId == userId && p.IsDeleted == false, cancellationToken),
+                CacheConstants.DefaultCacheDuration,
+                cancellationToken);
 
             if (product == null || product.UserId != userId)
             {
@@ -102,7 +104,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             };
         }
 
-        public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserProductRequestServiceRequest request)
+        public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserProductRequestServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(CreateUserProductRequestValidator), request);
 
@@ -134,7 +136,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                         }
                     }
 
-                    if (!await _supplierRepository.AnyAsync(p => p.Id == mapping.SupplierId && p.IsDeleted == false))
+                    if (!await _supplierRepository.AnyAsync(p => p.Id == mapping.SupplierId && p.IsDeleted == false, cancellationToken))
                     {
                         errors.Add(String.Format(ServiceResponseMessage.SUPPLIER_NOTFOUND, mapping.SupplierId));
                     }
@@ -157,7 +159,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     Guid productId = Guid.Empty;
                     var productSupplierInfoMapping = await _productSupplierInfoMappingRepository.FindOneAsync(p =>
                         p.Url.Equals(mapping.Url) &&
-                        p.IsDeleted == false);
+                        p.IsDeleted == false, cancellationToken);
 
                     if (productSupplierInfoMapping == null)
                     {
@@ -166,7 +168,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                             var product = await _productRepository.InsertAsync(new Model.Product.Product
                             {
                                 Name = request.Name
-                            });
+                            }, cancellationToken);
                             createdProductId = product.Id;
                         }
 
@@ -175,7 +177,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                             ProductId = createdProductId,
                             SupplierId = mapping.SupplierId,
                             Url = mapping.Url
-                        });
+                        }, cancellationToken);
                     }
                     else
                     {
@@ -198,12 +200,12 @@ namespace PriceHunter.Business.UserProduct.Concrete
                 UserId = userId
             };
 
-            entity = await _userProductRepository.InsertAsync(entity);
+            entity = await _userProductRepository.InsertAsync(entity, cancellationToken);
 
             if (productSupplierMappings.Any())
             {
                 productSupplierMappings.ForEach(p => p.UserProductId = entity.Id);
-                await _userProductSupplierMappingRepository.InsertManyAsync(productSupplierMappings);
+                await _userProductSupplierMappingRepository.InsertManyAsync(productSupplierMappings, cancellationToken);
             }
 
             dynamic productWrapper = new ExpandoObject();
@@ -217,7 +219,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             };
         }
 
-        public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserProductRequestServiceRequest request)
+        public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserProductRequestServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(UpdateUserProductRequestValidator), request);
 
@@ -235,7 +237,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             var entity = await _userProductRepository.FindOneAsync(p =>
                p.Id == request.Id &&
                p.UserId == userId &&
-               p.IsDeleted == false);
+               p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -263,7 +265,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                         }                        
                     }
 
-                    if (!await _supplierRepository.AnyAsync(p => p.Id == mapping.SupplierId && p.IsDeleted == false))
+                    if (!await _supplierRepository.AnyAsync(p => p.Id == mapping.SupplierId && p.IsDeleted == false, cancellationToken))
                     {
                         errors.Add(String.Format(ServiceResponseMessage.SUPPLIER_NOTFOUND, mapping.SupplierId));
                     }
@@ -288,7 +290,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                     Guid productId = Guid.Empty;
                     var productSupplierInfoMapping = await _productSupplierInfoMappingRepository.FindOneAsync(p =>
                        p.Url.Equals(mapping.Url) &&
-                       p.IsDeleted == false);
+                       p.IsDeleted == false, cancellationToken);
 
                     if (productSupplierInfoMapping == null)
                     {
@@ -297,7 +299,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                             var product = await _productRepository.InsertAsync(new Model.Product.Product
                             {
                                 Name = request.Name
-                            });
+                            }, cancellationToken);
                             createdProductId = product.Id;
                         }
 
@@ -306,7 +308,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                             ProductId = createdProductId,
                             SupplierId = mapping.SupplierId,
                             Url = mapping.Url
-                        });
+                        }, cancellationToken);
                     }
                     else
                     {
@@ -327,11 +329,11 @@ namespace PriceHunter.Business.UserProduct.Concrete
             var lockKey = string.Format(LockKeyConstants.UserProductLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserProductCacheKey, entity.Id);
 
-            using (await _lockService.CreateLockAsync(lockKey))
+            using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
             {
                 entity.Name = request.Name.Trim();
 
-                entity = await _userProductRepository.UpdateAsync(entity);
+                entity = await _userProductRepository.UpdateAsync(entity, cancellationToken);
 
                 var dbProductSupplierMappings = _userProductSupplierMappingRepository.Find(p =>
                     p.UserProductId == request.Id && 
@@ -339,16 +341,16 @@ namespace PriceHunter.Business.UserProduct.Concrete
 
                 if (dbProductSupplierMappings.Any())
                 {
-                    await _userProductSupplierMappingRepository.DeleteManyAsync(dbProductSupplierMappings);
+                    await _userProductSupplierMappingRepository.DeleteManyAsync(dbProductSupplierMappings, cancellationToken);
                 }
 
                 if (productSupplierMappings.Any())
                 {
                     productSupplierMappings.ForEach(p => p.UserProductId = entity.Id);
-                    await _userProductSupplierMappingRepository.InsertManyAsync(productSupplierMappings);
+                    await _userProductSupplierMappingRepository.InsertManyAsync(productSupplierMappings, cancellationToken);
                 }
 
-                await _cacheService.RemoveAsync(cacheKey);
+                await _cacheService.RemoveAsync(cacheKey, cancellationToken);
             }
 
 
@@ -363,14 +365,14 @@ namespace PriceHunter.Business.UserProduct.Concrete
             };
         }
 
-        public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id)
+        public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             var userId = ApplicationContext.Instance.CurrentUser.Id;
 
             var entity = await _userProductRepository.FindOneAsync(p =>
                 p.Id == id &&
                 p.UserId == userId &&
-                p.IsDeleted == false);
+                p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -384,9 +386,9 @@ namespace PriceHunter.Business.UserProduct.Concrete
             var lockKey = string.Format(LockKeyConstants.UserProductLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserProductCacheKey, entity.Id);
 
-            using (await _lockService.CreateLockAsync(lockKey))
+            using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
             {
-                await _userProductRepository.DeleteAsync(entity);
+                await _userProductRepository.DeleteAsync(entity, cancellationToken);
 
                 var dbProductSupplierMappings = _userProductSupplierMappingRepository.Find(p =>
                     p.UserProductId == entity.Id &&
@@ -394,10 +396,10 @@ namespace PriceHunter.Business.UserProduct.Concrete
 
                 if (dbProductSupplierMappings.Any())
                 {
-                    await _userProductSupplierMappingRepository.DeleteManyAsync(dbProductSupplierMappings);
+                    await _userProductSupplierMappingRepository.DeleteManyAsync(dbProductSupplierMappings, cancellationToken);
                 }
 
-                await _cacheService.RemoveAsync(cacheKey);
+                await _cacheService.RemoveAsync(cacheKey, cancellationToken);
             }
 
             return new ServiceResult<ExpandoObject>
@@ -407,7 +409,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             };
         }
 
-        public async Task<ServiceResult<PagedList<UserProductSearchViewModel>>> SearchAsync(FilteryRequest request)
+        public async Task<ServiceResult<PagedList<UserProductSearchViewModel>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken)
         {
             var filteryResponse = await _userProductRepository
                 .Find(p => p.IsDeleted == false)
@@ -431,10 +433,10 @@ namespace PriceHunter.Business.UserProduct.Concrete
             };
         }
 
-        public async Task<ServiceResult<List<ProductPriceChangesViewModel>>> GetLastNMonthChangesAsync(Guid id, int monthCount)
+        public async Task<ServiceResult<List<ProductPriceChangesViewModel>>> GetLastNMonthChangesAsync(Guid id, int monthCount, CancellationToken cancellationToken)
         {
             var userId = ApplicationContext.Instance.CurrentUser.Id;
-            var userProduct = await _userProductRepository.FindOneAsync(p => p.Id == id && p.UserId == userId && p.IsDeleted == false);
+            var userProduct = await _userProductRepository.FindOneAsync(p => p.Id == id && p.UserId == userId && p.IsDeleted == false, cancellationToken);
 
             if (userProduct == null)
             {
@@ -462,7 +464,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             }
 
             List<Guid> productIds = userProductMappings.Select(p => p.ProductId.Value).ToList();
-            if (!await _productRepository.AnyAsync(p => productIds.Contains(p.Id) && p.IsDeleted == false))
+            if (!await _productRepository.AnyAsync(p => productIds.Contains(p.Id) && p.IsDeleted == false, cancellationToken))
             {
                 return new ServiceResult<List<ProductPriceChangesViewModel>>
                 {
