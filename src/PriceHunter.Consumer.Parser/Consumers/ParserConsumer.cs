@@ -100,7 +100,7 @@ namespace PriceHunter.Consumer.Parser.Consumers
                 }
             }
             catch (Exception ex)
-            {
+            { 
                 _logger.LogError(ex, ex.Message);
             }
         }

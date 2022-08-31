@@ -18,10 +18,9 @@ namespace PriceHunter.ScheduleService.Configurations
         public static IServiceCollection AddHangfireConfiguration(this IServiceCollection services,
             IConfiguration configuration)
         {
-            var mongoUrlBuilder = new MongoUrlBuilder($"{configuration["Mongo:ConnectionString"]}/{configuration["Mongo:Database"]}");
+            var mongoUrlBuilder = new MongoUrlBuilder($"{configuration["MongoSettings:ConnectionString"]}/{configuration["MongoSettings:Database"]}");
             var mongoClient = new MongoClient(mongoUrlBuilder.ToMongoUrl());
 
-            // Add Hangfire services. Hangfire.AspNetCore nuget required
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
@@ -41,7 +40,7 @@ namespace PriceHunter.ScheduleService.Configurations
 
             services.AddHangfireServer(serverOptions =>
             {
-                serverOptions.ServerName = "Server 1";
+                serverOptions.ServerName = $"Server-{Environment.MachineName}";
             });
 
 

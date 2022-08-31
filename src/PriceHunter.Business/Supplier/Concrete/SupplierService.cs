@@ -28,8 +28,8 @@ namespace PriceHunter.Business.Supplier.Concrete
         }
 
         public async Task<ServiceResult<List<SupplierViewModel>>> GetAllAsync(CancellationToken cancellationToken)
-        {  
-            var suppliers = await _cacheService.GetOrSetObjectAsync(CacheKeyConstants.SuppliersAllCacheKey, async () => await _supplierRepository.Find(p => p.IsDeleted == false).ToListAsync(cancellationToken), CacheConstants.DefaultCacheDuration, cancellationToken);
+        {
+            var suppliers = await _cacheService.GetOrSetObjectAsync(CacheKeyConstants.SuppliersAllCacheKey, () => _supplierRepository.Find(p => p.IsDeleted == false).ToList(), CacheConstants.DefaultCacheDuration, cancellationToken);
 
             var response = new List<SupplierViewModel>();
 

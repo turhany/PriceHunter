@@ -18,17 +18,15 @@ namespace PriceHunter.Common.StartupConfigurations
         /// <param name="services">ServiceCollection</param>
         /// <param name="configuration">Configuration</param>
         /// <returns></returns>
-        public static IServiceCollection AddHealthCheckConfiguration(this IServiceCollection services,
-            IConfiguration configuration)
+        public static IServiceCollection AddHealthCheckConfiguration(this IServiceCollection services, IConfiguration configuration)
         { 
             services
                 .AddHealthChecks() 
-                .AddMongoDb(configuration["Mongo:ConnectionString"])
+                .AddMongoDb(configuration["MongoSettings:ConnectionString"])
                 .AddRedis(configuration.GetConnectionString(AppConstants.RedisConnectionString));
 
             services.AddHealthChecksUI()
                 .AddInMemoryStorage();
-
 
             return services;
         }

@@ -1,5 +1,5 @@
 #### What next?
-* Add Blazor app into DockerCompose
+* ~~Add Blazor app into DockerCompose~~
 * Add currency type for product
 * Add sample json response for api endpoint's
 * check (product,userproduct)"last6monthchanges" response business logic

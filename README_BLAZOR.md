@@ -8,6 +8,7 @@
 * https://www.youtube.com/watch?v=kOnMMKxwm3I
 * https://www.youtube.com/watch?v=7P_eyz4mEmA&list=PLzewa6pjbr3IQEUfNiK2SROQC1NuKl6PV&index=15
 * https://github.com/SteveSandersonMS/presentation-2019-06-NDCOslo/blob/master/demos/MissionControl/MissionControl.Client/Util/ServiceExtensions.cs
+* https://chrissainty.com/containerising-blazor-applications-with-docker-containerising-a-blazor-webassembly-app/
 
 #### Turkish
 * https://www.youtube.com/playlist?list=PLS4NTfmoaSLRTAPCk84RTEXywOXkNt0N5
@@ -15,3 +16,4 @@
 * https://www.youtube.com/watch?v=l0aZc4R5oEM
 * https://www.youtube.com/watch?v=Xd1wjd8q9fM
 * https://www.youtube.com/playlist?list=PL9OZDx-_1-s1-AHpUVL-Ttr_PEu_0LRBv
+* https://www.youtube.com/watch?v=KKqLbLpL2s0
