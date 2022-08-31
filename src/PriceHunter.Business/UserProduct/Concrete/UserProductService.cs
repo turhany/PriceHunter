@@ -13,7 +13,7 @@ using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Contract.App.Product;
 using PriceHunter.Contract.App.UserProduct;
 using PriceHunter.Contract.Mappings.Filtery;
-using PriceHunter.Contract.Service.UserProduct; 
+using PriceHunter.Contract.Service.UserProduct;
 using PriceHunter.Model.UserProduct;
 using PriceHunter.Resources.Extensions;
 using PriceHunter.Resources.Model;
@@ -262,7 +262,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                         if (!errors.Contains(errorMessage))
                         {
                             errors.Add(errorMessage);
-                        }                        
+                        }
                     }
 
                     if (!await _supplierRepository.AnyAsync(p => p.Id == mapping.SupplierId && p.IsDeleted == false, cancellationToken))
@@ -321,7 +321,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                         Url = mapping.Url,
                         ProductId = productIdForMap,
                         SupplierId = mapping.SupplierId,
-                        UserProductId = request.Id                       
+                        UserProductId = request.Id
                     });
                 }
             }
@@ -336,7 +336,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
                 entity = await _userProductRepository.UpdateAsync(entity, cancellationToken);
 
                 var dbProductSupplierMappings = _userProductSupplierMappingRepository.Find(p =>
-                    p.UserProductId == request.Id && 
+                    p.UserProductId == request.Id &&
                     p.IsDeleted == false).ToList();
 
                 if (dbProductSupplierMappings.Any())
@@ -450,7 +450,7 @@ namespace PriceHunter.Business.UserProduct.Concrete
             var response = new List<ProductPriceChangesViewModel>();
 
             var userProductMappings = _userProductSupplierMappingRepository.Find(p =>
-               p.UserProductId == userProduct.Id && 
+               p.UserProductId == userProduct.Id &&
                p.IsDeleted == false).ToList();
 
             if (userProductMappings == null)
@@ -463,8 +463,18 @@ namespace PriceHunter.Business.UserProduct.Concrete
                 };
             }
 
+            var filterEndDate = DateTime.UtcNow;
+            var tempMonth = monthCount * -1;
+            var filterStartDate = DateTime.UtcNow.AddMonths(tempMonth);
+            filterStartDate = new DateTime(filterEndDate.Year, filterEndDate.Month, filterEndDate.Day);
+
             List<Guid> productIds = userProductMappings.Select(p => p.ProductId.Value).ToList();
-            if (!await _productRepository.AnyAsync(p => productIds.Contains(p.Id) && p.IsDeleted == false, cancellationToken))
+            if (!await _productRepository.AnyAsync(p =>
+                            productIds.Contains(p.Id) &&
+                            p.CreatedOn >= filterStartDate &&
+                            p.CreatedOn <= filterEndDate &&
+                            p.IsDeleted == false,
+                            cancellationToken))
             {
                 return new ServiceResult<List<ProductPriceChangesViewModel>>
                 {
@@ -475,7 +485,11 @@ namespace PriceHunter.Business.UserProduct.Concrete
             }
 
             var groupedPriceHistory = _productPriceHistoryRepository
-                                    .Find(p => productIds.Contains(p.ProductId) && p.IsDeleted == false)
+                                    .Find(p =>
+                                        productIds.Contains(p.ProductId) &&
+                                        p.CreatedOn >= filterStartDate &&
+                                        p.CreatedOn <= filterEndDate &&
+                                        p.IsDeleted == false)
                                     .OrderByDescending(p => p.CreatedBy)
                                     .GroupBy(p => new { p.Year, p.Month })
                                     .Select(p => new { Year = p.Key.Year, Month = p.Key.Month, Price = p.Average(x => x.Price) })

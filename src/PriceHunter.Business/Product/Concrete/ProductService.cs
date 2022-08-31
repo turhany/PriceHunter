@@ -430,8 +430,32 @@ namespace PriceHunter.Business.Product.Concrete
                 };
             }
 
+            var filterEndDate = DateTime.UtcNow;
+            var tempMonth = monthCount * -1;
+            var filterStartDate = DateTime.UtcNow.AddMonths(tempMonth);
+            filterStartDate = new DateTime(filterEndDate.Year, filterEndDate.Month, filterEndDate.Day);
+
+            if (!await _productPriceHistoryRepository.AnyAsync(p =>
+                            p.ProductId == id &&
+                            p.CreatedOn >= filterStartDate &&
+                            p.CreatedOn <= filterEndDate &&
+                            p.IsDeleted == false,
+                            cancellationToken))
+            {
+                return new ServiceResult<List<ProductPriceChangesViewModel>>
+                {
+                    Status = ResultStatus.Successful,
+                    Message = Resource.Retrieved(),
+                    Data = new List<ProductPriceChangesViewModel>()
+                };
+            }
+
             var groupedPriceHistory = _productPriceHistoryRepository
-                                    .Find(P => P.ProductId == id && P.IsDeleted == false)
+                                    .Find(
+                                        p => p.ProductId == id &&
+                                        p.CreatedOn >= filterStartDate &&
+                                        p.CreatedOn <= filterEndDate &&
+                                        p.IsDeleted == false)
                                     .OrderByDescending(p => p.CreatedBy)
                                     .GroupBy(p => new { p.Year, p.Month })
                                     .Select(p => new { Year = p.Key.Year, Month = p.Key.Month, Price = p.Average(x => x.Price) })
