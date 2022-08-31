@@ -238,6 +238,7 @@ No need extra info. Return "<b>BaseResponse</b>" model.
 public class CreateUserProductRequest
 {
     public string Name { get; set; }
+    public Guid CurrencyId { get; set; }
     public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; }
 }
 
@@ -253,6 +254,7 @@ public class UrlSupplierMappingViewModel
 public class UserProductViewModel
 {
     public string Name { get; set; }
+    public Guid CurrencyId { get; set; }
     public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; } = new List<UrlSupplierMappingViewModel>();
 }
 
@@ -268,6 +270,7 @@ public class UrlSupplierMappingViewModel
 public class UpdateUserProductRequest
 {
     public string Name { get; set; } 
+    public Guid CurrencyId { get; set; }
     public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; }
 }
 
@@ -297,6 +300,7 @@ No need extra info. Return "<b>BaseResponse</b>" model.
  public class CreateProductRequest
 {
     public string Name { get; set; }
+    public Guid CurrencyId { get; set; }
     public List<ProductSupplierInfoMappingViewModel> UrlSupplierMapping { get; set; }
 }
 
@@ -312,6 +316,7 @@ public class ProductSupplierInfoMappingViewModel
 public class ProductViewModel
 {
     public string Name { get; set; }
+    public Guid CurrencyId { get; set; }
     public List<ProductSupplierInfoMappingViewModel> UrlSupplierMapping { get; set; } = new List<ProductSupplierInfoMappingViewModel>();
 }
 
@@ -327,6 +332,7 @@ public class ProductSupplierInfoMappingViewModel
  public class UpdateProductRequest
 {
     public string Name { get; set; }
+    public Guid CurrencyId { get; set; }
     public List<ProductSupplierInfoMappingViewModel> UrlSupplierMapping { get; set; } 
 }
 
@@ -371,13 +377,25 @@ public class ProductPriceChangesViewModel
 }
 ``` 
 
-#### Read/Get Product > {url}/suppliers/all - GET
+#### All Suppliers > {url}/suppliers/all - GET
 ```cs
 //Response model in BaseResponse > Data
 public class SupplierViewModel
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+}
+``` 
+
+#### All Currencies > {url}/currencies/all - GET
+```cs
+//Response model in BaseResponse > Data
+public class CurrencyViewModel
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string ShortCode { get; set; }
+    public int Order { get; set; }
 }
 ``` 
 
