@@ -142,15 +142,7 @@ namespace PriceHunter.Data.MongoDB.Repositories
 
         private void SetAuditFields(TEntity entity, OperationFlow operationFlow)
         {
-            Guid? currentUserId = null;
-            try
-            {
-                currentUserId = ApplicationContext.Instance.CurrentUser.Id;
-            }
-            catch
-            {
-                //User not initialized ignore
-            }
+            Guid? currentUserId = ApplicationContext.Instance?.CurrentUser?.Id;
 
             switch (operationFlow)
             {
