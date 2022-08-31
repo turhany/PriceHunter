@@ -32,6 +32,11 @@ namespace PriceHunter.Business.TestData.Concrete
 
         public async Task InsertDataAsync(CancellationToken cancellationToken)
         {
+            if (await _userRepository.AnyAsync(p => p.Email == "user@pricehunter.com", cancellationToken))
+            {
+                return;
+            }
+
             var user = new Model.User.User
             {
                 FirstName = "User",

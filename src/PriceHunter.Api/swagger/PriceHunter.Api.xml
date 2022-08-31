@@ -93,6 +93,19 @@
             <param name="app">Application builder</param>
             <returns></returns>
         </member>
+        <member name="T:PriceHunter.Api.Configurations.Startup.ConfigureTestData">
+            <summary>
+            Add test data extension
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Configurations.Startup.ConfigureTestData.InsertTestData(Microsoft.AspNetCore.Builder.IApplicationBuilder,PriceHunter.Business.TestData.Abstract.ITestDataService)">
+            <summary>
+            Insert Test data extension
+            </summary>
+            <param name="app">Application builder</param>
+            <param name="testDataService">Test Data Service</param>
+            <returns></returns>
+        </member>
         <member name="T:PriceHunter.Api.Controllers.BaseController">
             <summary>
             Api base controller
@@ -207,22 +220,6 @@
         <member name="M:PriceHunter.Api.Controllers.V1.SuppliersController.All(System.Threading.CancellationToken)">
             <summary>
             Get Suppliers
-            </summary>
-        </member>
-        <member name="T:PriceHunter.Api.Controllers.V1.TestDataController">
-            <summary>
-            Test Data Controller
-            </summary>
-        </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.TestDataController.#ctor(PriceHunter.Business.TestData.Abstract.ITestDataService)">
-            <summary>
-            Test Data Controller
-            </summary>
-            <param name="testDataService"></param>
-        </member>
-        <member name="M:PriceHunter.Api.Controllers.V1.TestDataController.InsertTestData(System.Threading.CancellationToken)">
-            <summary>
-            Insert Test Data
             </summary>
         </member>
         <member name="T:PriceHunter.Api.Controllers.V1.UserProductsController">

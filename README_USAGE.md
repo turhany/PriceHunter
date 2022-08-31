@@ -1,5 +1,5 @@
 #### Usages
-* First step need to call "{url}/testdata - GET", this call insert sample datas
+* When API project run, it insert test data to database
 * Application has multi language support for demo pupose now only EN
 * Before request auth need endpoints like User and Product endpoints first need to Login over login/token enpoint
     * **Accept-Language** can set "en-US"

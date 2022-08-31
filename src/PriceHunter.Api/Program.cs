@@ -1,7 +1,8 @@
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
+using Autofac.Extensions.DependencyInjection; 
 using PriceHunter.Api.Configurations.Startup;
 using PriceHunter.Api.Middlewares;
+using PriceHunter.Business.TestData.Abstract;
 using PriceHunter.Cache.Redis.StartupConfigurations;
 using PriceHunter.Common.Application;
 using PriceHunter.Common.Constans;
@@ -45,8 +46,7 @@ builder.Services.AddMassTransitConfiguration(builder.Configuration);
 builder.Services.AddHealthCheckConfiguration(builder.Configuration);
 builder.Services.AddRateLimitingConfiguration(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(ProductMapping));
-
-
+ 
 var app = builder.Build();
 app.UseMiddleware<RequestLogMiddleware>();
 app.UseLocalizationConfiguration();
@@ -63,6 +63,7 @@ app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseRateLimitingConfiguration(builder.Configuration);
 app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
+app.InsertTestData(app.Services.GetRequiredService<ITestDataService>());
 
 ApplicationContext.Configure(app.Services.GetRequiredService<IHttpContextAccessor>());
 ApplicationContext.ConfigureThreadPool(builder.Configuration);
