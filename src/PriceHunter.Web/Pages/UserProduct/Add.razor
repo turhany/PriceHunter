@@ -1,5 +1,6 @@
 ﻿@page "/User/Products/Add"
 
+@using PriceHunter.Web.Data.Currency.App
 @using PriceHunter.Web.Data.UserProduct.App
 @using PriceHunter.Web.Data.UserProduct.Api
 @using PriceHunter.Web.Data.Supplier.App
@@ -34,6 +35,23 @@ else
         <div class="form-group">
             <label for="name">Name</label>
             <InputText id="name" @bind-Value="model.Name" class="form-control w-50"></InputText>
+            <br />
+        </div>
+        <div class="form-group">
+            <label for="currency">Currency</label>
+            <InputSelect id="currency" @bind-Value="model.CurrencyId" class="form-select w-25">
+                @foreach (var currency in _currencies)
+                {
+                    if (currency.Id == model.CurrencyId)
+                    {
+                        <option selected value="@currency.Id">@currency.Name (@currency.ShortCode)</option>
+                    }
+                    else
+                    {
+                        <option value="@currency.Id">@currency.Name (@currency.ShortCode)</option>
+                    } 
+                }
+            </InputSelect>
             <br />
         </div>
         <div class="form-group">
@@ -72,22 +90,26 @@ else
 
 @code {
     UserProductViewModel model = new UserProductViewModel();
-
+    private List<CurrencyViewModel> _currencies = new List<CurrencyViewModel>();
     private PageState _pageState { get; set; } = PageState.Loading;
 
     protected override async Task OnInitializedAsync()
     {
         try
-        {            
+        {
             var supplierResult = await _httpRequester.GetAsync<List<SupplierViewModel>>(ApiUrls.V1SupplierAllUrl, true);
+            var currencyResult = await _httpRequester.GetAsync<List<CurrencyViewModel>>(ApiUrls.V1CurrencyAllUrl, true);
 
-            if (supplierResult.IsSuccess)
+            if (supplierResult.IsSuccess && currencyResult.IsSuccess)
             {
                 model.UrlSupplierMapping = supplierResult.Response.Data.Select(p => new UrlSupplierMappingViewModel
                     {
                         Supplier = p.Name,
                         SupplierId = p.Id
                     }).ToList();
+
+                _currencies = currencyResult.Response.Data.OrderBy(p => p.Order).ToList();
+                model.CurrencyId = _currencies[0].Id;
 
                 _pageState = PageState.Loaded;
             }
@@ -105,13 +127,14 @@ else
     }
 
     private async void HandleSave()
-    { 
+    {
         try
         {
             _pageState = PageState.Loading;
 
             var requestModel = new UserProductCreateApiModel();
             requestModel.Name = model.Name;
+            requestModel.CurrencyId = model.CurrencyId;
             if (model.UrlSupplierMapping != null &&
                 model.UrlSupplierMapping.Any(p => !string.IsNullOrWhiteSpace(p.Url)))
             {

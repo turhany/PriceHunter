@@ -14,5 +14,7 @@
         public static readonly string V1UserProductLast6MonthChangesUrl = "http://localhost:5010/api/v1/userproducts/last6monthchanges/{0}";
 
         public static readonly string V1SupplierAllUrl = "http://localhost:5010/api/v1/suppliers/all";
+
+        public static readonly string V1CurrencyAllUrl = "http://localhost:5010/api/v1/currencies/all";
     }
 }

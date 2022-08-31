@@ -4,6 +4,7 @@ namespace PriceHunter.Model.Product
 {
     public class Product : SoftDeleteEntity
     { 
-        public string Name { get; set; }        
+        public string Name { get; set; }
+        public Guid CurrencyId { get; set; }
     }
 }

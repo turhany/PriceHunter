@@ -1,5 +1,6 @@
 ﻿@page "/User/Products/Detail/{id:guid}"
 
+@using PriceHunter.Web.Data.Currency.App
 @using PriceHunter.Web.Data.UserProduct.Api
 @using PriceHunter.Web.Data.UserProduct.App
 @using PriceHunter.Web.Data.Supplier.App
@@ -31,6 +32,10 @@ else
     <div class="mb-3 w-50">
         <label for="name" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" disabled value="@model.Name">
+    </div>
+    <div class="mb-3 w-50">
+        <label for="currency" class="form-label">Currency</label>
+        <input type="text" class="form-control" id="currency" disabled value="@model.Currency (@model.CurrencyShortCode)">
     </div>
 
     <br />
@@ -117,16 +122,22 @@ else
             var requestUrl = string.Format(ApiUrls.V1UserProductUrl, id);
             var result = await _httpRequester.GetAsync<UserProductViewApiModel>(requestUrl, true);
             var supplierResult = await _httpRequester.GetAsync<List<SupplierViewModel>>(ApiUrls.V1SupplierAllUrl, true);
+            var currencyResult = await _httpRequester.GetAsync<List<CurrencyViewModel>>(ApiUrls.V1CurrencyAllUrl, true);
             var last6monthChangesRequestUrl = string.Format(ApiUrls.V1UserProductLast6MonthChangesUrl, id);
             var last6MonthChangesResult = await _httpRequester.GetAsync<List<ProductPriceChangesViewModel>>(last6monthChangesRequestUrl, true);
 
-            if (result.IsSuccess && supplierResult.IsSuccess && last6MonthChangesResult.IsSuccess)
+            if (result.IsSuccess && supplierResult.IsSuccess && last6MonthChangesResult.IsSuccess && currencyResult.IsSuccess)
             {
+                var currency = currencyResult.Response.Data.FirstOrDefault(p => p.Id == result.Response.Data.CurrencyId);
+
                 model.Name = result.Response.Data.Name;
+                model.CurrencyId = result.Response.Data.CurrencyId;                
+                model.Currency = currency.Name;
+                model.CurrencyShortCode = currency.ShortCode;
                 model.UrlSupplierMapping = result.Response.Data.UrlSupplierMapping?.Select(p => new UrlSupplierMappingViewModel
                     {
                         SupplierId = p.SupplierId,
-                        Supplier = supplierResult.Response.Data.FirstOrDefault(k => k.Id == p.SupplierId).Name,
+                        Supplier = supplierResult.Response.Data.FirstOrDefault(k => k.Id == p.SupplierId).Name,                        
                         Url = p.Url
                     }).ToList();
 

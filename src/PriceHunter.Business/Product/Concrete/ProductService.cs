@@ -34,6 +34,7 @@ namespace PriceHunter.Business.Product.Concrete
         private readonly IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
         private readonly IGenericRepository<PriceHunter.Model.Product.ProductPriceHistory> _productPriceHistoryRepository;
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> _userProductSupplierMappingRepository;
+        private readonly IGenericRepository<PriceHunter.Model.Currency.Currency> _currencyRepository;
         private readonly ICacheService _cacheService;
         private readonly ILockService _lockService;
         private readonly IMapper _mapper;
@@ -48,6 +49,7 @@ namespace PriceHunter.Business.Product.Concrete
         IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
         IGenericRepository<PriceHunter.Model.Product.ProductPriceHistory> productPriceHistoryRepository,
         IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> userProductSupplierMappingRepository,
+        IGenericRepository<PriceHunter.Model.Currency.Currency> currencyRepository,
         ICacheService cacheService,
         ILockService lockService,
         IMapper mapper,
@@ -61,6 +63,7 @@ namespace PriceHunter.Business.Product.Concrete
             _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
             _productPriceHistoryRepository = productPriceHistoryRepository;
             _userProductSupplierMappingRepository = userProductSupplierMappingRepository;
+            _currencyRepository = currencyRepository;
             _cacheService = cacheService;
             _lockService = lockService;
             _mapper = mapper;
@@ -127,6 +130,15 @@ namespace PriceHunter.Business.Product.Concrete
                 };
             }
 
+            if (! await _currencyRepository.AnyAsync(p => p.Id == request.CurrencyId, cancellationToken))
+            {
+                return new ServiceResult<ExpandoObject>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.Currency)
+                };
+            }
+
             var productSupplierMappings = new List<ProductSupplierInfoMapping>();
             if (request.UrlSupplierMapping != null && request.UrlSupplierMapping.Any())
             {
@@ -171,7 +183,8 @@ namespace PriceHunter.Business.Product.Concrete
 
             var entity = new PriceHunter.Model.Product.Product
             {
-                Name = request.Name.Trim()
+                Name = request.Name.Trim(),
+                CurrencyId = request.CurrencyId
             };
 
             entity = await _productRepository.InsertAsync(entity, cancellationToken);
@@ -202,6 +215,15 @@ namespace PriceHunter.Business.Product.Concrete
                     Status = ResultStatus.InvalidInput,
                     Message = ServiceResponseMessage.INVALID_INPUT_ERROR,
                     ValidationMessages = validationResponse.ErrorMessages
+                };
+            }
+
+            if (!await _currencyRepository.AnyAsync(p => p.Id == request.CurrencyId, cancellationToken))
+            {
+                return new ServiceResult<ExpandoObject>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.Currency)
                 };
             }
 
@@ -265,6 +287,7 @@ namespace PriceHunter.Business.Product.Concrete
             using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
             {
                 entity.Name = request.Name.Trim();
+                entity.CurrencyId = request.CurrencyId;
 
                 entity = await _productRepository.UpdateAsync(entity, cancellationToken);
 

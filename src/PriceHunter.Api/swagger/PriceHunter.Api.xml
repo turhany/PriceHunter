@@ -132,6 +132,22 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:PriceHunter.Api.Controllers.V1.CurrenciesController">
+            <summary>
+            Currencies Controller
+            </summary>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.CurrenciesController.#ctor(PriceHunter.Business.Currency.Abstract.ICurrencyService)">
+            <summary>
+            Currencies Controller
+            </summary>
+            <param name="currencyService"></param>
+        </member>
+        <member name="M:PriceHunter.Api.Controllers.V1.CurrenciesController.All(System.Threading.CancellationToken)">
+            <summary>
+            Get Currencies
+            </summary>
+        </member>
         <member name="T:PriceHunter.Api.Controllers.V1.LoginController">
             <summary>
             Login Controller

@@ -11,6 +11,7 @@ namespace PriceHunter.Business.TestData.Concrete
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> _userProductSupplierMappingRepository;
         private readonly IGenericRepository<PriceHunter.Model.Supplier.Supplier> _supplierRepository;
         private readonly IGenericRepository<PriceHunter.Model.Product.Product> _productRepository;
+        private readonly IGenericRepository<PriceHunter.Model.Currency.Currency> _currencyRepository;
         IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
 
         public TestDataService(
@@ -19,7 +20,8 @@ namespace PriceHunter.Business.TestData.Concrete
             IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> userProductSupplierMappingRepository,
             IGenericRepository<Model.Supplier.Supplier> supplierRepository,
             IGenericRepository<PriceHunter.Model.Product.Product> productRepository,
-            IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> productSupplierInfoMappingRepository
+            IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
+            IGenericRepository<PriceHunter.Model.Currency.Currency> currencyRepository
             )
         {
             _userRepository = userRepository;
@@ -28,6 +30,7 @@ namespace PriceHunter.Business.TestData.Concrete
             _supplierRepository = supplierRepository;
             _productRepository = productRepository;
             _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
+            _currencyRepository = currencyRepository;
         }
 
         public async Task InsertDataAsync(CancellationToken cancellationToken)
@@ -37,6 +40,16 @@ namespace PriceHunter.Business.TestData.Concrete
                 return;
             }
 
+            var user = await InsertUserAsync(cancellationToken);
+            var suppliers = await InsertSuppliersAsync(cancellationToken);
+            var currencies = await InsertCurrenciesAsync(cancellationToken);
+            var product = await InsertProductAsync(suppliers, currencies, cancellationToken);
+            await InsertUserProductAsync(user, suppliers, currencies, product, cancellationToken);
+        }
+
+
+        private async Task<Model.User.User> InsertUserAsync(CancellationToken cancellationToken)
+        {
             var user = new Model.User.User
             {
                 FirstName = "User",
@@ -47,7 +60,10 @@ namespace PriceHunter.Business.TestData.Concrete
             };
 
             await _userRepository.InsertAsync(user, cancellationToken);
-
+            return user;
+        }
+        private async Task<List<Model.Supplier.Supplier>> InsertSuppliersAsync(CancellationToken cancellationToken)
+        {
             var supplierList = new List<Model.Supplier.Supplier>();
             supplierList.Add(new Model.Supplier.Supplier
             {
@@ -72,10 +88,39 @@ namespace PriceHunter.Business.TestData.Concrete
             });
 
             var suppliers = await _supplierRepository.InsertManyAsync(supplierList, cancellationToken);
+            return suppliers;
+        }
+        private async Task<List<Model.Currency.Currency>> InsertCurrenciesAsync(CancellationToken cancellationToken)
+        {
+            var currencyList = new List<Model.Currency.Currency>();
+            currencyList.Add(new Model.Currency.Currency
+            {
+                Name = "Dolar",
+                ShortCode = "USD",
+                Order = 1
+            });
+            currencyList.Add(new Model.Currency.Currency
+            {
+                Name = "Euro",
+                ShortCode = "EU",
+                Order = 2
+            });
+            currencyList.Add(new Model.Currency.Currency
+            {
+                Name = "Lira",
+                ShortCode = "TL",
+                Order = 3
+            });
 
+            var suppliers = await _currencyRepository.InsertManyAsync(currencyList, cancellationToken);
+            return suppliers;
+        }
+        private async Task<Model.Product.Product> InsertProductAsync(List<Model.Supplier.Supplier> suppliers, List<Model.Currency.Currency> currencies, CancellationToken cancellationToken)
+        {
             var product = await _productRepository.InsertAsync(new Model.Product.Product
             {
-                Name = "Headphones",                
+                Name = "Headphones",
+                CurrencyId = currencies.First().Id
             }, cancellationToken);
 
             await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
@@ -84,11 +129,15 @@ namespace PriceHunter.Business.TestData.Concrete
                 SupplierId = suppliers.First().Id,
                 Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031"
             }, cancellationToken);
-
+            return product;
+        }
+        private async Task InsertUserProductAsync(Model.User.User user, List<Model.Supplier.Supplier> suppliers, List<Model.Currency.Currency> currencies, Model.Product.Product product, CancellationToken cancellationToken)
+        {
             var userProduct = await _userProductRepository.InsertAsync(new Model.UserProduct.UserProduct
             {
                 Name = product.Name,
-                UserId = user.Id
+                UserId = user.Id,
+                CurrencyId = currencies.First().Id
             }, cancellationToken);
 
             await _userProductSupplierMappingRepository.InsertAsync(new Model.UserProduct.UserProductSupplierMapping
@@ -102,7 +151,8 @@ namespace PriceHunter.Business.TestData.Concrete
             var userProduct2 = await _userProductRepository.InsertAsync(new Model.UserProduct.UserProduct
             {
                 Name = product.Name + 2,
-                UserId = user.Id
+                UserId = user.Id,
+                CurrencyId = currencies.Last().Id
             }, cancellationToken);
 
             await _userProductSupplierMappingRepository.InsertAsync(new Model.UserProduct.UserProductSupplierMapping
@@ -113,5 +163,6 @@ namespace PriceHunter.Business.TestData.Concrete
                 UserProductId = userProduct2.Id
             }, cancellationToken);
         }
+
     }
 }

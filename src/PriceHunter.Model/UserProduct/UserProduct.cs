@@ -6,5 +6,6 @@ namespace PriceHunter.Model.UserProduct
     {
         public Guid UserId { get; set; }
         public string Name { get; set; }
+        public Guid CurrencyId { get; set; }
     }
 }

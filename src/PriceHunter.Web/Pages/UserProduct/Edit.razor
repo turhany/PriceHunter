@@ -1,5 +1,6 @@
 ﻿@page "/User/Products/Edit/{id:guid}"
 
+@using PriceHunter.Web.Data.Currency.App
 @using PriceHunter.Web.Data.UserProduct.App
 @using PriceHunter.Web.Data.UserProduct.Api
 @using PriceHunter.Web.Data.Supplier.App
@@ -36,6 +37,24 @@ else
         <div class="form-group">
             <label for="name">Name</label>
             <InputText id="name" @bind-Value="model.Name" class="form-control w-50"></InputText>
+            <br />
+        </div>
+        <div class="form-group">
+            <label for="currency">Currency</label>
+            <InputSelect id="currency" @bind-Value="model.CurrencyId" class="form-select w-25">
+                @foreach (var currency in _currencies)
+                {
+                    @if (currency.Id == model.CurrencyId)
+                    {
+                        <option selected value="@currency.Id">@currency.Name (@currency.ShortCode)</option>
+                    }
+                    else
+                    {
+                        <option value="@currency.Id">@currency.Name (@currency.ShortCode)</option>
+                    }
+
+                }
+            </InputSelect>
             <br />
         </div>
         <div class="form-group">
@@ -79,6 +98,7 @@ else
     public Guid id { get; set; }
     private string RequestUrl { get; set; }
     private PageState _pageState { get; set; } = PageState.Loading;
+    private List<CurrencyViewModel> _currencies = new List<CurrencyViewModel>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -87,10 +107,16 @@ else
             RequestUrl = string.Format(ApiUrls.V1UserProductUrl, id);
             var result = await _httpRequester.GetAsync<UserProductViewApiModel>(RequestUrl, true);
             var supplierResult = await _httpRequester.GetAsync<List<SupplierViewModel>>(ApiUrls.V1SupplierAllUrl, true);
+            var currencyResult = await _httpRequester.GetAsync<List<CurrencyViewModel>>(ApiUrls.V1CurrencyAllUrl, true);
 
-            if (result.IsSuccess && supplierResult.IsSuccess)
+            if (result.IsSuccess && supplierResult.IsSuccess && currencyResult.IsSuccess)
             {
+                var currency = currencyResult.Response.Data.FirstOrDefault(p => p.Id == result.Response.Data.CurrencyId);
+
                 model.Name = result.Response.Data.Name;
+                model.CurrencyId = result.Response.Data.CurrencyId;
+                model.Currency = currency.Name;
+                model.CurrencyShortCode = currency.ShortCode;
                 model.UrlSupplierMapping = supplierResult.Response.Data.Select(p => new UrlSupplierMappingViewModel
                     {
                         Supplier = p.Name,
@@ -103,6 +129,8 @@ else
                     .Where(p => p.SupplierId == mapping.SupplierId).ToList()
                     .ForEach(p => p.Url = mapping.Url);
                 }
+                 
+                _currencies = currencyResult.Response.Data.OrderBy(p => p.Order).ToList();
 
                 _pageState = PageState.Loaded;
             }
@@ -127,7 +155,8 @@ else
 
             var requestModel = new UserProductCreateApiModel();
             requestModel.Name = model.Name;
-            if (model.UrlSupplierMapping != null && 
+            requestModel.CurrencyId = model.CurrencyId;
+            if (model.UrlSupplierMapping != null &&
                 model.UrlSupplierMapping.Any(p => !string.IsNullOrWhiteSpace(p.Url)))
             {
                 requestModel.UrlSupplierMapping =
