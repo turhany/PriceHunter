@@ -5,6 +5,7 @@
 * ~~Add sample json response for api endpoint's~~
 * ~~check (product,userproduct)"last6monthchanges" response business logic~~
 * ~~Add is favorite feature for user product~~
+* ~~Change price history table with line chart~~
 * Refactor UI App
 * Refactor Api App
 * Add Gateway project
