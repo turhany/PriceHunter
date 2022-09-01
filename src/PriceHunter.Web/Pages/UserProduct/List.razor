@@ -67,8 +67,9 @@ else
                 </li>
                 @for (int pageNumber = 1; pageNumber <= PageInfo.TotalPageCount; pageNumber++)
                 {
+                    int tempPageNumber = pageNumber; 
                     <li class="page-item @(PageInfo.PageNumber == pageNumber ? "active" : string.Empty)">
-                        <button class="page-link" @onclick="@(async () => await FilterAsync(pageNumber))">@pageNumber</button>
+                        <button class="page-link" @onclick="@(async () => await FilterAsync(tempPageNumber))">@pageNumber</button>
                     </li>
                 }
                 <li class="page-item @(PageInfo.PageNumber == PageInfo.TotalPageCount ? "disabled" : string.Empty)">
@@ -93,6 +94,8 @@ else
     {
         try
         {
+            _pageState = PageState.Loading;
+
             var requestModel = new FilterRequest();
             requestModel.OrderOperations.Add(UserProductFilterFilelds.Name, OrderOperation.Ascending);
             requestModel.PageNumber = pageNumber;

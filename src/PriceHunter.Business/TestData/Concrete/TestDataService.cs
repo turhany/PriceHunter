@@ -1,5 +1,6 @@
 ﻿using PriceHunter.Business.TestData.Abstract;
 using PriceHunter.Common.Data.Abstract;
+using PriceHunter.Model.Product;
 using PriceHunter.Model.Supplier;
 
 namespace PriceHunter.Business.TestData.Concrete
@@ -7,29 +8,35 @@ namespace PriceHunter.Business.TestData.Concrete
     public class TestDataService : ITestDataService
     {
         private readonly IGenericRepository<PriceHunter.Model.User.User> _userRepository;
+
+        private readonly IGenericRepository<PriceHunter.Model.Product.Product> _productRepository;
+        private readonly IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
+        private readonly IGenericRepository<PriceHunter.Model.Product.ProductPriceHistory> _productPriceHistoryRepository;
+
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProduct> _userProductRepository;
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> _userProductSupplierMappingRepository;
+
         private readonly IGenericRepository<PriceHunter.Model.Supplier.Supplier> _supplierRepository;
-        private readonly IGenericRepository<PriceHunter.Model.Product.Product> _productRepository;
         private readonly IGenericRepository<PriceHunter.Model.Currency.Currency> _currencyRepository;
-        IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
 
         public TestDataService(
             IGenericRepository<Model.User.User> userRepository,
+            IGenericRepository<PriceHunter.Model.Product.Product> productRepository,
+            IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
+            IGenericRepository<PriceHunter.Model.Product.ProductPriceHistory> productPriceHistoryRepository,
             IGenericRepository<PriceHunter.Model.UserProduct.UserProduct> userProductRepository,
             IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> userProductSupplierMappingRepository,
             IGenericRepository<Model.Supplier.Supplier> supplierRepository,
-            IGenericRepository<PriceHunter.Model.Product.Product> productRepository,
-            IGenericRepository<PriceHunter.Model.Product.ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
             IGenericRepository<PriceHunter.Model.Currency.Currency> currencyRepository
             )
         {
             _userRepository = userRepository;
+            _productRepository = productRepository;
+            _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
+            _productPriceHistoryRepository = productPriceHistoryRepository;
             _userProductRepository = userProductRepository;
             _userProductSupplierMappingRepository = userProductSupplierMappingRepository;
             _supplierRepository = supplierRepository;
-            _productRepository = productRepository;
-            _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
             _currencyRepository = currencyRepository;
         }
 
@@ -119,7 +126,7 @@ namespace PriceHunter.Business.TestData.Concrete
         {
             var product = await _productRepository.InsertAsync(new Model.Product.Product
             {
-                Name = "Headphones",
+                Name = "Headphone",
                 CurrencyId = currencies.First().Id
             }, cancellationToken);
 
@@ -129,40 +136,67 @@ namespace PriceHunter.Business.TestData.Concrete
                 SupplierId = suppliers.First().Id,
                 Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031"
             }, cancellationToken);
+
+            await _productSupplierInfoMappingRepository.InsertAsync(new Model.Product.ProductSupplierInfoMapping
+            {
+                ProductId = product.Id,
+                SupplierId = suppliers.Last().Id,
+                Url = "https://www.alibaba.com/product-detail/Valdus-Wholesale-Custom-APP-Y68-D20_1600052963993.html?spm=a27ef.23070389.0.0.13c239cePstdTm&ecology_token=alisaas"
+            }, cancellationToken);
+
+            var priceHistory = new List<ProductPriceHistory>();
+            var operationDate = DateTime.UtcNow;
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int k = 0; k < 20; k++)
+                {
+                    priceHistory.Add(new Model.Product.ProductPriceHistory
+                    {
+                        ProductId = product.Id,
+                        SupplierId = suppliers.First().Id,
+                        Price = new Random().Next(1, 600),
+                        Year = operationDate.Year,
+                        Month = operationDate.Month,
+                        Day = 1,
+                        Time = operationDate.TimeOfDay
+                    });
+                } 
+
+                operationDate = operationDate.AddMonths(-1);
+            }
+
+            _ = _productPriceHistoryRepository.InsertManyAsync(priceHistory, cancellationToken);
+
             return product;
         }
         private async Task InsertUserProductAsync(Model.User.User user, List<Model.Supplier.Supplier> suppliers, List<Model.Currency.Currency> currencies, Model.Product.Product product, CancellationToken cancellationToken)
-        {
-            var userProduct = await _userProductRepository.InsertAsync(new Model.UserProduct.UserProduct
+        { 
+            for (int i = 0; i < 100; i++)
             {
-                Name = product.Name,
-                UserId = user.Id,
-                CurrencyId = currencies.First().Id
-            }, cancellationToken);
+                var userProduct = await _userProductRepository.InsertAsync(new Model.UserProduct.UserProduct
+                {
+                    Name = $"{product.Name}-{i}",
+                    UserId = user.Id,
+                    CurrencyId = currencies.First().Id
+                }, cancellationToken);
 
-            await _userProductSupplierMappingRepository.InsertAsync(new Model.UserProduct.UserProductSupplierMapping
-            {
-                ProductId = product.Id,
-                SupplierId = suppliers.First().Id,
-                Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031",
-                UserProductId = userProduct.Id
-            }, cancellationToken);
+                await _userProductSupplierMappingRepository.InsertAsync(new Model.UserProduct.UserProductSupplierMapping
+                {
+                    ProductId = product.Id,
+                    SupplierId = suppliers.First().Id,
+                    Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031",
+                    UserProductId = userProduct.Id
+                }, cancellationToken);
 
-            var userProduct2 = await _userProductRepository.InsertAsync(new Model.UserProduct.UserProduct
-            {
-                Name = product.Name + 2,
-                UserId = user.Id,
-                CurrencyId = currencies.Last().Id
-            }, cancellationToken);
-
-            await _userProductSupplierMappingRepository.InsertAsync(new Model.UserProduct.UserProductSupplierMapping
-            {
-                ProductId = product.Id,
-                SupplierId = suppliers.First().Id,
-                Url = "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031",
-                UserProductId = userProduct2.Id
-            }, cancellationToken);
-        }
-
+                await _userProductSupplierMappingRepository.InsertAsync(new Model.UserProduct.UserProductSupplierMapping
+                {
+                    ProductId = product.Id,
+                    SupplierId = suppliers.Last().Id,
+                    Url = "https://www.alibaba.com/product-detail/Valdus-Wholesale-Custom-APP-Y68-D20_1600052963993.html?spm=a27ef.23070389.0.0.13c239cePstdTm&ecology_token=alisaas",
+                    UserProductId = userProduct.Id
+                }, cancellationToken);
+            }
+        } 
     }
 }
