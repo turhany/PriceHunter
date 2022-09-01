@@ -4,6 +4,7 @@
 * ~~Add currency type for product~~
 * ~~Add sample json response for api endpoint's~~
 * ~~check (product,userproduct)"last6monthchanges" response business logic~~
+* ~~Add is favorite feature for user product~~
 * Refactor UI App
 * Refactor Api App
 * Add Gateway project

@@ -9,6 +9,7 @@ namespace PriceHunter.Web.Data.UserProduct.App
         public Guid CurrencyId { get; set; }
         public string Currency { get; set; }
         public string CurrencyShortCode { get; set; }
+        public bool IsFavorite { get; set; }
         public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; } = new List<UrlSupplierMappingViewModel>();
     }
 }

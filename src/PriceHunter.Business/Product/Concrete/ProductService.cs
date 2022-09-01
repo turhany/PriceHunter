@@ -453,48 +453,75 @@ namespace PriceHunter.Business.Product.Concrete
                 };
             }
 
-            var filterEndDate = DateTime.UtcNow;
-            var tempMonth = monthCount * -1;
-            var filterStartDate = DateTime.UtcNow.AddMonths(tempMonth);
-            filterStartDate = new DateTime(filterEndDate.Year, filterEndDate.Month, filterEndDate.Day);
+            var filterDate = DateTime.UtcNow;
+            var filterDates = new Dictionary<int, List<int>>();
+            for (int i = 1; i <= monthCount; i++)
+            {
+                if (filterDates.ContainsKey(filterDate.Year))
+                {
+                    if (!filterDates[filterDate.Year].Contains(filterDate.Month))
+                    {
+                        filterDates[filterDate.Year].Add(filterDate.Month);
+                    }
+                }
+                else
+                {
+                    var months = new List<int>();
+                    months.Add(filterDate.Month);
+                    filterDates.Add(filterDate.Year, months);
+                }
 
-            if (!await _productPriceHistoryRepository.AnyAsync(p =>
-                            p.ProductId == id &&
-                            p.CreatedOn >= filterStartDate &&
-                            p.CreatedOn <= filterEndDate &&
+                filterDate = filterDate.AddMonths(-1);
+            }
+
+            var hasPriceInfo = false;
+
+            foreach (var filter in filterDates)
+            {
+                if (await _productPriceHistoryRepository.AnyAsync(p =>
+                            p.Id == id &&
+                            p.Year == filterDate.Year &&
+                            filter.Value.Contains(p.Month) &&
                             p.IsDeleted == false,
                             cancellationToken))
+                {
+                    hasPriceInfo = true;
+                    break;
+                }
+            }
+
+            var response = new List<ProductPriceChangesViewModel>();
+
+            if (!hasPriceInfo)
             {
                 return new ServiceResult<List<ProductPriceChangesViewModel>>
                 {
                     Status = ResultStatus.Successful,
                     Message = Resource.Retrieved(),
-                    Data = new List<ProductPriceChangesViewModel>()
+                    Data = response
                 };
             }
 
-            var groupedPriceHistory = _productPriceHistoryRepository
-                                    .Find(
-                                        p => p.ProductId == id &&
-                                        p.CreatedOn >= filterStartDate &&
-                                        p.CreatedOn <= filterEndDate &&
+            var groupedPriceHistory = new List<ProductPriceChangesViewModel>();
+            foreach (var filter in filterDates)
+            {
+                groupedPriceHistory.AddRange(_productPriceHistoryRepository
+                                    .Find(p =>
+                                        p.Id == id &&
+                                        p.Year == filterDate.Year &&
+                                        filter.Value.Contains(p.Month) &&
                                         p.IsDeleted == false)
-                                    .OrderByDescending(p => p.CreatedBy)
                                     .GroupBy(p => new { p.Year, p.Month })
-                                    .Select(p => new { Year = p.Key.Year, Month = p.Key.Month, Price = p.Average(x => x.Price) })
-                                    .Take(monthCount)
-                                    .ToList();
-
-            var response = new List<ProductPriceChangesViewModel>();
+                                    .Select(p => new ProductPriceChangesViewModel() { Year = p.Key.Year, Month = p.Key.Month, Price = p.Average(x => x.Price) })
+                                    .ToList());
+            }
 
             if (groupedPriceHistory != null && groupedPriceHistory.Any())
             {
-                response = groupedPriceHistory.Select(p => new ProductPriceChangesViewModel
-                {
-                    Year = p.Year,
-                    Month = p.Month,
-                    Price = p.Price
-                }).ToList();
+                response = groupedPriceHistory
+                .OrderByDescending(p => p.Year)
+                .OrderByDescending(p => p.Month)
+                .ToList();
             }
 
             return new ServiceResult<List<ProductPriceChangesViewModel>>
