@@ -17,3 +17,9 @@
 * https://www.youtube.com/watch?v=Xd1wjd8q9fM
 * https://www.youtube.com/playlist?list=PL9OZDx-_1-s1-AHpUVL-Ttr_PEu_0LRBv
 * https://www.youtube.com/watch?v=KKqLbLpL2s0
+
+#### Tools
+* https://medium.com/@alexandre.malavasi/top-10-nice-free-blazor-components-b42875e56b28
+* https://blazor.radzen.com/docs/guides/getting-started/installation.html
+    * https://blazor.radzen.com/line-chart
+

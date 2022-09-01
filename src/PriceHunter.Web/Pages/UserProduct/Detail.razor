@@ -4,6 +4,7 @@
 @using PriceHunter.Web.Data.UserProduct.Api
 @using PriceHunter.Web.Data.UserProduct.App
 @using PriceHunter.Web.Data.Supplier.App
+@using System.Globalization
 
 @inject IHttpRequester _httpRequester
 @inject IToastService _toastService
@@ -28,7 +29,7 @@ else if (_pageState == PageState.Error)
     </text>
 }
 else
-{ 
+{
     <div class="mb-3 w-50">
         <label for="name" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" disabled value="@model.Name">
@@ -42,17 +43,18 @@ else
         @if (model.IsFavorite)
         {
             <input type="checkbox" id="isfavorite" disabled checked class="form-check">
-        }else
+        }
+        else
         {
             <input type="checkbox" id="isfavorite" disabled class="form-check">
-        }        
+        }
     </div>
 
     <br />
 
     <h4>URL(s)</h4>
     if (model.UrlSupplierMapping.Any())
-    {        
+    {
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -66,44 +68,37 @@ else
                     <tr>
                         <td>@entity.Supplier</td>
                         <td>
-                            <a href="@entity.Url" target="_blank">@entity.Url</a>                            
+                            <a href="@entity.Url" target="_blank">@entity.Url</a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-    }else
+    }
+    else
     {
         <text>
             Not defined.
         </text>
     }
-     
+
     <br />
     <br />
 
     <h4>Price History</h4>
     if (priceChanges.Any())
-    {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col" class="w-25">Month</th>
-                    <th scope="col" class="w-25">Year</th>
-                    <th scope="col" class="w-50">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var entity in priceChanges)
-                {
-                    <tr>
-                        <td>@entity.Month</td>
-                        <td>@entity.Year</td>
-                        <td>@entity.Price.ToString("N2")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    { 
+        <RadzenChart>
+            <RadzenLineSeries Smooth="false" Data="@priceChanges" CategoryProperty="Month" LineType="LineType.Dashed" ValueProperty="Price" Title="Price">
+                <RadzenMarkers MarkerType="MarkerType.Square" />
+                <RadzenSeriesDataLabels Visible="true" />
+            </RadzenLineSeries>
+            <RadzenCategoryAxis Padding="20" Formatter="@FormatAsMonth" />
+            <RadzenValueAxis Formatter="@FormatPrice">
+                <RadzenGridLines Visible="true" />
+                <RadzenAxisTitle Text="Price Changes" />
+            </RadzenValueAxis>
+        </RadzenChart>
     }
     else
     {
@@ -115,6 +110,8 @@ else
     <div>
         <br />
         <a href="@NavigationConstants.UserProductList" class="btn btn-primary">Back</a>
+        <br />
+        <br />
     </div>
 }
 
@@ -141,14 +138,14 @@ else
                 var currency = currencyResult.Response.Data.FirstOrDefault(p => p.Id == result.Response.Data.CurrencyId);
 
                 model.Name = result.Response.Data.Name;
-                model.CurrencyId = result.Response.Data.CurrencyId;                
+                model.CurrencyId = result.Response.Data.CurrencyId;
                 model.Currency = currency.Name;
                 model.CurrencyShortCode = currency.ShortCode;
                 model.IsFavorite = result.Response.Data.IsFavorite;
                 model.UrlSupplierMapping = result.Response.Data.UrlSupplierMapping?.Select(p => new UrlSupplierMappingViewModel
                     {
                         SupplierId = p.SupplierId,
-                        Supplier = supplierResult.Response.Data.FirstOrDefault(k => k.Id == p.SupplierId).Name,                        
+                        Supplier = supplierResult.Response.Data.FirstOrDefault(k => k.Id == p.SupplierId).Name,
                         Url = p.Url
                     }).ToList();
 
@@ -171,5 +168,23 @@ else
             _pageState = PageState.Error;
             _toastService.ShowError(ex.Message);
         }
+    }
+
+    string FormatAsMonth(object value)
+    {
+        if (value != null)
+        {
+            if (int.TryParse(value.ToString(), out int month))
+            {
+                return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);    
+            }            
+        }
+
+        return string.Empty;
+    }
+
+    string FormatPrice(object value)
+    {
+        return ((double)value).ToString("N2");
     }
 }
