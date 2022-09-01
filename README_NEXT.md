@@ -2,7 +2,7 @@
 * ~~Add Blazor app into DockerCompose~~
 * ~~Find more suitable way for insert test data~~
 * ~~Add currency type for product~~
-* Add sample json response for api endpoint's
+* ~~Add sample json response for api endpoint's~~
 * ~~check (product,userproduct)"last6monthchanges" response business logic~~
 * Refactor UI App
 * Refactor Api App
