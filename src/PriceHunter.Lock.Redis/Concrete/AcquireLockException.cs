@@ -1,6 +1,4 @@
-﻿using System; 
-
-namespace PriceHunter.Lock.Concrete
+﻿namespace PriceHunter.Lock.Redis.Concrete
 {
     public class AcquireLockException : Exception
     {

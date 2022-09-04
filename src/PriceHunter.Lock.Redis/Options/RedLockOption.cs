@@ -1,4 +1,4 @@
-﻿namespace PriceHunter.Lock.Options
+﻿namespace PriceHunter.Lock.Redis.Options
 {
     public class RedLockOption
     {

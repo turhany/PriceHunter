@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using PriceHunter.Cache.Abstract; 
 
-namespace PriceHunter.Cache.Concrete
+namespace PriceHunter.Cache.Redis.Concrete
 {
     public class RedisCacheService : ICacheService
     {

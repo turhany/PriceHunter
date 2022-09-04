@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PriceHunter.Lock.Options;
+using PriceHunter.Lock.Redis.Options;
 
 namespace PriceHunter.Lock.Redis.StartupConfigurations
 {

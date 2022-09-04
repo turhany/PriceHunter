@@ -1,10 +1,10 @@
 ﻿using Autofac;
-using PriceHunter.Cache.Abstract;
-using PriceHunter.Cache.Concrete;
-using PriceHunter.Lock.Abstract;
-using PriceHunter.Lock.Concrete;
+using PriceHunter.Cache.Abstract; 
+using PriceHunter.Lock.Abstract; 
 using PriceHunter.Common.Validation.Abstract;
 using PriceHunter.Common.Validation.Concrete;
+using PriceHunter.Cache.Redis.Concrete;
+using PriceHunter.Lock.Redis.Concrete;
 
 namespace PriceHunter.Container.Modules
 {

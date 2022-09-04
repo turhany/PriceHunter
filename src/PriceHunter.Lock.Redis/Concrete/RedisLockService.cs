@@ -4,9 +4,9 @@ using RedLockNet.SERedis;
 using RedLockNet.SERedis.Configuration;
 using Microsoft.Extensions.Options;
 using PriceHunter.Lock.Abstract;
-using PriceHunter.Lock.Options;
+using PriceHunter.Lock.Redis.Options;
 
-namespace PriceHunter.Lock.Concrete
+namespace PriceHunter.Lock.Redis.Concrete
 {
     public class RedisLockService : ILockService
     {
