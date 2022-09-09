@@ -87,16 +87,27 @@ else
 
     <h4>Price History</h4>
     if (priceChanges.Any())
-    { 
+    {
         <RadzenChart>
             <RadzenLineSeries Smooth="false" Data="@priceChanges" CategoryProperty="Month" LineType="LineType.Dashed" ValueProperty="Price" Title="Price">
-                <RadzenMarkers MarkerType="MarkerType.Square" />
-                <RadzenSeriesDataLabels Visible="true" />
+                <ChildContent>
+                    <RadzenMarkers MarkerType="MarkerType.Square" />
+                    <RadzenSeriesDataLabels Visible="true" />
+                </ChildContent>
+                <TooltipTemplate Context="data">                    
+                    <div>
+                        @FormatPrice(data.Price)
+                        <br>
+                        @data.Supplier
+                    </div>
+                </TooltipTemplate>
             </RadzenLineSeries>
-            <RadzenCategoryAxis Padding="20" Formatter="@FormatAsMonth" />
+            <RadzenCategoryAxis Padding="20" Formatter="@FormatAsMonth">
+                <RadzenAxisTitle Text="Months" />
+            </RadzenCategoryAxis>
             <RadzenValueAxis Formatter="@FormatPrice">
                 <RadzenGridLines Visible="true" />
-                <RadzenAxisTitle Text="Price Changes" />
+                <RadzenAxisTitle Text="Price Changes(Min)" />
             </RadzenValueAxis>
         </RadzenChart>
     }
@@ -154,7 +165,13 @@ else
                     model.UrlSupplierMapping = new List<UrlSupplierMappingViewModel>();
                 }
 
-                priceChanges = last6MonthChangesResult.Response.Data;
+                var priceData = last6MonthChangesResult.Response.Data;
+                foreach (var item in priceData)
+                {
+                    item.Supplier = supplierResult.Response.Data.FirstOrDefault(k => k.Id == item.SupplierId)?.Name;
+                }
+
+                priceChanges = priceData;
 
                 _pageState = PageState.DataLoaded;
             }
@@ -176,8 +193,8 @@ else
         {
             if (int.TryParse(value.ToString(), out int month))
             {
-                return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);    
-            }            
+                return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+            }
         }
 
         return string.Empty;

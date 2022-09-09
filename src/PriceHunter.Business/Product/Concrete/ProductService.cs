@@ -130,7 +130,7 @@ namespace PriceHunter.Business.Product.Concrete
                 };
             }
 
-            if (! await _currencyRepository.AnyAsync(p => p.Id == request.CurrencyId, cancellationToken))
+            if (!await _currencyRepository.AnyAsync(p => p.Id == request.CurrencyId, cancellationToken))
             {
                 return new ServiceResult<ExpandoObject>
                 {
@@ -474,46 +474,32 @@ namespace PriceHunter.Business.Product.Concrete
                 filterDate = filterDate.AddMonths(-1);
             }
 
-            var hasPriceInfo = false;
-
-            foreach (var filter in filterDates)
-            {
-                if (await _productPriceHistoryRepository.AnyAsync(p =>
-                            p.Id == id &&
-                            p.Year == filterDate.Year &&
-                            filter.Value.Contains(p.Month) &&
-                            p.IsDeleted == false,
-                            cancellationToken))
-                {
-                    hasPriceInfo = true;
-                    break;
-                }
-            }
-
             var response = new List<ProductPriceChangesViewModel>();
-
-            if (!hasPriceInfo)
-            {
-                return new ServiceResult<List<ProductPriceChangesViewModel>>
-                {
-                    Status = ResultStatus.Successful,
-                    Message = Resource.Retrieved(),
-                    Data = response
-                };
-            }
 
             var groupedPriceHistory = new List<ProductPriceChangesViewModel>();
             foreach (var filter in filterDates)
             {
-                groupedPriceHistory.AddRange(_productPriceHistoryRepository
-                                    .Find(p =>
-                                        p.Id == id &&
-                                        p.Year == filterDate.Year &&
-                                        filter.Value.Contains(p.Month) &&
-                                        p.IsDeleted == false)
-                                    .GroupBy(p => new { p.Year, p.Month })
-                                    .Select(p => new ProductPriceChangesViewModel() { Year = p.Key.Year, Month = p.Key.Month, Price = p.Average(x => x.Price) })
-                                    .ToList());
+                foreach (var filterMonth in filter.Value)
+                {
+                    var minPrice = _productPriceHistoryRepository
+                                   .Find(p =>
+                                       p.ProductId == id &&
+                                       p.Year == filter.Key &&
+                                       p.Month == filterMonth &&
+                                       p.Price != 0 &&
+                                       p.IsDeleted == false)
+                                   .OrderBy(p => p.Price)
+                                   .FirstOrDefault();
+
+                    if (minPrice == null)
+                    {
+                        groupedPriceHistory.Add(new ProductPriceChangesViewModel() { Year = filter.Key, Month = filterMonth, Price = 0 });
+                    }
+                    else
+                    {
+                        groupedPriceHistory.Add(new ProductPriceChangesViewModel() { Year = filter.Key, Month = filterMonth, Price = minPrice.Price, SupplierId = minPrice.SupplierId });
+                    }
+                }
             }
 
             if (groupedPriceHistory != null && groupedPriceHistory.Any())

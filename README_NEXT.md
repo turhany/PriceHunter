@@ -9,7 +9,7 @@
 * Refactor UI App
 * Refactor Api App
 * Add Gateway project
-* Develop parser's business logic
+* ~~Develop parser's business logic~~
 * Develop notification's business logic
 * Save notifications to database
 * Implement Role Auth to Blazor flow 

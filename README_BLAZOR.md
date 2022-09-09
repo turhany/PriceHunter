@@ -22,4 +22,5 @@
 * https://medium.com/@alexandre.malavasi/top-10-nice-free-blazor-components-b42875e56b28
 * https://blazor.radzen.com/docs/guides/getting-started/installation.html
     * https://blazor.radzen.com/line-chart
+    * https://forum.radzen.com/t/line-chart-cant-use-radzenmarkers-and-tooltiptemplate-together/9761
 

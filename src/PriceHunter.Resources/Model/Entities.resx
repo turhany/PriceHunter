@@ -123,6 +123,12 @@
   <data name="Product" xml:space="preserve">
     <value>Product</value>
   </data>
+  <data name="Supplier" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="SupplierPriceParseScript" xml:space="preserve">
+    <value>SupplierPriceParseScript</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>

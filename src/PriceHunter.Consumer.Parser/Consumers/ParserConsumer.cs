@@ -10,6 +10,7 @@ using PriceHunter.Contract.Consumer.Parser;
 using PriceHunter.Model.Product;
 using PriceHunter.Model.Supplier;
 using PriceHunter.Parser;
+using PriceHunter.Parser.Models;
 using PriceHunter.Resources.Extensions;
 using PriceHunter.Resources.Model;
 
@@ -18,7 +19,8 @@ namespace PriceHunter.Consumer.Parser.Consumers
     public class ParserConsumer : IConsumer<SendParserCommand>
     {
         private readonly IGenericRepository<ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
-        private readonly IGenericRepository<ProductPriceHistory> _productPriceHistoryRepository;
+        private readonly IGenericRepository<ProductPriceHistory> _productPriceHistoryRepository; 
+        private readonly IGenericRepository<SupplierPriceParseScript> _supplierPriceParseScriptRepository; 
         private readonly ISendEndpointProvider _sendEndpointProvider;
         private readonly RabbitMqOption _rabbitMqOptions;
         private readonly ILogger<ProductService> _logger;
@@ -27,6 +29,7 @@ namespace PriceHunter.Consumer.Parser.Consumers
         public ParserConsumer(
             IGenericRepository<ProductSupplierInfoMapping> productSupplierInfoMappingRepository,
             IGenericRepository<ProductPriceHistory> productPriceHistoryRepository,
+            IGenericRepository<SupplierPriceParseScript> supplierPriceParseScriptRepository,
             ISendEndpointProvider sendEndpointProvider,
             IOptions<RabbitMqOption> rabbitMqOptions,
             ILogger<ProductService> logger,
@@ -35,6 +38,7 @@ namespace PriceHunter.Consumer.Parser.Consumers
         {
             _productSupplierInfoMappingRepository = productSupplierInfoMappingRepository;
             _productPriceHistoryRepository = productPriceHistoryRepository;
+            _supplierPriceParseScriptRepository = supplierPriceParseScriptRepository;
             _rabbitMqOptions = rabbitMqOptions.Value;
             _sendEndpointProvider = sendEndpointProvider;
             _logger = logger;
@@ -44,12 +48,17 @@ namespace PriceHunter.Consumer.Parser.Consumers
         {
             try
             {
-                Console.WriteLine($"Parser Consumer - ProductId:{context.Message.ProductId} - SupplierId:{context.Message.SupplierId} - Url:{context.Message.Url} - EunmMapping:{context.Message.EnumMapping} - RequestTime:{context.Message.RequestTime} - ProcessTime:{DateTime.Now}");
-
                 var mapping = await _productSupplierInfoMappingRepository.FindOneAsync(p => p.ProductId == context.Message.ProductId && p.SupplierId == context.Message.SupplierId && p.IsDeleted == false, context.CancellationToken);
                 if (mapping == null)
                 {
                     _logger.LogInformation(string.Format($"{Resource.NotFound(Entities.Product)} - ProductId: {context.Message.ProductId} - SupplierId:{context.Message.SupplierId}"));
+                    return;
+                }
+
+                var parseScripts = _supplierPriceParseScriptRepository.Find(p => p.SupplierId == context.Message.SupplierId && p.IsDeleted == false).ToList();
+                if (parseScripts == null || !parseScripts.Any())
+                {
+                    _logger.LogInformation(string.Format($"{Resource.NotFound(Entities.SupplierPriceParseScript)} - ProductId: {context.Message.ProductId} - SupplierId:{context.Message.SupplierId}"));
                     return;
                 }
 
@@ -62,20 +71,23 @@ namespace PriceHunter.Consumer.Parser.Consumers
 
                 if (lastPriceHistoryItem != null && lastPriceHistoryItem.CreatedOn >= context.Message.RequestTime)
                 {
-                    _logger.LogInformation(
-                        string.Format(
-                            $"ProductId: {context.Message.ProductId} - SupplierId:{context.Message.SupplierId} - RequestTime:{context.Message.RequestTime} - LastPriceDate:{lastPriceHistoryItem.CreatedOn}; already has new price data."
-                        )
-                    );
+                    _logger.LogInformation(string.Format($"ProductId: {context.Message.ProductId} - SupplierId:{context.Message.SupplierId} - RequestTime:{context.Message.RequestTime} - LastPriceDate:{lastPriceHistoryItem.CreatedOn}; already has new price data."));
                     return;
                 }
 
                 var supplierType = (SupplierType)context.Message.EnumMapping;
-                double parsedPrice = 0;
+                var parsedResponse = new ParseResponse();
+
                 using (var scope = _lifetimeScope.BeginLifetimeScope())
                 {
                     var parser = scope.ResolveKeyed<IParser>(supplierType);
-                    parsedPrice = parser.Parse(context.Message.Url);
+                    parsedResponse = await parser.ParseAsync(context.Message.Url, parseScripts.Select(p => p.Script).ToList());
+                }
+
+                if (!parsedResponse.IsSuccess)
+                {
+                    var errorMessage = string.Join(",", parsedResponse.ErrorMessages);
+                    _logger.LogError(errorMessage);
                 }
 
                 var operationTime = DateTime.UtcNow;
@@ -83,14 +95,14 @@ namespace PriceHunter.Consumer.Parser.Consumers
                 {
                     ProductId = context.Message.ProductId,
                     SupplierId = context.Message.SupplierId,
-                    Price = parsedPrice,
+                    Price = parsedResponse.Price,
                     Year = operationTime.Year,
                     Month = operationTime.Month,
                     Day = operationTime.Day,
                     Time = operationTime.TimeOfDay
                 }, context.CancellationToken);
 
-                if (lastPriceHistoryItem != null && parsedPrice != null && lastPriceHistoryItem.Price > parsedPrice)
+                if (lastPriceHistoryItem != null && parsedResponse.Price != null && lastPriceHistoryItem.Price > parsedResponse.Price)
                 {
                     var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri($"{_rabbitMqOptions.RabbitMqUri}/{_rabbitMqOptions.NotificationQueue}"));
                     await endpoint.Send(new SendNotificationCommand
@@ -100,7 +112,7 @@ namespace PriceHunter.Consumer.Parser.Consumers
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 _logger.LogError(ex, ex.Message);
             }
         }

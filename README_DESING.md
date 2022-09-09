@@ -259,6 +259,7 @@ public class CreateUserProductRequest
 {
     public string Name { get; set; }
     public Guid CurrencyId { get; set; }
+    public bool IsFavorite { get; set; }
     public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; }
 }
 
@@ -273,6 +274,7 @@ public class UrlSupplierMappingViewModel
 {
   "name": "Test Product",
   "currencyId": "90fc6e57-44e8-4597-93c1-bbadf45cd5b9",
+  "isFavorite" : true,
   "urlSupplierMapping": [
     {
       "url": "https://www.amazon.com.tr/Logitech-Gaming-Headset-Mikrofontechnologie-Lautsprechern-Akkulaufzeit/dp/B07W7KT2B3/ref=pd_day0fbt_img_sccl_1/259-7749636-5841963?pd_rd_w=IIbx8&content-id=amzn1.sym.91d7beb6-46ba-40be-8fc8-873cbca32304&pf_rd_p=91d7beb6-46ba-40be-8fc8-873cbca32304&pf_rd_r=TAK06A102M6NR8408H10&pd_rd_wg=ad3s9&pd_rd_r=f641d3ad-c7ec-4fbb-b75a-4350ed3117d7&pd_rd_i=B07W7KT2B3&psc=1",
@@ -298,6 +300,7 @@ public class UserProductViewModel
 {
     public string Name { get; set; }
     public Guid CurrencyId { get; set; }
+    public bool IsFavorite { get; set; }
     public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; } = new List<UrlSupplierMappingViewModel>();
 }
 
@@ -313,6 +316,7 @@ public class UrlSupplierMappingViewModel
     "data": {
         "name": "Headphones",
         "currencyId": "90fc6e57-44e8-4597-93c1-bbadf45cd5b9",
+        "isFavorite" : true,
         "urlSupplierMapping": [
             {
                 "url": "https://www.amazon.com.tr/Logitech-LIGHTSPEED-kulakl%C4%B1%C4%9F%C4%B1-Teknolojisi-Hoparl%C3%B6rler/dp/B07W6FQ658/?_encoding=UTF8&pd_rd_w=iLJWl&content-id=amzn1.sym.8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_p=8a1231b3-9dd1-4590-bc25-426daace92a4&pf_rd_r=30X37DGQX0WYDH83EXPP&pd_rd_wg=mbI3e&pd_rd_r=14e9fb5a-1d11-4240-991f-856395bdcdc7&ref_=pd_gw_crs_zg_bs_12466497031",
@@ -333,6 +337,7 @@ public class UpdateUserProductRequest
 {
     public string Name { get; set; } 
     public Guid CurrencyId { get; set; }
+    public bool IsFavorite { get; set; }
     public List<UrlSupplierMappingViewModel> UrlSupplierMapping { get; set; }
 }
 
@@ -347,6 +352,7 @@ public class UrlSupplierMappingViewModel
 {
   "name": "Test Product",
   "currencyId": "90fc6e57-44e8-4597-93c1-bbadf45cd5b9",
+  "isFavorite" : true,
   "urlSupplierMapping": [
     {
       "url": "https://www.amazon.com.tr/Logitech-Gaming-Headset-Mikrofontechnologie-Lautsprechern-Akkulaufzeit/dp/B07W7KT2B3/ref=pd_day0fbt_img_sccl_1/259-7749636-5841963?pd_rd_w=IIbx8&content-id=amzn1.sym.91d7beb6-46ba-40be-8fc8-873cbca32304&pf_rd_p=91d7beb6-46ba-40be-8fc8-873cbca32304&pf_rd_r=TAK06A102M6NR8408H10&pd_rd_wg=ad3s9&pd_rd_r=f641d3ad-c7ec-4fbb-b75a-4350ed3117d7&pd_rd_i=B07W7KT2B3&psc=1",
@@ -374,6 +380,7 @@ public class ProductPriceChangesViewModel
     public double Price { get; set; }
     public int Year { get; set; }
     public int Month { get; set; }
+    public Guid SupplierId { get; set; }
 }
 ``` 
 ```json
@@ -535,6 +542,7 @@ public class ProductPriceChangesViewModel
     public double Price { get; set; }
     public int Year { get; set; }
     public int Month { get; set; }
+    public Guid SupplierId { get; set; }
 }
 ``` 
 

@@ -17,6 +17,7 @@ namespace PriceHunter.Business.TestData.Concrete
         private readonly IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> _userProductSupplierMappingRepository;
 
         private readonly IGenericRepository<PriceHunter.Model.Supplier.Supplier> _supplierRepository;
+        private readonly IGenericRepository<SupplierPriceParseScript> _supplierPriceParseScriptRepository;
         private readonly IGenericRepository<PriceHunter.Model.Currency.Currency> _currencyRepository;
 
         public TestDataService(
@@ -27,6 +28,7 @@ namespace PriceHunter.Business.TestData.Concrete
             IGenericRepository<PriceHunter.Model.UserProduct.UserProduct> userProductRepository,
             IGenericRepository<PriceHunter.Model.UserProduct.UserProductSupplierMapping> userProductSupplierMappingRepository,
             IGenericRepository<Model.Supplier.Supplier> supplierRepository,
+            IGenericRepository<SupplierPriceParseScript> supplierPriceParseScriptRepository,
             IGenericRepository<PriceHunter.Model.Currency.Currency> currencyRepository
             )
         {
@@ -37,6 +39,7 @@ namespace PriceHunter.Business.TestData.Concrete
             _userProductRepository = userProductRepository;
             _userProductSupplierMappingRepository = userProductSupplierMappingRepository;
             _supplierRepository = supplierRepository;
+            _supplierPriceParseScriptRepository = supplierPriceParseScriptRepository;
             _currencyRepository = currencyRepository;
         }
 
@@ -49,12 +52,12 @@ namespace PriceHunter.Business.TestData.Concrete
 
             var user = await InsertUserAsync(cancellationToken);
             var suppliers = await InsertSuppliersAsync(cancellationToken);
+            await InsertSupplierParseScripts(suppliers);
             var currencies = await InsertCurrenciesAsync(cancellationToken);
             var product = await InsertProductAsync(suppliers, currencies, cancellationToken);
             await InsertUserProductAsync(user, suppliers, currencies, product, cancellationToken);
         }
-
-
+         
         private async Task<Model.User.User> InsertUserAsync(CancellationToken cancellationToken)
         {
             var user = new Model.User.User
@@ -96,6 +99,21 @@ namespace PriceHunter.Business.TestData.Concrete
 
             var suppliers = await _supplierRepository.InsertManyAsync(supplierList, cancellationToken);
             return suppliers;
+        }
+        private async Task InsertSupplierParseScripts(List<Model.Supplier.Supplier> suppliers)
+        {
+            await _supplierPriceParseScriptRepository.InsertAsync(new SupplierPriceParseScript
+            {
+                SupplierId = suppliers.First(p => p.EnumMapping == SupplierType.Amazon.GetHashCode()).Id,
+                Script = @"() => (
+                                    {
+                                        price: document.getElementById('tp_price_block_total_price_ww').getElementsByClassName('a-price-whole')[0].textContent,
+                                        divider: document.getElementById('tp_price_block_total_price_ww').getElementsByClassName('a-price-decimal')[0].textContent,
+                                        fraction: document.getElementById('tp_price_block_total_price_ww').getElementsByClassName('a-price-fraction')[0].textContent,
+                                        symbol: document.getElementsByClassName('a-price-symbol')[0].textContent
+                                    }
+                                )"
+            }, CancellationToken.None);
         }
         private async Task<List<Model.Currency.Currency>> InsertCurrenciesAsync(CancellationToken cancellationToken)
         {

@@ -1,7 +1,9 @@
-﻿namespace PriceHunter.Parser
+﻿using PriceHunter.Parser.Models;
+
+namespace PriceHunter.Parser
 {
     public interface IParser
     {
-        double Parse(string productUrl);
+        Task<ParseResponse> ParseAsync(string productUrl, List<string> priceParseScripts);
     }
 }

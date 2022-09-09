@@ -2,8 +2,9 @@
 {
     public class ProductPriceChangesViewModel
     {
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public int Year { get; set; }
         public int Month { get; set; }
+        public Guid SupplierId { get; set; }
     }
 }
