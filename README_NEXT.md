@@ -6,27 +6,25 @@
 * ~~check (product,userproduct)"last6monthchanges" response business logic~~
 * ~~Add is favorite feature for user product~~
 * ~~Change price history table with line chart~~
-* Refactor UI App
-* Refactor Api App
-* Add Gateway project
 * ~~Develop parser's business logic~~
+* ~~Add cancelation token to all async flows~~
+* ~~Add paging for price history (Product Controller)~~
+* ~~Check hangfire job concurrency flow~~
+* ~~Seperate Cache, Lock systems from Common project~~
 * Develop notification's business logic
 * Save notifications to database
 * Implement Role Auth to Blazor flow 
 * Try add Database as volume in docker 
-* ~~Add cancelation token to all async flows~~
-* ~~Add paging for price history (Product Controller)~~
-* ~~Check hangfire job concurrency flow~~
-
-
-#### Suggestions
-* ~~Seperate Cache, Lock systems from Common project~~
+* Refactor UI App
+* Refactor Api App
+* Add Gateway project
 
 
 #### V2 Suggestions
 * Implement on demand search flow for not added products
 * Seperate all domains as a microservice api
 * Service mesh / Service Discovery
+
 
 #### Research
 * Kafka vs RabbitMQ
