@@ -24,6 +24,7 @@ using PriceHunter.Resources.Service;
 using System.Dynamic;
 using PriceHunter.Lock.Abstract;
 using PriceHunter.Cache.Constants;
+using Hangfire;
 
 namespace PriceHunter.Business.Product.Concrete
 {
@@ -412,6 +413,7 @@ namespace PriceHunter.Business.Product.Concrete
             };
         }
 
+        [DisableConcurrentExecution(timeoutInSeconds: 60 * 60)]//60 * 60 = 1 hour
         public async Task CheckProductPricesAsync(Guid supplierId, CancellationToken cancellationToken)
         {
             try

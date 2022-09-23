@@ -15,8 +15,8 @@
 * Implement Role Auth to Blazor flow 
 * Try add Database as volume in docker 
 * ~~Add cancelation token to all async flows~~
-* Add paging for price history (Product Controller)
-* Chcek hangfire job concurrency flow
+* ~~Add paging for price history (Product Controller)~~
+* ~~Check hangfire job concurrency flow~~
 
 
 #### Suggestions
