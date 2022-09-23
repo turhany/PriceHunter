@@ -23,4 +23,7 @@
 * https://blazor.radzen.com/docs/guides/getting-started/installation.html
     * https://blazor.radzen.com/line-chart
     * https://forum.radzen.com/t/line-chart-cant-use-radzenmarkers-and-tooltiptemplate-together/9761
+* https://github.com/Blazored/Modal
+* https://github.com/Blazored/Toast
+* https://github.com/Blazored/LocalStorage
 

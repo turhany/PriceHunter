@@ -17,6 +17,13 @@ namespace PriceHunter.Contract.Mappings.Filtery
                 .Filter(p => p.Name.ToLower().Contains(FilteryQueryValueMarker.FilterStringValue.ToLower()), FilterOperation.Contains)
                 .Filter(p => p.Name.ToLower().StartsWith(FilteryQueryValueMarker.FilterStringValue.ToLower()), FilterOperation.StartsWith)
                 .Filter(p => p.Name.ToLower().EndsWith(FilteryQueryValueMarker.FilterStringValue.ToLower()), FilterOperation.EndsWith);
+
+            mapper
+            .Name("isfavorite")
+            .OrderProperty(p => p.IsFavorite)
+            .Filter(p => p.IsFavorite == FilteryQueryValueMarker.FilterBooleanValue, FilterOperation.Equal)
+            .Filter(p => p.IsFavorite != FilteryQueryValueMarker.FilterBooleanValue, FilterOperation.NotEqual);
+
         }
     }
 }

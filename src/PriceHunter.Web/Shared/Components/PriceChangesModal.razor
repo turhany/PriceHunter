@@ -1,0 +1,60 @@
+﻿@using PriceHunter.Web.Data.UserProduct.App
+@using System.Globalization
+
+<div> 
+    @if (PriceChanges.Any())
+    {
+        <RadzenChart>
+            <RadzenLineSeries Smooth="false" Data="@PriceChanges" CategoryProperty="Month" LineType="LineType.Dashed" ValueProperty="Price" Title="Price">
+                <ChildContent>
+                    <RadzenMarkers MarkerType="MarkerType.Square" />
+                    <RadzenSeriesDataLabels Visible="true" />
+                </ChildContent>
+                <TooltipTemplate Context="data">
+                    <div>
+                        @FormatPrice(data.Price)
+                        <br>
+                        @data.Supplier
+                    </div>
+                </TooltipTemplate>
+            </RadzenLineSeries>
+            <RadzenCategoryAxis Padding="20" Formatter="@FormatAsMonth">
+                <RadzenAxisTitle Text="Months" />
+            </RadzenCategoryAxis>
+            <RadzenValueAxis Formatter="@FormatPrice">
+                <RadzenGridLines Visible="true" />
+                <RadzenAxisTitle Text="Price Changes(Min)" />
+            </RadzenValueAxis>
+        </RadzenChart>
+    }else{
+        <text>
+            No data for display...
+        </text>
+    } 
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    [Parameter] public List<ProductPriceChangesViewModel> PriceChanges { get; set; }
+
+    private async Task Close() => await BlazoredModal.CloseAsync();
+
+    string FormatAsMonth(object value)
+    {
+        if (value != null)
+        {
+            if (int.TryParse(value.ToString(), out int month))
+            {
+                return CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+            }
+        }
+
+        return string.Empty;
+    }
+
+    string FormatPrice(object value)
+    {
+        return ((double)value).ToString("N2");
+    }
+}

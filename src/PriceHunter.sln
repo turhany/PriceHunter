@@ -65,13 +65,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.BusinessTests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Web", "PriceHunter.Web\PriceHunter.Web.csproj", "{CE02AD09-966A-48F5-82BF-70696CE69ACD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Cache", "PriceHunter.Cache\PriceHunter.Cache.csproj", "{AD8FF2EF-A795-400E-A53B-F37864DC2FBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Cache", "PriceHunter.Cache\PriceHunter.Cache.csproj", "{AD8FF2EF-A795-400E-A53B-F37864DC2FBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Cache.Redis", "PriceHunter.Cache.Redis\PriceHunter.Cache.Redis.csproj", "{2D024A11-CCE5-498A-A8C7-A6E2E00F98E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Cache.Redis", "PriceHunter.Cache.Redis\PriceHunter.Cache.Redis.csproj", "{2D024A11-CCE5-498A-A8C7-A6E2E00F98E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Lock", "PriceHunter.Lock\PriceHunter.Lock.csproj", "{801FDFE1-2166-4D61-8285-1ECBD5783D50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Lock", "PriceHunter.Lock\PriceHunter.Lock.csproj", "{801FDFE1-2166-4D61-8285-1ECBD5783D50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceHunter.Lock.Redis", "PriceHunter.Lock.Redis\PriceHunter.Lock.Redis.csproj", "{99C6615C-D488-4B7D-BFD3-1771D5E89E10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceHunter.Lock.Redis", "PriceHunter.Lock.Redis\PriceHunter.Lock.Redis.csproj", "{99C6615C-D488-4B7D-BFD3-1771D5E89E10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,168 @@
+﻿@page "/User/Products/Favorites"
+
+@using PriceHunter.Web.Data.Filter
+@using PriceHunter.Web.Data.Pager
+@using PriceHunter.Web.Data.Supplier.App
+@using PriceHunter.Web.Data.UserProduct.Api
+@using PriceHunter.Web.Data.UserProduct.App
+@inject IToastService _toastService
+@inject IHttpRequester _httpRequester
+@inject IJSRuntime JSRuntime
+
+@attribute [Authorize]
+
+<h3>Favorite Products</h3>
+
+@if (_pageState == PageState.Loading)
+{
+    <Loading />
+}
+else if (_pageState == PageState.NoData)
+{
+    <text>
+        No Data...
+    </text>
+}
+else if (_pageState == PageState.Error)
+{
+    <text>
+        Loading Error...
+    </text>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entity in entities)
+            {
+                <tr>
+                    <td>@entity.Name</td>
+                    <td class="float-right ">
+                        <div class=" float-end">
+                            <button type="button" class="btn btn-primary" @onclick="@(async () => await PriceChangesAsync(entity.Id))">Price Changes</button>
+                        </div>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    if (PageInfo.TotalItemCount > 0 && PageInfo.TotalPageCount > 1)
+    {
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item @(PageInfo.PageNumber == 1 ? "disabled" : string.Empty)">
+                    <button class="page-link" @onclick="@(async () => await FilterAsync(1))">First</button>
+                </li>
+                @for (int pageNumber = 1; pageNumber <= PageInfo.TotalPageCount; pageNumber++)
+                {
+                    int tempPageNumber = pageNumber;
+                    <li class="page-item @(PageInfo.PageNumber == pageNumber ? "active" : string.Empty)">
+                        <button class="page-link" @onclick="@(async () => await FilterAsync(tempPageNumber))">@pageNumber</button>
+                    </li>
+                }
+                <li class="page-item @(PageInfo.PageNumber == PageInfo.TotalPageCount ? "disabled" : string.Empty)">
+                    <button class="page-link" @onclick="@(async () => await FilterAsync(PageInfo.TotalPageCount))">Last</button>
+                </li>
+            </ul>
+        </nav>
+    }
+}
+
+@code {
+    List<UserProductSearchViewModel> entities = new List<UserProductSearchViewModel>();
+    public PageState _pageState { get; set; } = PageState.Loading;
+    public Page PageInfo { get; set; }
+
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FilterAsync(1);
+    }
+
+    private async Task FilterAsync(int pageNumber)
+    {
+        try
+        {
+            _pageState = PageState.Loading;
+
+            var requestModel = new FilterRequest();
+            requestModel.AndFilters.Add(new FilterItem { Operation = FilterOperation.Equal, TargetFieldName = UserProductFilterFilelds.IsFavorite, Value = true.ToString() });
+            requestModel.OrderOperations.Add(UserProductFilterFilelds.Name, OrderOperation.Ascending);
+            requestModel.PageNumber = pageNumber;
+
+            var result = await _httpRequester.PostAsync<FilterRequest, PagedList<UserProductSearchViewApiModel>>(ApiUrls.V1ApiUserProductSearchUrl, requestModel, true);
+            if (result.IsSuccess)
+            {
+                if (result.Response.Data.Data != null ||
+                    result.Response.Data.Data.Any())
+                {
+                    _pageState = PageState.DataLoaded;
+
+                    PageInfo = result.Response.Data.PageInfo;
+                    entities = result.Response.Data.Data.Select(p => new UserProductSearchViewModel
+                        {
+                            Id = p.Id,
+                            Name = p.Name
+                        }).ToList();
+                }
+                else
+                {
+                    _pageState = PageState.NoData;
+                }
+            }
+            else
+            {
+                _pageState = PageState.Error;
+            }
+        }
+        catch (Exception ex)
+        {
+            _pageState = PageState.Error;
+            _toastService.ShowError(ex.Message);
+        }
+    }
+
+    private async Task PriceChangesAsync(Guid id)
+    { 
+        try
+        {
+            _pageState = PageState.Loading;
+
+            var last6monthChangesRequestUrl = string.Format(ApiUrls.V1UserProductLast6MonthChangesUrl, id);
+            var last6MonthChangesResult = await _httpRequester.GetAsync<List<ProductPriceChangesViewModel>>(last6monthChangesRequestUrl, true);
+            var supplierResult = await _httpRequester.GetAsync<List<SupplierViewModel>>(ApiUrls.V1SupplierAllUrl, true);
+
+            if (last6MonthChangesResult.IsSuccess && supplierResult.IsSuccess)
+            {
+                var priceData = last6MonthChangesResult.Response.Data;
+                foreach (var item in priceData)
+                {
+                    item.Supplier = supplierResult.Response.Data.FirstOrDefault(k => k.Id == item.SupplierId)?.Name;
+                }
+
+                var parameters = new ModalParameters().Add(nameof(PriceChangesModal.PriceChanges), priceData);
+                Modal.Show<PriceChangesModal>("Price History", parameters);
+
+                _pageState = PageState.DataLoaded;
+            }
+            else
+            {
+                _pageState = PageState.Error;
+            }
+        }
+        catch (Exception ex)
+        {
+            _pageState = PageState.Error;
+            _toastService.ShowError(ex.Message);
+        }
+    }
+}

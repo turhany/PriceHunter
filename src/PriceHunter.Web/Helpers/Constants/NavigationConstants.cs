@@ -11,6 +11,7 @@
         public static readonly string UserProductEdit = "/User/Products/Edit/";
         public static readonly string UserProductDetail = "/User/Products/Detail/";
         public static readonly string UserProductList = "/User/Products/List";
+        public static readonly string UserProductFavorites = "/User/Products/Favorites";
         
     }
 }
