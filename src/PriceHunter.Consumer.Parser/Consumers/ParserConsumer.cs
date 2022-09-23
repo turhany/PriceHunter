@@ -13,14 +13,15 @@ using PriceHunter.Parser;
 using PriceHunter.Parser.Models;
 using PriceHunter.Resources.Extensions;
 using PriceHunter.Resources.Model;
+using System.Diagnostics;
 
 namespace PriceHunter.Consumer.Parser.Consumers
 {
     public class ParserConsumer : IConsumer<SendParserCommand>
     {
         private readonly IGenericRepository<ProductSupplierInfoMapping> _productSupplierInfoMappingRepository;
-        private readonly IGenericRepository<ProductPriceHistory> _productPriceHistoryRepository; 
-        private readonly IGenericRepository<SupplierPriceParseScript> _supplierPriceParseScriptRepository; 
+        private readonly IGenericRepository<ProductPriceHistory> _productPriceHistoryRepository;
+        private readonly IGenericRepository<SupplierPriceParseScript> _supplierPriceParseScriptRepository;
         private readonly ISendEndpointProvider _sendEndpointProvider;
         private readonly RabbitMqOption _rabbitMqOptions;
         private readonly ILogger<ProductService> _logger;
@@ -48,6 +49,12 @@ namespace PriceHunter.Consumer.Parser.Consumers
         {
             try
             {
+                if (Debugger.IsAttached)
+                {
+                    Console.WriteLine("----");
+                    Console.WriteLine($"Parser Consumer - ProductId:{context.Message.ProductId} - SupplierId:{context.Message.SupplierId} - Url:{context.Message.Url} - EunmMapping:{context.Message.EnumMapping} - RequestTime:{context.Message.RequestTime} - ProcessTime:{DateTime.Now}");
+                }
+
                 var mapping = await _productSupplierInfoMappingRepository.FindOneAsync(p => p.ProductId == context.Message.ProductId && p.SupplierId == context.Message.SupplierId && p.IsDeleted == false, context.CancellationToken);
                 if (mapping == null)
                 {
