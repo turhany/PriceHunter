@@ -27,8 +27,8 @@
 
 
 #### Research
-* Kafka vs RabbitMQ
-* Kafka
+* Kafka vs RabbitMQ > https://blog.devops.dev/kafka-or-rabbitmq-2851cd400456
+* Kafka 
     * What ?
     * Why ?
     * Where ?
