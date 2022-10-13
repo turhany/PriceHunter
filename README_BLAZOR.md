@@ -26,4 +26,4 @@
 * https://github.com/Blazored/Modal
 * https://github.com/Blazored/Toast
 * https://github.com/Blazored/LocalStorage
-
+* Bootstrap 5 implemented Blazor components > https://getblazorbootstrap.com/
